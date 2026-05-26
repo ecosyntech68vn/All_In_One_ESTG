@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<!--
+  ============================================================
+  TEMPLATE: Dark Modern
+  STYLE: Sleek, futuristic, glassmorphism aesthetic with gradient accents
+  BEST FOR: SaaS products, tech startups, AI/ML services, B2B platforms
+
+  DESIGN SYSTEM:
+  - Background: Dark slate (#0F172A slate-900) with gradient mesh overlays
+  - Primary: Electric blue (#3B82F6)
+  - Secondary: Purple (#7C3AED)
+  - CTA: Blue-to-purple gradient (#3B82F6 to #7C3AED)
+  - Heading Font: Space Grotesk (geometric sans)
+  - Body Font: DM Sans (clean sans-serif)
+
+  SECTIONS:
+  1. Navbar — Glassmorphism floating nav
+  2. Hero — Full viewport with gradient mesh background
+  3. Logo Cloud — Trusted by section
+  4. Features Grid — 2x3 glassmorphism cards
+  5. How It Works — 3-step process
+  6. Stats Bar — Metrics with gradient background
+  7. Product Demo — Mockup with glow effects
+  8. Testimonials — Carousel-style cards
+  9. Pricing — 3-tier with gradient accents
+  10. FAQ — Dark accordion
+  11. Final CTA — Gradient background section
+  12. Footer — Multi-column with newsletter
+
+  CUSTOMIZATION GUIDE:
+  - Colors: Edit CSS variables in <style> section or Tailwind config
+  - Fonts: Change Google Fonts import links
+  - Content: Replace all {{PLACEHOLDER}} markers
+  - Sections: Can reorder or remove (each is self-contained)
+  - Payment: Update SePay bank details in pricing section
+  - Images: Replace placeholder image URLs with your assets
+
+  DEPLOYMENT:
+  - Save as index.html
+  - Deploy via Vercel: vercel --prod
+  - Or Netlify: drag and drop to dashboard
+  - Or GitHub Pages: push to gh-pages branch
+
+  RESPONSIVE BREAKPOINTS:
+  - Mobile: < 640px (sm)
+  - Tablet: 640px - 1024px (sm-lg)
+  - Desktop: > 1024px (lg+)
+
+  PERFORMANCE NOTES:
+  - Tailwind CDN loads ~80KB (consider build step for production)
+  - Google Fonts loads 2 font families (~40KB total)
+  - No external JS dependencies
+  - All animations are CSS-based (GPU accelerated)
+  ============================================================
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PAGE_TITLE}} | {{COMPANY_NAME}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Space Grotesk (headings) + DM Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /*
+      CUSTOM STYLES AND ANIMATIONS
+      - CSS variables for easy theming
+      - @keyframes for floating orbs and other animations
+      - Utility classes for effects not covered by Tailwind
+    */
+
+    :root {
+      --gradient-blue: #3B82F6;
+      --gradient-purple: #7C3AED;
+      --bg-dark: #0F172A;
+      --text-light: #F8FAFC;
+    }
+
+    * {
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* Floating orb animation for hero background */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px);
+      }
+      33% {
+        transform: translateY(-30px) translateX(20px);
+      }
+      66% {
+        transform: translateY(-15px) translateX(-20px);
+      }
+    }
+
+    @keyframes float-delayed {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px);
+      }
+      33% {
+        transform: translateY(20px) translateX(-25px);
+      }
+      66% {
+        transform: translateY(-25px) translateX(15px);
+      }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+      }
+    }
+
+    /* Gradient text effect */
+    .gradient-text {
+      background: linear-gradient(135deg, var(--gradient-blue), var(--gradient-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glassmorphism utility */
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Glow shadow effect */
+    .glow-blue {
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+    }
+
+    .glow-purple {
+      box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+    }
+
+    /* Scroll-triggered fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Gradient mesh background for hero */
+    .gradient-mesh {
+      background:
+        radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+        #0F172A;
+    }
+
+    /* Floating orbs in hero background */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--gradient-blue);
+      top: 10%;
+      left: 10%;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: var(--gradient-purple);
+      bottom: 20%;
+      right: 15%;
+      animation: float-delayed 18s ease-in-out infinite;
+    }
+
+    .orb-3 {
+      width: 250px;
+      height: 250px;
+      background: #EC4899;
+      top: 50%;
+      right: 30%;
+      animation: float 15s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-900 text-gray-300 antialiased overflow-x-hidden">
+
+  <!--
+    ============================================================
+    SECTION: Navigation Bar
+    PURPOSE: Primary navigation, brand identity, CTA access
+    PSYCHOLOGY:
+      - Glassmorphism creates modern, premium feel
+      - Floating nav (not full-width) suggests sophistication
+      - Gradient CTA button draws eye to primary action
+      - Sticky positioning keeps conversion opportunities visible
+    RESPONSIVE:
+      - Desktop: Full nav with all links visible
+      - Mobile: Hamburger menu with slide-down overlay
+      - Backdrop blur works on all modern browsers
+    CUSTOMIZE:
+      - Replace {{COMPANY_NAME}} with your brand
+      - Update navigation links and URLs
+      - Adjust logo/brand styling
+      - Change CTA button text and link
+    TECHNICAL NOTES:
+      - Uses fixed positioning with backdrop-blur for glassmorphism
+      - Mobile menu controlled via JavaScript toggle
+      - Smooth transitions on all interactive elements
+      - z-index: 50 ensures nav stays above other content
+  ============================================================
+  -->
+  <nav id="navbar" class="fixed top-4 left-0 right-0 z-50 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto glass rounded-2xl px-6 py-4 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+          {{LOGO}}
+        </div>
+        <span class="text-white font-bold text-xl hidden sm:inline">{{COMPANY_NAME}}</span>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200">{{NAV_LINK_1}}</a>
+        <a href="#how-it-works" class="text-gray-300 hover:text-white transition-colors duration-200">{{NAV_LINK_2}}</a>
+        <a href="#pricing" class="text-gray-300 hover:text-white transition-colors duration-200">{{NAV_LINK_3}}</a>
+        <a href="#faq" class="text-gray-300 hover:text-white transition-colors duration-200">{{NAV_LINK_4}}</a>
+      </div>
+
+      <!-- CTA Button -->
+      <div class="flex items-center space-x-4">
+        <a href="#pricing" class="hidden sm:inline-block px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200">
+          {{NAV_CTA_TEXT}}
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="md:hidden text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="hidden md:hidden mt-2 glass rounded-2xl p-6 flex flex-col space-y-4">
+      <a href="#features" class="text-gray-300 hover:text-white transition-colors duration-200 py-2">{{NAV_LINK_1}}</a>
+      <a href="#how-it-works" class="text-gray-300 hover:text-white transition-colors duration-200 py-2">{{NAV_LINK_2}}</a>
+      <a href="#pricing" class="text-gray-300 hover:text-white transition-colors duration-200 py-2">{{NAV_LINK_3}}</a>
+      <a href="#faq" class="text-gray-300 hover:text-white transition-colors duration-200 py-2">{{NAV_LINK_4}}</a>
+      <a href="#pricing" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold text-center hover:shadow-lg transition-all duration-200">
+        {{NAV_CTA_TEXT}}
+      </a>
+    </div>
+  </nav>
+
+  <!--
+    ============================================================
+    SECTION: Hero
+    PURPOSE: Capture attention, communicate value proposition, drive primary CTA
+    PSYCHOLOGY:
+      - Full viewport height creates immersive first impression
+      - Gradient mesh + floating orbs = modern, innovative brand perception
+      - Large headline with gradient effect draws eye immediately
+      - Dual CTAs give users choice (primary action vs. learn more)
+      - Trust badges reduce friction by showing social proof upfront
+    RESPONSIVE:
+      - Desktop: Side-by-side layout with generous spacing
+      - Tablet: Stacked layout with adjusted font sizes
+      - Mobile: Single column, optimized text sizes, vertical CTAs
+    CUSTOMIZE:
+      - Update {{HERO_HEADLINE}} - keep under 10 words for impact
+      - Modify {{HERO_SUBHEADLINE}} - explain benefit in 1-2 sentences
+      - Change CTA button text and links
+      - Update trust badge metrics
+      - Replace social proof logos
+    TECHNICAL NOTES:
+      - Gradient mesh created with radial-gradient layers
+      - Floating orbs use @keyframes animation (GPU accelerated)
+      - Gradient text uses background-clip technique
+      - Trust badges use grayscale filter with hover effect
+  ============================================================
+  -->
+  <section class="relative min-h-screen flex items-center justify-center pt-24 pb-20 px-4 md:px-8 gradient-mesh overflow-hidden">
+    <!-- Animated Floating Orbs (background decoration) -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto text-center">
+      <!-- Main Headline -->
+      <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-tight mb-6">
+        {{HERO_HEADLINE_PART_1}}
+        <span class="gradient-text">{{HERO_HEADLINE_HIGHLIGHT}}</span>
+        {{HERO_HEADLINE_PART_2}}
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="text-xl md:text-2xl text-gray-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+        {{HERO_SUBHEADLINE}}
+      </p>
+
+      <!-- Dual CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+        <a href="#pricing" class="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 glow-blue">
+          {{HERO_PRIMARY_CTA}}
+        </a>
+        <a href="#how-it-works" class="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-white/20 text-white font-semibold text-lg hover:bg-white/10 transition-all duration-300">
+          {{HERO_SECONDARY_CTA}}
+        </a>
+      </div>
+
+      <!-- Trust Badges Row -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+          <span class="text-gray-400"><span class="text-white font-semibold">{{TRUST_RATING}}</span> từ {{TRUST_REVIEW_COUNT}} đánh giá</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+          </svg>
+          <span class="text-gray-400"><span class="text-white font-semibold">{{TRUST_USER_COUNT}}</span> người dùng</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-gray-400"><span class="text-white font-semibold">{{TRUST_GUARANTEE}}</span> hoàn tiền</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Logo Cloud / Trusted By
+    PURPOSE: Build credibility through brand association
+    PSYCHOLOGY:
+      - Social proof via recognizable brand logos
+      - Grayscale treatment = professional, non-distracting
+      - Hover color = interactive, modern feel
+      - "Trusted by" phrasing = risk reduction
+    RESPONSIVE:
+      - Desktop: Single row, all logos visible
+      - Tablet: Wrap to 2 rows if needed
+      - Mobile: Scrollable row or stack
+    CUSTOMIZE:
+      - Replace logo image URLs
+      - Update company count
+      - Add/remove logos (keep 4-6 for optimal visual balance)
+    TECHNICAL NOTES:
+      - Grayscale filter with opacity for muted effect
+      - Hover removes filter to show brand colors
+      - Object-contain ensures logos maintain aspect ratio
+  ============================================================
+  -->
+  <section class="py-16 px-4 md:px-8 bg-slate-800/50 fade-in">
+    <div class="max-w-6xl mx-auto">
+      <p class="text-center text-gray-400 mb-8 text-sm uppercase tracking-wider">
+        Được tin dùng bởi hơn {{TRUSTED_BY_COUNT}} doanh nghiệp
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+        <!-- Logo 1 -->
+        <img src="{{LOGO_URL_1}}" alt="{{LOGO_ALT_1}}" class="h-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300 object-contain">
+        <!-- Logo 2 -->
+        <img src="{{LOGO_URL_2}}" alt="{{LOGO_ALT_2}}" class="h-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300 object-contain">
+        <!-- Logo 3 -->
+        <img src="{{LOGO_URL_3}}" alt="{{LOGO_ALT_3}}" class="h-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300 object-contain">
+        <!-- Logo 4 -->
+        <img src="{{LOGO_URL_4}}" alt="{{LOGO_ALT_4}}" class="h-12 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300 object-contain">
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Features Grid
+    PURPOSE: Communicate key product benefits and differentiation
+    PSYCHOLOGY:
+      - Grid layout = organized, comprehensive
+      - Glassmorphism cards = premium, modern aesthetic
+      - Icons with gradient = visual interest, category identification
+      - Hover glow effect = interactive, encourages exploration
+    RESPONSIVE:
+      - Desktop: 3 columns
+      - Tablet: 2 columns
+      - Mobile: 1 column
+    CUSTOMIZE:
+      - Update feature titles and descriptions
+      - Replace icon SVGs (or use icon library like Heroicons)
+      - Adjust gradient colors for icon backgrounds
+      - Add/remove features (keep 6-9 for balance)
+    TECHNICAL NOTES:
+      - Glassmorphism: bg-white/5 + backdrop-blur + border
+      - Hover state adds border glow + slight lift
+      - Icons use gradient backgrounds for visual consistency
+      - Grid auto-fills based on screen size
+  ============================================================
+  -->
+  <section id="features" class="py-20 px-4 md:px-8 bg-slate-900 fade-in">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          {{FEATURES_HEADLINE}}
+        </h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          {{FEATURES_SUBHEADLINE}}
+        </p>
+      </div>
+
+      <!-- Features Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Feature 1 -->
+        <div class="glass rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{{FEATURE_1_TITLE}}</h3>
+          <p class="text-gray-400 leading-relaxed">{{FEATURE_1_DESCRIPTION}}</p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="glass rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{{FEATURE_2_TITLE}}</h3>
+          <p class="text-gray-400 leading-relaxed">{{FEATURE_2_DESCRIPTION}}</p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="glass rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{{FEATURE_3_TITLE}}</h3>
+          <p class="text-gray-400 leading-relaxed">{{FEATURE_3_DESCRIPTION}}</p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="glass rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{{FEATURE_4_TITLE}}</h3>
+          <p class="text-gray-400 leading-relaxed">{{FEATURE_4_DESCRIPTION}}</p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="glass rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{{FEATURE_5_TITLE}}</h3>
+          <p class="text-gray-400 leading-relaxed">{{FEATURE_5_DESCRIPTION}}</p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="glass rounded-2xl p-8 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)] transition-all duration-300 group">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">{{FEATURE_6_TITLE}}</h3>
+          <p class="text-gray-400 leading-relaxed">{{FEATURE_6_DESCRIPTION}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: How It Works
+    PURPOSE: Explain product usage, reduce complexity, build confidence
+    PSYCHOLOGY:
+      - 3-step process = simple, achievable, not overwhelming
+      - Numbered sequence = clear progression, logical flow
+      - Connecting line = visual continuity, complete journey
+      - Icons + gradient circles = modern, professional presentation
+    RESPONSIVE:
+      - Desktop: Horizontal 3-column layout
+      - Tablet: Horizontal with smaller spacing
+      - Mobile: Vertical stack with connecting vertical line
+    CUSTOMIZE:
+      - Update step titles and descriptions
+      - Replace icons (use consistent style)
+      - Adjust gradient colors for number circles
+      - Add 4th step if needed (not recommended - 3 is optimal)
+    TECHNICAL NOTES:
+      - Gradient circles use flexbox centering
+      - Connecting line uses border-top (horizontal) or border-left (mobile vertical)
+      - Hover effect on step cards for interactivity
+      - Numbers use gradient backgrounds for visual interest
+  ============================================================
+  -->
+  <section id="how-it-works" class="py-20 px-4 md:px-8 bg-slate-800/50 fade-in">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          {{HOW_IT_WORKS_HEADLINE}}
+        </h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          {{HOW_IT_WORKS_SUBHEADLINE}}
+        </p>
+      </div>
+
+      <!-- Steps Grid -->
+      <div class="grid md:grid-cols-3 gap-8 relative">
+        <!-- Connecting Line (Desktop only) -->
+        <div class="hidden md:block absolute top-20 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20" style="top: 80px;"></div>
+
+        <!-- Step 1 -->
+        <div class="relative text-center">
+          <div class="relative z-10 w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg glow-blue">
+            1
+          </div>
+          <div class="glass rounded-2xl p-6 hover:border-blue-500/50 transition-all duration-300">
+            <svg class="w-12 h-12 text-blue-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+            </svg>
+            <h3 class="text-xl font-bold text-white mb-3">{{STEP_1_TITLE}}</h3>
+            <p class="text-gray-400">{{STEP_1_DESCRIPTION}}</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="relative text-center">
+          <div class="relative z-10 w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg glow-purple">
+            2
+          </div>
+          <div class="glass rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300">
+            <svg class="w-12 h-12 text-purple-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+            </svg>
+            <h3 class="text-xl font-bold text-white mb-3">{{STEP_2_TITLE}}</h3>
+            <p class="text-gray-400">{{STEP_2_DESCRIPTION}}</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="relative text-center">
+          <div class="relative z-10 w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg" style="box-shadow: 0 0 30px rgba(236, 72, 153, 0.3);">
+            3
+          </div>
+          <div class="glass rounded-2xl p-6 hover:border-pink-500/50 transition-all duration-300">
+            <svg class="w-12 h-12 text-pink-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+            <h3 class="text-xl font-bold text-white mb-3">{{STEP_3_TITLE}}</h3>
+            <p class="text-gray-400">{{STEP_3_DESCRIPTION}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Stats/Metrics Bar
+    PURPOSE: Demonstrate scale, credibility, track record
+    PSYCHOLOGY:
+      - Large numbers = impressive, authoritative
+      - Gradient background = premium, celebratory feel
+      - 4 stats = comprehensive without overwhelming
+      - Animated counters (placeholder) = dynamic, engaging
+    RESPONSIVE:
+      - Desktop: 4 columns in single row
+      - Tablet: 2x2 grid
+      - Mobile: Single column stack
+    CUSTOMIZE:
+      - Update stat numbers and labels
+      - Change gradient colors
+      - Add/remove stats (keep 4 for symmetry)
+      - Implement JavaScript counter animation if desired
+    TECHNICAL NOTES:
+      - Gradient background uses multi-stop linear gradient
+      - Text is white for high contrast
+      - Numbers use larger font size for emphasis
+      - Labels use smaller, uppercase text with tracking
+  ============================================================
+  -->
+  <section class="py-16 px-4 md:px-8 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 fade-in">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+        <!-- Stat 1 -->
+        <div>
+          <div class="text-5xl md:text-6xl font-bold text-white mb-2">{{STAT_1_NUMBER}}</div>
+          <div class="text-white/90 uppercase tracking-wider text-sm">{{STAT_1_LABEL}}</div>
+        </div>
+
+        <!-- Stat 2 -->
+        <div>
+          <div class="text-5xl md:text-6xl font-bold text-white mb-2">{{STAT_2_NUMBER}}</div>
+          <div class="text-white/90 uppercase tracking-wider text-sm">{{STAT_2_LABEL}}</div>
+        </div>
+
+        <!-- Stat 3 -->
+        <div>
+          <div class="text-5xl md:text-6xl font-bold text-white mb-2">{{STAT_3_NUMBER}}</div>
+          <div class="text-white/90 uppercase tracking-wider text-sm">{{STAT_3_LABEL}}</div>
+        </div>
+
+        <!-- Stat 4 -->
+        <div>
+          <div class="text-5xl md:text-6xl font-bold text-white mb-2">{{STAT_4_NUMBER}}</div>
+          <div class="text-white/90 uppercase tracking-wider text-sm">{{STAT_4_LABEL}}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Product Screenshot/Demo
+    PURPOSE: Visualize product, build tangibility, showcase UI/UX
+    PSYCHOLOGY:
+      - Seeing is believing - visual proof of product quality
+      - Mockup frame = professional presentation
+      - Glow effect = premium, attention-drawing
+      - Floating UI elements = depth, modern design
+    RESPONSIVE:
+      - Desktop: Large centered mockup with floating elements
+      - Tablet: Slightly smaller, fewer floating elements
+      - Mobile: Full-width mockup, no floating elements
+    CUSTOMIZE:
+      - Replace {{MOCKUP_IMAGE_URL}} with actual screenshot
+      - Update floating UI element images/text
+      - Adjust glow color to match brand
+      - Add multiple screenshots if showing different features
+    TECHNICAL NOTES:
+      - Gradient border using padding + background-clip trick
+      - Glow shadow uses rgba for transparency
+      - Floating elements use absolute positioning
+      - Object-cover ensures image fills container
+  ============================================================
+  -->
+  <section class="py-20 px-4 md:px-8 bg-slate-900 fade-in">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          {{DEMO_HEADLINE}}
+        </h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          {{DEMO_SUBHEADLINE}}
+        </p>
+      </div>
+
+      <!-- Product Mockup -->
+      <div class="relative max-w-5xl mx-auto">
+        <!-- Main Screenshot Frame -->
+        <div class="relative rounded-2xl overflow-hidden glow-blue" style="padding: 3px; background: linear-gradient(135deg, #3B82F6, #7C3AED, #EC4899);">
+          <div class="bg-slate-900 rounded-2xl overflow-hidden">
+            <img src="{{MOCKUP_IMAGE_URL}}" alt="{{MOCKUP_ALT_TEXT}}" class="w-full h-auto object-cover">
+          </div>
+        </div>
+
+        <!-- Floating UI Element 1 (Optional - Desktop only) -->
+        <div class="hidden lg:block absolute -left-8 top-1/4 glass rounded-xl p-4 shadow-xl">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-white">{{FLOATING_STAT_1_TITLE}}</div>
+              <div class="text-xs text-gray-400">{{FLOATING_STAT_1_VALUE}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating UI Element 2 (Optional - Desktop only) -->
+        <div class="hidden lg:block absolute -right-8 bottom-1/4 glass rounded-xl p-4 shadow-xl">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm font-semibold text-white">{{FLOATING_STAT_2_TITLE}}</div>
+              <div class="text-xs text-gray-400">{{FLOATING_STAT_2_VALUE}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Testimonials
+    PURPOSE: Build trust through customer experiences, address objections
+    PSYCHOLOGY:
+      - Real people = authentic, relatable
+      - 5-star ratings = social validation
+      - Specific details = credible, not generic
+      - Carousel layout = many testimonials without overwhelming
+    RESPONSIVE:
+      - Desktop: 3 cards visible in carousel-style layout
+      - Tablet: 2 cards visible
+      - Mobile: 1 card, swipeable (or stack all)
+    CUSTOMIZE:
+      - Update customer names, roles, companies
+      - Replace avatar images
+      - Modify testimonial quotes
+      - Adjust star ratings if using variable ratings
+      - Change colored left border color per testimonial
+    TECHNICAL NOTES:
+      - Cards use glassmorphism for dark theme consistency
+      - Left border color adds visual distinction
+      - Star rating uses filled SVG icons
+      - Avatar uses rounded-full for circular crop
+      - Quote marks optional (shown here as decorative element)
+  ============================================================
+  -->
+  <section class="py-20 px-4 md:px-8 bg-slate-800/50 fade-in">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          {{TESTIMONIALS_HEADLINE}}
+        </h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          {{TESTIMONIALS_SUBHEADLINE}}
+        </p>
+      </div>
+
+      <!-- Testimonials Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Testimonial 1 -->
+        <div class="glass rounded-2xl p-8 border-l-4 border-blue-500">
+          <!-- Star Rating -->
+          <div class="flex gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+          </div>
+
+          <!-- Quote -->
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            "{{TESTIMONIAL_1_QUOTE}}"
+          </p>
+
+          <!-- Customer Info -->
+          <div class="flex items-center gap-4">
+            <img src="{{TESTIMONIAL_1_AVATAR}}" alt="{{TESTIMONIAL_1_NAME}}" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-white">{{TESTIMONIAL_1_NAME}}</div>
+              <div class="text-sm text-gray-400">{{TESTIMONIAL_1_ROLE}}, {{TESTIMONIAL_1_COMPANY}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="glass rounded-2xl p-8 border-l-4 border-purple-500">
+          <!-- Star Rating -->
+          <div class="flex gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+          </div>
+
+          <!-- Quote -->
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            "{{TESTIMONIAL_2_QUOTE}}"
+          </p>
+
+          <!-- Customer Info -->
+          <div class="flex items-center gap-4">
+            <img src="{{TESTIMONIAL_2_AVATAR}}" alt="{{TESTIMONIAL_2_NAME}}" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-white">{{TESTIMONIAL_2_NAME}}</div>
+              <div class="text-sm text-gray-400">{{TESTIMONIAL_2_ROLE}}, {{TESTIMONIAL_2_COMPANY}}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="glass rounded-2xl p-8 border-l-4 border-pink-500">
+          <!-- Star Rating -->
+          <div class="flex gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+          </div>
+
+          <!-- Quote -->
+          <p class="text-gray-300 mb-6 leading-relaxed">
+            "{{TESTIMONIAL_3_QUOTE}}"
+          </p>
+
+          <!-- Customer Info -->
+          <div class="flex items-center gap-4">
+            <img src="{{TESTIMONIAL_3_AVATAR}}" alt="{{TESTIMONIAL_3_NAME}}" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-white">{{TESTIMONIAL_3_NAME}}</div>
+              <div class="text-sm text-gray-400">{{TESTIMONIAL_3_ROLE}}, {{TESTIMONIAL_3_COMPANY}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Pricing
+    PURPOSE: Convert interest into purchase decision
+    PSYCHOLOGY:
+      - 3 tiers = good-better-best anchoring
+      - Middle tier highlighted = nudge toward higher value option
+      - "Most Popular" badge = social proof + recommendation
+      - Feature checkmarks = clear value communication
+      - Gradient border on popular tier = premium feel
+      - VND pricing = local market relevance
+      - SePay QR = low-friction payment method for Vietnam
+    RESPONSIVE:
+      - Desktop: 3 columns side-by-side
+      - Tablet: 3 columns with smaller padding
+      - Mobile: Stack vertically with popular tier first
+    CUSTOMIZE:
+      - Update tier names, prices, features
+      - Change "Most Popular" to different tier if needed
+      - Adjust VND pricing
+      - Update SePay bank account details
+      - Add/remove features (keep lists similar length)
+    TECHNICAL NOTES:
+      - Popular tier has gradient border (padding trick)
+      - Badge uses absolute positioning
+      - Feature lists use flexbox for checkmark alignment
+      - SePay QR embedded as base64 or external image
+      - CTA buttons use gradient backgrounds
+  ============================================================
+  -->
+  <section id="pricing" class="py-20 px-4 md:px-8 bg-slate-900 fade-in">
+    <div class="max-w-7xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          {{PRICING_HEADLINE}}
+        </h2>
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+          {{PRICING_SUBHEADLINE}}
+        </p>
+      </div>
+
+      <!-- Pricing Tiers -->
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Tier 1: Basic -->
+        <div class="glass rounded-2xl p-8 hover:border-white/20 transition-all duration-300">
+          <h3 class="text-2xl font-bold text-white mb-2">{{TIER_1_NAME}}</h3>
+          <p class="text-gray-400 mb-6">{{TIER_1_DESCRIPTION}}</p>
+          <div class="mb-6">
+            <span class="text-5xl font-bold text-white">{{TIER_1_PRICE}}</span>
+            <span class="text-gray-400">₫/{{TIER_1_PERIOD}}</span>
+          </div>
+
+          <!-- Features -->
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">{{TIER_1_FEATURE_1}}</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">{{TIER_1_FEATURE_2}}</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">{{TIER_1_FEATURE_3}}</span>
+            </li>
+          </ul>
+
+          <!-- CTA -->
+          <a href="#contact" class="block w-full py-3 px-6 rounded-full bg-white/10 text-white text-center font-semibold hover:bg-white/20 transition-all duration-200">
+            {{TIER_1_CTA}}
+          </a>
+        </div>
+
+        <!-- Tier 2: Pro (Most Popular) -->
+        <div class="relative rounded-2xl" style="padding: 3px; background: linear-gradient(135deg, #3B82F6, #7C3AED);">
+          <!-- "Most Popular" Badge -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-semibold rounded-full">
+            Phổ biến nhất
+          </div>
+
+          <div class="bg-slate-900 rounded-2xl p-8 h-full">
+            <h3 class="text-2xl font-bold text-white mb-2">{{TIER_2_NAME}}</h3>
+            <p class="text-gray-400 mb-6">{{TIER_2_DESCRIPTION}}</p>
+            <div class="mb-6">
+              <span class="text-5xl font-bold gradient-text">{{TIER_2_PRICE}}</span>
+              <span class="text-gray-400">₫/{{TIER_2_PERIOD}}</span>
+            </div>
+
+            <!-- Features -->
+            <ul class="space-y-4 mb-8">
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-300">{{TIER_2_FEATURE_1}}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-300">{{TIER_2_FEATURE_2}}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-300">{{TIER_2_FEATURE_3}}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-300">{{TIER_2_FEATURE_4}}</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <span class="text-gray-300">{{TIER_2_FEATURE_5}}</span>
+              </li>
+            </ul>
+
+            <!-- SePay QR Payment -->
+            <div class="bg-white/5 rounded-xl p-4 mb-6">
+              <p class="text-sm text-gray-400 text-center mb-3">Thanh toán nhanh qua SePay:</p>
+              <img src="{{SEPAY_QR_URL}}" alt="SePay QR Code" class="w-48 h-48 mx-auto rounded-lg bg-white p-2">
+              <p class="text-xs text-gray-500 text-center mt-2">
+                Ngân hàng: {{SEPAY_BANK_NAME}}<br>
+                STK: {{SEPAY_ACCOUNT_NUMBER}}<br>
+                Chủ TK: {{SEPAY_ACCOUNT_HOLDER}}
+              </p>
+            </div>
+
+            <!-- CTA -->
+            <a href="#contact" class="block w-full py-3 px-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center font-semibold hover:shadow-xl hover:scale-105 transition-all duration-200">
+              {{TIER_2_CTA}}
+            </a>
+          </div>
+        </div>
+
+        <!-- Tier 3: Enterprise -->
+        <div class="glass rounded-2xl p-8 hover:border-white/20 transition-all duration-300">
+          <h3 class="text-2xl font-bold text-white mb-2">{{TIER_3_NAME}}</h3>
+          <p class="text-gray-400 mb-6">{{TIER_3_DESCRIPTION}}</p>
+          <div class="mb-6">
+            <span class="text-5xl font-bold text-white">{{TIER_3_PRICE}}</span>
+          </div>
+
+          <!-- Features -->
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">{{TIER_3_FEATURE_1}}</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">{{TIER_3_FEATURE_2}}</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">{{TIER_3_FEATURE_3}}</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-blue-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">{{TIER_3_FEATURE_4}}</span>
+            </li>
+          </ul>
+
+          <!-- CTA -->
+          <a href="#contact" class="block w-full py-3 px-6 rounded-full bg-white/10 text-white text-center font-semibold hover:bg-white/20 transition-all duration-200">
+            {{TIER_3_CTA}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: FAQ (Frequently Asked Questions)
+    PURPOSE: Address objections, reduce friction, build confidence
+    PSYCHOLOGY:
+      - Accordion format = progressive disclosure (not overwhelming)
+      - Answering objections upfront = transparent, trustworthy
+      - 6 questions = comprehensive coverage without fatigue
+      - Dark cards = consistent with overall theme
+    RESPONSIVE:
+      - All breakpoints: Single column for readability
+      - Mobile: Slightly reduced padding
+    CUSTOMIZE:
+      - Update questions and answers
+      - Add/remove questions (keep 5-8 for optimal UX)
+      - Adjust colors for plus/minus icons
+      - Change open/close animation speed
+    TECHNICAL NOTES:
+      - JavaScript controls accordion open/close
+      - Only one question open at a time (exclusive accordion)
+      - Smooth height transition using max-height trick
+      - Plus icon rotates to become minus when open
+      - Answer div uses overflow-hidden for clean animation
+  ============================================================
+  -->
+  <section id="faq" class="py-20 px-4 md:px-8 bg-slate-800/50 fade-in">
+    <div class="max-w-4xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+          {{FAQ_HEADLINE}}
+        </h2>
+        <p class="text-xl text-gray-400">
+          {{FAQ_SUBHEADLINE}}
+        </p>
+      </div>
+
+      <!-- FAQ Items -->
+      <div class="space-y-4">
+        <!-- FAQ 1 -->
+        <div class="glass rounded-xl overflow-hidden">
+          <button class="faq-question w-full text-left px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-colors duration-200">
+            <span class="text-lg font-semibold text-white pr-8">{{FAQ_1_QUESTION}}</span>
+            <svg class="w-6 h-6 text-blue-500 flex-shrink-0 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+            <p class="px-6 pb-5 text-gray-400 leading-relaxed">
+              {{FAQ_1_ANSWER}}
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="glass rounded-xl overflow-hidden">
+          <button class="faq-question w-full text-left px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-colors duration-200">
+            <span class="text-lg font-semibold text-white pr-8">{{FAQ_2_QUESTION}}</span>
+            <svg class="w-6 h-6 text-blue-500 flex-shrink-0 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+            <p class="px-6 pb-5 text-gray-400 leading-relaxed">
+              {{FAQ_2_ANSWER}}
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="glass rounded-xl overflow-hidden">
+          <button class="faq-question w-full text-left px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-colors duration-200">
+            <span class="text-lg font-semibold text-white pr-8">{{FAQ_3_QUESTION}}</span>
+            <svg class="w-6 h-6 text-blue-500 flex-shrink-0 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+            <p class="px-6 pb-5 text-gray-400 leading-relaxed">
+              {{FAQ_3_ANSWER}}
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="glass rounded-xl overflow-hidden">
+          <button class="faq-question w-full text-left px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-colors duration-200">
+            <span class="text-lg font-semibold text-white pr-8">{{FAQ_4_QUESTION}}</span>
+            <svg class="w-6 h-6 text-blue-500 flex-shrink-0 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+            <p class="px-6 pb-5 text-gray-400 leading-relaxed">
+              {{FAQ_4_ANSWER}}
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="glass rounded-xl overflow-hidden">
+          <button class="faq-question w-full text-left px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-colors duration-200">
+            <span class="text-lg font-semibold text-white pr-8">{{FAQ_5_QUESTION}}</span>
+            <svg class="w-6 h-6 text-blue-500 flex-shrink-0 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+            <p class="px-6 pb-5 text-gray-400 leading-relaxed">
+              {{FAQ_5_ANSWER}}
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="glass rounded-xl overflow-hidden">
+          <button class="faq-question w-full text-left px-6 py-5 flex items-center justify-between hover:bg-white/5 transition-colors duration-200">
+            <span class="text-lg font-semibold text-white pr-8">{{FAQ_6_QUESTION}}</span>
+            <svg class="w-6 h-6 text-blue-500 flex-shrink-0 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </button>
+          <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300">
+            <p class="px-6 pb-5 text-gray-400 leading-relaxed">
+              {{FAQ_6_ANSWER}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Final CTA (Call-to-Action)
+    PURPOSE: Last conversion opportunity before footer
+    PSYCHOLOGY:
+      - Gradient background = celebratory, exciting
+      - Bold headline = confidence, urgency
+      - Trust signals = last-minute risk reduction
+      - Large CTA button = unmissable final action
+    RESPONSIVE:
+      - All breakpoints: Centered content
+      - Mobile: Stack elements vertically
+    CUSTOMIZE:
+      - Update headline and subheadline
+      - Change gradient colors
+      - Modify CTA button text and link
+      - Update trust signal text
+    TECHNICAL NOTES:
+      - Multi-stop gradient background
+      - White text for contrast
+      - Large CTA button with hover effects
+      - Trust signals use small text with icons
+  ============================================================
+  -->
+  <section class="py-20 px-4 md:px-8 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 fade-in">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">
+        {{FINAL_CTA_HEADLINE}}
+      </h2>
+      <p class="text-xl md:text-2xl text-white/90 mb-10 max-w-2xl mx-auto">
+        {{FINAL_CTA_SUBHEADLINE}}
+      </p>
+
+      <!-- CTA Button -->
+      <a href="#pricing" class="inline-block px-10 py-5 rounded-full bg-white text-purple-600 font-bold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 mb-8">
+        {{FINAL_CTA_BUTTON}}
+      </a>
+
+      <!-- Trust Signals -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-6 text-white/90 text-sm">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span>{{FINAL_CTA_TRUST_1}}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span>{{FINAL_CTA_TRUST_2}}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span>{{FINAL_CTA_TRUST_3}}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    ============================================================
+    SECTION: Footer
+    PURPOSE: Legal compliance, secondary navigation, brand reinforcement
+    PSYCHOLOGY:
+      - Newsletter = continue relationship, stay connected
+      - Multi-column layout = comprehensive, organized
+      - Social links = community, transparency
+      - Dark background = visual endpoint, footer feel
+    RESPONSIVE:
+      - Desktop: 4 columns side-by-side
+      - Tablet: 2x2 grid
+      - Mobile: Single column stack
+    CUSTOMIZE:
+      - Update company name and description
+      - Modify footer links and URLs
+      - Change social media links
+      - Update newsletter form action URL
+      - Adjust copyright year and text
+    TECHNICAL NOTES:
+      - Dark background for visual separation
+      - Newsletter form uses flexbox for layout
+      - Social icons use hover effects
+      - Links have subtle hover states
+      - Copyright uses smaller text size
+  ============================================================
+  -->
+  <footer class="py-16 px-4 md:px-8 bg-slate-950">
+    <div class="max-w-7xl mx-auto">
+      <!-- Footer Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <!-- Company Info -->
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl">
+              {{LOGO}}
+            </div>
+            <span class="text-white font-bold text-xl">{{COMPANY_NAME}}</span>
+          </div>
+          <p class="text-gray-400 leading-relaxed">
+            {{FOOTER_COMPANY_DESCRIPTION}}
+          </p>
+        </div>
+
+        <!-- Product Links -->
+        <div>
+          <h4 class="text-white font-semibold mb-4">Sản phẩm</h4>
+          <ul class="space-y-3">
+            <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-200">{{FOOTER_LINK_1}}</a></li>
+            <li><a href="#pricing" class="text-gray-400 hover:text-white transition-colors duration-200">{{FOOTER_LINK_2}}</a></li>
+            <li><a href="#faq" class="text-gray-400 hover:text-white transition-colors duration-200">{{FOOTER_LINK_3}}</a></li>
+          </ul>
+        </div>
+
+        <!-- Company Links -->
+        <div>
+          <h4 class="text-white font-semibold mb-4">Công ty</h4>
+          <ul class="space-y-3">
+            <li><a href="{{ABOUT_URL}}" class="text-gray-400 hover:text-white transition-colors duration-200">Về chúng tôi</a></li>
+            <li><a href="{{BLOG_URL}}" class="text-gray-400 hover:text-white transition-colors duration-200">Blog</a></li>
+            <li><a href="{{CAREERS_URL}}" class="text-gray-400 hover:text-white transition-colors duration-200">Tuyển dụng</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div>
+          <h4 class="text-white font-semibold mb-4">Nhận tin tức</h4>
+          <p class="text-gray-400 mb-4 text-sm">Đăng ký để nhận các ưu đãi và tin tức mới nhất.</p>
+          <form action="{{NEWSLETTER_FORM_ACTION}}" method="POST" class="flex gap-2">
+            <input type="email" name="email" placeholder="Email của bạn" required class="flex-1 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors duration-200">
+            <button type="submit" class="px-6 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg transition-all duration-200">
+              Gửi
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <!-- Copyright -->
+        <p class="text-gray-500 text-sm">
+          © {{CURRENT_YEAR}} {{COMPANY_NAME}}. {{FOOTER_COPYRIGHT_TEXT}}
+        </p>
+
+        <!-- Legal Links -->
+        <div class="flex items-center gap-6 text-sm">
+          <a href="{{PRIVACY_POLICY_URL}}" class="text-gray-400 hover:text-white transition-colors duration-200">Chính sách bảo mật</a>
+          <a href="{{TERMS_OF_SERVICE_URL}}" class="text-gray-400 hover:text-white transition-colors duration-200">Điều khoản dịch vụ</a>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center gap-4">
+          <a href="{{FACEBOOK_URL}}" class="text-gray-400 hover:text-blue-500 transition-colors duration-200" aria-label="Facebook">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="{{TWITTER_URL}}" class="text-gray-400 hover:text-blue-400 transition-colors duration-200" aria-label="Twitter">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+            </svg>
+          </a>
+          <a href="{{LINKEDIN_URL}}" class="text-gray-400 hover:text-blue-600 transition-colors duration-200" aria-label="LinkedIn">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!--
+    ============================================================
+    JAVASCRIPT
+    PURPOSE: Interactive functionality (mobile menu, FAQ accordion, scroll animations)
+
+    FEATURES:
+    1. Mobile Menu Toggle - Open/close mobile navigation
+    2. FAQ Accordion - Expand/collapse FAQ answers
+    3. Scroll-triggered Animations - Fade-in elements as user scrolls
+    4. Smooth Scroll - Native browser smooth scrolling (handled by CSS)
+
+    CUSTOMIZATION:
+    - Adjust scroll animation thresholds
+    - Change accordion behavior (single vs. multiple open)
+    - Add custom animations
+    - Implement counter animations for stats
+
+    PERFORMANCE NOTES:
+    - Intersection Observer is efficient (native browser API)
+    - Event delegation used where possible
+    - No external JS libraries required
+    - Minimal DOM manipulation
+  ============================================================
+  -->
+  <script>
+    // ========== MOBILE MENU TOGGLE ==========
+    // Opens/closes the mobile navigation menu
+    // CUSTOMIZATION: Adjust animation classes or add slide-in effects
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking a link
+    // CUSTOMIZATION: Add smooth scroll offset if using fixed navbar
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // ========== FAQ ACCORDION ==========
+    // Expands/collapses FAQ answers with smooth animation
+    // BEHAVIOR: Only one answer open at a time (exclusive accordion)
+    // CUSTOMIZATION: Change to allow multiple answers open by removing closeAll logic
+    const faqQuestions = document.querySelectorAll('.faq-question');
+
+    faqQuestions.forEach(question => {
+      question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('svg');
+        const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+        // Close all other answers (exclusive accordion)
+        // REMOVE THIS BLOCK to allow multiple answers open simultaneously
+        faqQuestions.forEach(q => {
+          const a = q.nextElementSibling;
+          const i = q.querySelector('svg');
+          if (q !== question) {
+            a.style.maxHeight = '0px';
+            i.style.transform = 'rotate(0deg)';
+          }
+        });
+
+        // Toggle current answer
+        if (isOpen) {
+          // Close
+          answer.style.maxHeight = '0px';
+          icon.style.transform = 'rotate(0deg)';
+        } else {
+          // Open
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          icon.style.transform = 'rotate(45deg)'; // Rotates plus icon to X
+        }
+      });
+    });
+
+    // ========== SCROLL-TRIGGERED FADE-IN ANIMATIONS ==========
+    // Fades in elements as they enter the viewport
+    // PERFORMANCE: Uses Intersection Observer (efficient, native API)
+    // CUSTOMIZATION: Adjust threshold, rootMargin for trigger point
+    const observerOptions = {
+      threshold: 0.1, // Trigger when 10% of element is visible
+      rootMargin: '0px 0px -50px 0px' // Trigger slightly before element enters viewport
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Add 'visible' class to trigger CSS animation
+          entry.target.classList.add('visible');
+          // Optional: Stop observing once animated (one-time animation)
+          // observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe all elements with 'fade-in' class
+    const fadeElements = document.querySelectorAll('.fade-in');
+    fadeElements.forEach(el => observer.observe(el));
+
+    // ========== OPTIONAL: ANIMATED COUNTER FOR STATS ==========
+    // Uncomment and customize to add number counting animation
+    /*
+    const animateCounter = (element, target, duration = 2000) => {
+      const start = 0;
+      const increment = target / (duration / 16); // 60fps
+      let current = start;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          element.textContent = target;
+          clearInterval(timer);
+        } else {
+          element.textContent = Math.floor(current);
+        }
+      }, 16);
+    };
+
+    // Usage: Call when stats section enters viewport
+    // Example: animateCounter(document.querySelector('.stat-number'), 10000);
+    */
+  </script>
+
+</body>
+</html>

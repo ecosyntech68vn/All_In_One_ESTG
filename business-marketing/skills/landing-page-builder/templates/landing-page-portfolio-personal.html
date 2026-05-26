@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{YOUR_NAME}} - {{YOUR_PROFESSION}}</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Outfit (heading) + Work Sans (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // CUSTOMIZE: Change primary accent color here
+                        // Options: coral (#F97316), teal (#14B8A6), amber (#F59E0B)
+                        primary: '#F97316', // Orange-500 - warm, approachable
+                        'primary-dark': '#EA580C', // Orange-600
+                        'primary-light': '#FB923C', // Orange-400
+                    },
+                    fontFamily: {
+                        heading: ['Outfit', 'sans-serif'],
+                        body: ['Work Sans', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-in-left': 'slideInLeft 0.6s ease-out',
+                        'slide-in-right': 'slideInRight 0.6s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInLeft: {
+                            '0%': { opacity: '0', transform: 'translateX(-20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Typography */
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Smooth scroll offset for fixed navbar */
+        html {
+            scroll-padding-top: 80px;
+        }
+
+        /* Background Pattern - subtle dots */
+        .bg-dots {
+            background-image: radial-gradient(#d4d4d8 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Accent border animation on hover */
+        .accent-border-hover {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .accent-border-hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #F97316;
+            transition: width 0.3s ease;
+        }
+
+        .accent-border-hover:hover::after {
+            width: 100%;
+        }
+
+        /* Portfolio filter active state */
+        .filter-btn.active {
+            background: #F97316;
+            color: white;
+        }
+
+        /* Portfolio item animations */
+        .portfolio-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .portfolio-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Project card overlay */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-card img {
+            transition: transform 0.3s ease;
+        }
+
+        /* Form validation styles */
+        .form-error {
+            border-color: #EF4444;
+        }
+
+        .error-message {
+            color: #EF4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        /* Photo accent shadow */
+        .photo-accent-shadow {
+            position: relative;
+        }
+
+        .photo-accent-shadow::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100%;
+            height: 100%;
+            border: 3px solid #F97316;
+            border-radius: 1rem;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<!--
+  ============================================================
+  TEMPLATE: Portfolio/Personal Brand Landing Page
+  STYLE: Modern, authentic, project-focused personal portfolio
+  BEST FOR: Freelancers, designers, developers, consultants, agencies
+
+  DESIGN SYSTEM:
+  - Background: Off-white (#FAFAFA) with dark accents (#18181B zinc-900)
+  - Primary: Orange #F97316 (warm, approachable) - easily customizable
+  - CTA: Clean pill buttons with primary color
+  - Text: Near-black (#18181B) headings, gray-600 body text
+  - Heading Font: Outfit (geometric, modern, confident)
+  - Body Font: Work Sans (clean, readable, professional)
+
+  DESIGN PHILOSOPHY:
+  "Show your work" - Personal, authentic, project-focused portfolio that builds
+  trust through demonstrated expertise. Emphasizes visual work samples, real
+  client results, and a human connection. Balances professionalism with personality.
+
+  SECTIONS INCLUDED:
+  1. Navbar - Minimal floating pill navigation
+  2. Hero - Personal introduction with professional photo
+  3. About - Story, philosophy, key stats
+  4. Skills/Services - What you offer with pricing hints
+  5. Portfolio Showcase - Filterable project gallery (MAIN SECTION)
+  6. Featured Project - Deep dive case study
+  7. Testimonials - Client social proof
+  8. Work Process - How you work (4-step timeline)
+  9. Pricing Packages - 3-tier pricing with SePay integration
+  10. Blog/Insights - Thought leadership articles
+  11. Contact Section - Form + contact details
+  12. Footer - Dark section with social links
+
+  CUSTOMIZATION GUIDE:
+  - Colors: Change 'primary' color in tailwind.config (line 24-28)
+  - Fonts: Replace Google Fonts import + update fontFamily config
+  - Content: Search for {{PLACEHOLDER}} and replace with your content
+  - Sections: Each section is independent, can be reordered or removed
+  - Payment: Update SePay bank details in pricing section (search "SEPAY")
+  - Images: Replace placeholder image URLs with your actual images
+
+  RESPONSIVE BEHAVIOR:
+  - Mobile-first design (320px+)
+  - Tablet breakpoint: 768px (md:)
+  - Desktop breakpoint: 1024px (lg:)
+  - Large desktop: 1280px (xl:)
+
+  DEPLOYMENT:
+  1. Replace all {{PLACEHOLDERS}} with your actual content
+  2. Upload your images and update image src URLs
+  3. Update SePay payment details
+  4. Test on mobile devices
+  5. Deploy via Vercel: vercel --prod
+  6. Or Netlify: drag and drop to netlify.com/drop
+  7. Or any static hosting: upload as index.html
+
+  PERFORMANCE NOTES:
+  - Uses Tailwind CDN (for easy customization, swap with compiled CSS for production)
+  - Lazy load images for better performance (add loading="lazy" to img tags)
+  - Minify HTML before production deployment
+  - Consider adding Open Graph meta tags for social sharing
+  ============================================================
+-->
+
+<body class="bg-stone-50 text-gray-800 antialiased">
+
+    <!--
+      SECTION: Navigation Bar
+      PURPOSE: Easy site navigation, always accessible, clear CTA
+      PSYCHOLOGY: Minimal design reduces cognitive load, pill shape = modern/friendly,
+                  transparent-to-solid on scroll = professional polish, CTA button
+                  stands out to drive action (hire/contact)
+      RESPONSIVE: Desktop = horizontal nav with logo left, links center, CTA right
+                  Mobile = hamburger menu, full-screen overlay menu
+      CUSTOMIZE: Replace {{YOUR_NAME}}, update nav links to match your sections,
+                 change "Hire Me" CTA text to fit your service (e.g., "Let's Talk")
+    -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo/Name -->
+                <div class="flex-shrink-0">
+                    <a href="#hero" class="text-2xl font-bold font-heading text-zinc-900 hover:text-primary transition-colors">
+                        {{YOUR_NAME}}
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#work" class="text-gray-600 hover:text-primary transition-colors font-medium">Work</a>
+                    <a href="#about" class="text-gray-600 hover:text-primary transition-colors font-medium">About</a>
+                    <a href="#contact" class="text-gray-600 hover:text-primary transition-colors font-medium">Contact</a>
+                    <a href="#contact" class="bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary/30">
+                        Hire Me
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-zinc-900 focus:outline-none">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#work" class="block text-gray-600 hover:text-primary transition-colors font-medium text-lg">Work</a>
+                <a href="#about" class="block text-gray-600 hover:text-primary transition-colors font-medium text-lg">About</a>
+                <a href="#contact" class="block text-gray-600 hover:text-primary transition-colors font-medium text-lg">Contact</a>
+                <a href="#contact" class="block bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-full font-medium text-center transition-colors">
+                    Hire Me
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!--
+      SECTION: Hero
+      PURPOSE: Immediate personal connection, clear value proposition, drive action
+      PSYCHOLOGY: Personal greeting creates warmth ("Hi, I'm..."), professional title
+                  in accent color = expertise, bio builds credibility, dual CTAs give
+                  options (browse work vs. immediate contact), professional photo =
+                  trust and authenticity, background pattern adds visual interest
+      RESPONSIVE: Desktop = text left (60%), photo right (40%), split layout
+                  Mobile = stacked, photo above text for immediate face connection
+      CUSTOMIZE: Replace {{NAME}}, {{TITLE}}, {{BIO_LINE_1}}, {{BIO_LINE_2}},
+                 update photo URL (use high-quality professional headshot),
+                 adjust button text to match your goals
+    -->
+    <section id="hero" class="pt-32 pb-20 md:pt-40 md:pb-32 bg-stone-50 bg-dots relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="animate-slide-in-left">
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-zinc-900 mb-4">
+                        Hi, I'm <span class="text-primary">{{YOUR_NAME}}</span>
+                    </h1>
+                    <p class="text-2xl md:text-3xl font-heading text-primary mb-6">
+                        {{YOUR_PROFESSIONAL_TITLE}}
+                    </p>
+                    <p class="text-lg md:text-xl text-gray-600 mb-4 leading-relaxed">
+                        {{BIO_LINE_1}}
+                    </p>
+                    <p class="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+                        {{BIO_LINE_2}}
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="#work" class="inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/30">
+                            See My Work
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </a>
+                        <a href="#contact" class="inline-flex items-center justify-center border-2 border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300">
+                            Get in Touch
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Professional Photo -->
+                <div class="animate-slide-in-right">
+                    <div class="photo-accent-shadow">
+                        <!-- CUSTOMIZE: Replace with your professional photo URL -->
+                        <!-- Recommended: High-resolution headshot or full-body professional photo -->
+                        <!-- Aspect ratio: 3:4 or 1:1 works best -->
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1000&fit=crop"
+                             alt="{{YOUR_NAME}} - Professional Photo"
+                             class="rounded-2xl shadow-2xl w-full max-w-md mx-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: About
+      PURPOSE: Build deeper connection, share story, demonstrate expertise
+      PSYCHOLOGY: Personal narrative creates emotional connection, philosophy shows
+                  values alignment, key stats provide social proof (years = experience,
+                  projects = output, clients = trust), conversational tone = approachable
+      RESPONSIVE: Desktop = photo left (40%), text right (60%), side-by-side
+                  Mobile = photo above text, full width for readability
+      CUSTOMIZE: Replace {{ABOUT_P1}}, {{ABOUT_P2}}, {{ABOUT_P3}}, update stats
+                 (years, projects, clients), add your actual professional photo,
+                 adjust paragraph count as needed (3-4 recommended)
+    -->
+    <section id="about" class="py-20 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-5 gap-12 items-center">
+                <!-- Professional Photo -->
+                <div class="md:col-span-2">
+                    <!-- CUSTOMIZE: Replace with a different professional photo (vertical orientation works best) -->
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop"
+                         alt="{{YOUR_NAME}} at work"
+                         class="rounded-2xl shadow-xl w-full">
+                </div>
+
+                <!-- Text Content -->
+                <div class="md:col-span-3">
+                    <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-6">
+                        About Me
+                    </h2>
+
+                    <!-- Key Stats Inline -->
+                    <div class="flex flex-wrap gap-6 mb-8">
+                        <div class="flex items-center">
+                            <span class="text-3xl font-bold text-primary mr-2">{{YEARS}}+</span>
+                            <span class="text-gray-600">years experience</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-3xl font-bold text-primary mr-2">{{PROJECTS}}+</span>
+                            <span class="text-gray-600">projects completed</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-3xl font-bold text-primary mr-2">{{CLIENTS}}+</span>
+                            <span class="text-gray-600">happy clients</span>
+                        </div>
+                    </div>
+
+                    <!-- About Paragraphs -->
+                    <div class="space-y-4 text-lg text-gray-600 leading-relaxed">
+                        <p>
+                            {{ABOUT_PARAGRAPH_1}}
+                        </p>
+                        <p>
+                            {{ABOUT_PARAGRAPH_2}}
+                        </p>
+                        <p>
+                            {{ABOUT_PARAGRAPH_3}}
+                        </p>
+                        <p>
+                            {{ABOUT_PARAGRAPH_4}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Skills/Services
+      PURPOSE: Clearly communicate what you offer, set pricing expectations
+      PSYCHOLOGY: Grid layout = organized expertise, icons = quick visual recognition,
+                  "Starting from X VND" = price anchoring without sticker shock,
+                  hover effects = interactive engagement, 4-6 services = not
+                  overwhelming, focused portfolio
+      RESPONSIVE: Desktop = 3 columns, Tablet = 2 columns, Mobile = 1 column
+      CUSTOMIZE: Replace service names, descriptions, icons (use emoji or SVG),
+                 update pricing (VND format: 5.000.000 ₫), add/remove cards,
+                 match services to your actual offerings
+    -->
+    <section id="services" class="py-20 md:py-32 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-4">
+                    What I Offer
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    {{SERVICES_SUBTITLE}}
+                </p>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <!-- CUSTOMIZE: Repeat this card structure for each service (4-6 recommended) -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:border-primary border-2 border-transparent group">
+                    <!-- Service Icon -->
+                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <!-- Replace emoji with SVG icon if preferred -->
+                        <span class="text-3xl group-hover:scale-110 transition-transform">🎨</span>
+                    </div>
+
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                        {{SERVICE_1_NAME}}
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        {{SERVICE_1_DESCRIPTION}}
+                    </p>
+                    <p class="text-primary font-semibold text-lg">
+                        Starting from {{PRICE_1_VND}} ₫
+                    </p>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:border-primary border-2 border-transparent group">
+                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">💻</span>
+                    </div>
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                        {{SERVICE_2_NAME}}
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        {{SERVICE_2_DESCRIPTION}}
+                    </p>
+                    <p class="text-primary font-semibold text-lg">
+                        Starting from {{PRICE_2_VND}} ₫
+                    </p>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:border-primary border-2 border-transparent group">
+                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">📱</span>
+                    </div>
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                        {{SERVICE_3_NAME}}
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        {{SERVICE_3_DESCRIPTION}}
+                    </p>
+                    <p class="text-primary font-semibold text-lg">
+                        Starting from {{PRICE_3_VND}} ₫
+                    </p>
+                </div>
+
+                <!-- Service Card 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:border-primary border-2 border-transparent group">
+                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">🚀</span>
+                    </div>
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                        {{SERVICE_4_NAME}}
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        {{SERVICE_4_DESCRIPTION}}
+                    </p>
+                    <p class="text-primary font-semibold text-lg">
+                        Starting from {{PRICE_4_VND}} ₫
+                    </p>
+                </div>
+
+                <!-- Service Card 5 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:border-primary border-2 border-transparent group">
+                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">✍️</span>
+                    </div>
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                        {{SERVICE_5_NAME}}
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        {{SERVICE_5_DESCRIPTION}}
+                    </p>
+                    <p class="text-primary font-semibold text-lg">
+                        Starting from {{PRICE_5_VND}} ₫
+                    </p>
+                </div>
+
+                <!-- Service Card 6 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:border-primary border-2 border-transparent group">
+                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary group-hover:scale-110 transition-all duration-300">
+                        <span class="text-3xl group-hover:scale-110 transition-transform">📊</span>
+                    </div>
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                        {{SERVICE_6_NAME}}
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        {{SERVICE_6_DESCRIPTION}}
+                    </p>
+                    <p class="text-primary font-semibold text-lg">
+                        Starting from {{PRICE_6_VND}} ₫
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Portfolio Showcase (MAIN SECTION)
+      PURPOSE: Demonstrate expertise through work samples, enable filtering by category
+      PSYCHOLOGY: Visual proof > claims, filter tabs = user control and engagement,
+                  hover overlay = curiosity (reveal more info), category tags = organization,
+                  6 projects = enough variety without overwhelming, masonry/grid = visual
+                  interest, "View Project" CTA = drive clicks to case studies
+      RESPONSIVE: Desktop = 3 columns, Tablet = 2 columns, Mobile = 1 column
+      CUSTOMIZE: Replace project images (use high-quality screenshots/mockups),
+                 update categories to match your work type, adjust filter tabs,
+                 change project names/descriptions, link to full case studies
+      JAVASCRIPT: Filter functionality included at bottom of file
+    -->
+    <section id="work" class="py-20 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-4">
+                    My Work
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    {{PORTFOLIO_SUBTITLE}}
+                </p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <!-- CUSTOMIZE: Update categories to match your actual work types -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="filter-btn active px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-primary text-white" data-category="all">
+                    All Projects
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="web-design">
+                    Web Design
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="branding">
+                    Branding
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="marketing">
+                    Marketing
+                </button>
+                <button class="filter-btn px-6 py-3 rounded-full font-semibold transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="development">
+                    Development
+                </button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div id="portfolio-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card 1 -->
+                <!-- CUSTOMIZE: Duplicate this structure for each project (6 recommended) -->
+                <div class="portfolio-item project-card rounded-2xl overflow-hidden shadow-lg" data-category="web-design">
+                    <!-- Project Image -->
+                    <!-- CUSTOMIZE: Replace with actual project screenshot/mockup -->
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+                         alt="{{PROJECT_1_NAME}}"
+                         class="w-full h-80 object-cover">
+
+                    <!-- Category Tag -->
+                    <div class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+                        Web Design
+                    </div>
+
+                    <!-- Hover Overlay -->
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            {{PROJECT_1_NAME}}
+                        </h3>
+                        <p class="text-gray-200 mb-4">
+                            {{PROJECT_1_DESCRIPTION}}
+                        </p>
+                        <a href="{{PROJECT_1_URL}}" class="inline-flex items-center text-white font-semibold hover:text-primary-light transition-colors">
+                            View Project
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="portfolio-item project-card rounded-2xl overflow-hidden shadow-lg" data-category="branding">
+                    <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=600&fit=crop"
+                         alt="{{PROJECT_2_NAME}}"
+                         class="w-full h-80 object-cover">
+                    <div class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+                        Branding
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            {{PROJECT_2_NAME}}
+                        </h3>
+                        <p class="text-gray-200 mb-4">
+                            {{PROJECT_2_DESCRIPTION}}
+                        </p>
+                        <a href="{{PROJECT_2_URL}}" class="inline-flex items-center text-white font-semibold hover:text-primary-light transition-colors">
+                            View Project
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="portfolio-item project-card rounded-2xl overflow-hidden shadow-lg" data-category="marketing">
+                    <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&h=600&fit=crop"
+                         alt="{{PROJECT_3_NAME}}"
+                         class="w-full h-80 object-cover">
+                    <div class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+                        Marketing
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            {{PROJECT_3_NAME}}
+                        </h3>
+                        <p class="text-gray-200 mb-4">
+                            {{PROJECT_3_DESCRIPTION}}
+                        </p>
+                        <a href="{{PROJECT_3_URL}}" class="inline-flex items-center text-white font-semibold hover:text-primary-light transition-colors">
+                            View Project
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 -->
+                <div class="portfolio-item project-card rounded-2xl overflow-hidden shadow-lg" data-category="development">
+                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&h=600&fit=crop"
+                         alt="{{PROJECT_4_NAME}}"
+                         class="w-full h-80 object-cover">
+                    <div class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+                        Development
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            {{PROJECT_4_NAME}}
+                        </h3>
+                        <p class="text-gray-200 mb-4">
+                            {{PROJECT_4_DESCRIPTION}}
+                        </p>
+                        <a href="{{PROJECT_4_URL}}" class="inline-flex items-center text-white font-semibold hover:text-primary-light transition-colors">
+                            View Project
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 -->
+                <div class="portfolio-item project-card rounded-2xl overflow-hidden shadow-lg" data-category="web-design">
+                    <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&h=600&fit=crop"
+                         alt="{{PROJECT_5_NAME}}"
+                         class="w-full h-80 object-cover">
+                    <div class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+                        Web Design
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            {{PROJECT_5_NAME}}
+                        </h3>
+                        <p class="text-gray-200 mb-4">
+                            {{PROJECT_5_DESCRIPTION}}
+                        </p>
+                        <a href="{{PROJECT_5_URL}}" class="inline-flex items-center text-white font-semibold hover:text-primary-light transition-colors">
+                            View Project
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project Card 6 -->
+                <div class="portfolio-item project-card rounded-2xl overflow-hidden shadow-lg" data-category="branding">
+                    <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&h=600&fit=crop"
+                         alt="{{PROJECT_6_NAME}}"
+                         class="w-full h-80 object-cover">
+                    <div class="absolute top-4 left-4 bg-primary text-white px-4 py-1.5 rounded-full text-sm font-semibold">
+                        Branding
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-2xl font-bold text-white mb-2">
+                            {{PROJECT_6_NAME}}
+                        </h3>
+                        <p class="text-gray-200 mb-4">
+                            {{PROJECT_6_DESCRIPTION}}
+                        </p>
+                        <a href="{{PROJECT_6_URL}}" class="inline-flex items-center text-white font-semibold hover:text-primary-light transition-colors">
+                            View Project
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Featured Project (Case Study Deep Dive)
+      PURPOSE: Showcase one project in depth to demonstrate process and results
+      PSYCHOLOGY: Challenge/Solution/Result format = problem-solving expertise,
+                  metrics = quantifiable value, full-width image = immersion,
+                  detailed breakdown = transparency and professionalism
+      RESPONSIVE: Full-width background image with overlay, stacked content on mobile
+      CUSTOMIZE: Replace with your best/most impressive project, update image,
+                 metrics should be real and specific, link to full case study page
+    -->
+    <section class="py-20 md:py-32 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-4">
+                    Featured Project
+                </h2>
+            </div>
+
+            <div class="bg-white rounded-3xl overflow-hidden shadow-2xl">
+                <!-- Project Image -->
+                <!-- CUSTOMIZE: Replace with your best project screenshot/hero image -->
+                <div class="relative h-96">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&h=800&fit=crop"
+                         alt="{{FEATURED_PROJECT_NAME}}"
+                         class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div class="absolute bottom-8 left-8">
+                        <h3 class="text-4xl font-bold font-heading text-white mb-2">
+                            {{FEATURED_PROJECT_NAME}}
+                        </h3>
+                        <p class="text-xl text-gray-200">
+                            Client: {{FEATURED_PROJECT_CLIENT}}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Project Details -->
+                <div class="p-8 md:p-12">
+                    <div class="grid md:grid-cols-3 gap-12">
+                        <!-- Challenge -->
+                        <div>
+                            <h4 class="text-2xl font-bold font-heading text-zinc-900 mb-4 flex items-center">
+                                <span class="w-2 h-8 bg-primary mr-3"></span>
+                                Challenge
+                            </h4>
+                            <p class="text-gray-600 leading-relaxed">
+                                {{FEATURED_PROJECT_CHALLENGE}}
+                            </p>
+                        </div>
+
+                        <!-- Solution -->
+                        <div>
+                            <h4 class="text-2xl font-bold font-heading text-zinc-900 mb-4 flex items-center">
+                                <span class="w-2 h-8 bg-primary mr-3"></span>
+                                Solution
+                            </h4>
+                            <p class="text-gray-600 leading-relaxed">
+                                {{FEATURED_PROJECT_SOLUTION}}
+                            </p>
+                        </div>
+
+                        <!-- Results -->
+                        <div>
+                            <h4 class="text-2xl font-bold font-heading text-zinc-900 mb-4 flex items-center">
+                                <span class="w-2 h-8 bg-primary mr-3"></span>
+                                Results
+                            </h4>
+                            <div class="space-y-3">
+                                <div>
+                                    <p class="text-3xl font-bold text-primary">{{RESULT_METRIC_1}}</p>
+                                    <p class="text-sm text-gray-600">{{RESULT_METRIC_1_LABEL}}</p>
+                                </div>
+                                <div>
+                                    <p class="text-3xl font-bold text-primary">{{RESULT_METRIC_2}}</p>
+                                    <p class="text-sm text-gray-600">{{RESULT_METRIC_2_LABEL}}</p>
+                                </div>
+                                <div>
+                                    <p class="text-3xl font-bold text-primary">{{RESULT_METRIC_3}}</p>
+                                    <p class="text-sm text-gray-600">{{RESULT_METRIC_3_LABEL}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA to Full Case Study -->
+                    <div class="mt-12 text-center">
+                        <a href="{{FEATURED_PROJECT_CASE_STUDY_URL}}" class="inline-flex items-center text-primary hover:text-primary-dark font-semibold text-lg accent-border-hover">
+                            View Full Case Study
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Testimonials
+      PURPOSE: Social proof from satisfied clients builds trust and credibility
+      PSYCHOLOGY: Testimonials = trust signal, large quote mark = authenticity,
+                  client name + company = verifiable proof, accent border = visual
+                  hierarchy, 2-3 testimonials = enough proof without overwhelming
+      RESPONSIVE: Desktop = 3 columns, Mobile = stacked single column
+      CUSTOMIZE: Replace with real client testimonials (get permission first),
+                 add client avatars if available, include full names and companies
+    -->
+    <section class="py-20 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-4">
+                    Client Testimonials
+                </h2>
+                <p class="text-xl text-gray-600">
+                    What clients say about working with me
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <!-- CUSTOMIZE: Replace with real testimonials -->
+                <div class="bg-stone-50 p-8 rounded-2xl border-l-4 border-primary">
+                    <!-- Quote Icon -->
+                    <svg class="w-12 h-12 text-primary mb-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                        "{{TESTIMONIAL_1_QUOTE}}"
+                    </p>
+
+                    <div class="flex items-center">
+                        <!-- Client Avatar (optional) -->
+                        <img src="https://ui-avatars.com/api/?name={{TESTIMONIAL_1_NAME}}&background=F97316&color=fff"
+                             alt="{{TESTIMONIAL_1_NAME}}"
+                             class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-zinc-900">{{TESTIMONIAL_1_NAME}}</p>
+                            <p class="text-sm text-gray-600">{{TESTIMONIAL_1_COMPANY}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-stone-50 p-8 rounded-2xl border-l-4 border-primary">
+                    <svg class="w-12 h-12 text-primary mb-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                        "{{TESTIMONIAL_2_QUOTE}}"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://ui-avatars.com/api/?name={{TESTIMONIAL_2_NAME}}&background=F97316&color=fff"
+                             alt="{{TESTIMONIAL_2_NAME}}"
+                             class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-zinc-900">{{TESTIMONIAL_2_NAME}}</p>
+                            <p class="text-sm text-gray-600">{{TESTIMONIAL_2_COMPANY}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-stone-50 p-8 rounded-2xl border-l-4 border-primary">
+                    <svg class="w-12 h-12 text-primary mb-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+                    </svg>
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                        "{{TESTIMONIAL_3_QUOTE}}"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="https://ui-avatars.com/api/?name={{TESTIMONIAL_3_NAME}}&background=F97316&color=fff"
+                             alt="{{TESTIMONIAL_3_NAME}}"
+                             class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <p class="font-bold text-zinc-900">{{TESTIMONIAL_3_NAME}}</p>
+                            <p class="text-sm text-gray-600">{{TESTIMONIAL_3_COMPANY}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Work Process
+      PURPOSE: Transparency in workflow, set expectations, professionalism
+      PSYCHOLOGY: 4-step process = digestible, not overwhelming, horizontal timeline =
+                  progress/journey metaphor, icons = visual memory anchors, brief
+                  descriptions = clarity without overload, connecting line = cohesive flow
+      RESPONSIVE: Desktop = horizontal timeline, Mobile = vertical stacked cards
+      CUSTOMIZE: Adjust step names and descriptions to match your actual process,
+                 change icons (emoji or SVG), add/remove steps as needed
+    -->
+    <section class="py-20 md:py-32 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-4">
+                    How I Work
+                </h2>
+                <p class="text-xl text-gray-600">
+                    My proven 4-step process for successful projects
+                </p>
+            </div>
+
+            <!-- Process Timeline -->
+            <div class="relative">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-20 left-0 right-0 h-1 bg-gray-200"></div>
+
+                <div class="grid md:grid-cols-4 gap-8 relative">
+                    <!-- Step 1 -->
+                    <div class="text-center">
+                        <!-- Icon Circle -->
+                        <div class="w-40 h-40 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 border-8 border-stone-50">
+                            <span class="text-5xl">🔍</span>
+                        </div>
+                        <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                            1. Discovery
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            {{PROCESS_STEP_1_DESCRIPTION}}
+                        </p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="text-center">
+                        <div class="w-40 h-40 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 border-8 border-stone-50">
+                            <span class="text-5xl">🎨</span>
+                        </div>
+                        <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                            2. Design
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            {{PROCESS_STEP_2_DESCRIPTION}}
+                        </p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="text-center">
+                        <div class="w-40 h-40 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 border-8 border-stone-50">
+                            <span class="text-5xl">⚙️</span>
+                        </div>
+                        <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                            3. Develop
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            {{PROCESS_STEP_3_DESCRIPTION}}
+                        </p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="text-center">
+                        <div class="w-40 h-40 bg-primary rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 border-8 border-stone-50">
+                            <span class="text-5xl">🚀</span>
+                        </div>
+                        <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-3">
+                            4. Deliver
+                        </h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            {{PROCESS_STEP_4_DESCRIPTION}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Pricing Packages
+      PURPOSE: Clear pricing options, drive purchase decision, payment integration
+      PSYCHOLOGY: 3-tier pricing = good/better/best paradox, middle tier highlighted =
+                  anchoring effect, "what's included" lists = value perception,
+                  turnaround time = urgency/efficiency, VND pricing = local relevance,
+                  SePay QR = friction-free payment for Vietnamese market
+      RESPONSIVE: Desktop = 3 columns side-by-side, Mobile = stacked cards
+      CUSTOMIZE: Update package names, features, prices (VND), turnaround times,
+                 **CRITICAL**: Update SePay bank account details with YOUR information
+    -->
+    <section id="pricing" class="py-20 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-4">
+                    Pricing Packages
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Choose the package that fits your needs
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Starter Package -->
+                <div class="bg-stone-50 p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-2">
+                        Starter
+                    </h3>
+                    <p class="text-gray-600 mb-6">
+                        {{STARTER_PACKAGE_DESCRIPTION}}
+                    </p>
+
+                    <!-- Price -->
+                    <div class="mb-8">
+                        <span class="text-5xl font-bold text-zinc-900">{{STARTER_PRICE_VND}}</span>
+                        <span class="text-xl text-gray-600"> ₫</span>
+                    </div>
+
+                    <!-- What's Included -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{STARTER_FEATURE_1}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{STARTER_FEATURE_2}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{STARTER_FEATURE_3}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{STARTER_FEATURE_4}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{STARTER_FEATURE_5}}</span>
+                        </li>
+                    </ul>
+
+                    <!-- Turnaround Time -->
+                    <p class="text-sm text-gray-600 mb-6">
+                        ⏱️ Turnaround: {{STARTER_TURNAROUND}}
+                    </p>
+
+                    <!-- CTA Button -->
+                    <a href="#contact" class="block w-full text-center bg-zinc-900 hover:bg-zinc-800 text-white px-6 py-4 rounded-full font-semibold transition-colors">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Professional Package (HIGHLIGHTED) -->
+                <div class="bg-primary p-8 rounded-3xl shadow-2xl transform md:-translate-y-4 relative">
+                    <!-- Popular Badge -->
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-zinc-900 text-white px-6 py-2 rounded-full text-sm font-bold">
+                        MOST POPULAR
+                    </div>
+
+                    <h3 class="text-2xl font-bold font-heading text-white mb-2">
+                        Professional
+                    </h3>
+                    <p class="text-white/90 mb-6">
+                        {{PROFESSIONAL_PACKAGE_DESCRIPTION}}
+                    </p>
+
+                    <!-- Price -->
+                    <div class="mb-8">
+                        <span class="text-5xl font-bold text-white">{{PROFESSIONAL_PRICE_VND}}</span>
+                        <span class="text-xl text-white/90"> ₫</span>
+                    </div>
+
+                    <!-- What's Included -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-white mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-white/95">{{PROFESSIONAL_FEATURE_1}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-white mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-white/95">{{PROFESSIONAL_FEATURE_2}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-white mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-white/95">{{PROFESSIONAL_FEATURE_3}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-white mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-white/95">{{PROFESSIONAL_FEATURE_4}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-white mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-white/95">{{PROFESSIONAL_FEATURE_5}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-white mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-white/95">{{PROFESSIONAL_FEATURE_6}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-white mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-white/95">{{PROFESSIONAL_FEATURE_7}}</span>
+                        </li>
+                    </ul>
+
+                    <!-- Turnaround Time -->
+                    <p class="text-sm text-white/90 mb-6">
+                        ⏱️ Turnaround: {{PROFESSIONAL_TURNAROUND}}
+                    </p>
+
+                    <!-- CTA Button -->
+                    <a href="#contact" class="block w-full text-center bg-white hover:bg-gray-100 text-primary px-6 py-4 rounded-full font-semibold transition-colors">
+                        Get Started
+                    </a>
+                </div>
+
+                <!-- Premium Package -->
+                <div class="bg-stone-50 p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300">
+                    <h3 class="text-2xl font-bold font-heading text-zinc-900 mb-2">
+                        Premium
+                    </h3>
+                    <p class="text-gray-600 mb-6">
+                        {{PREMIUM_PACKAGE_DESCRIPTION}}
+                    </p>
+
+                    <!-- Price -->
+                    <div class="mb-8">
+                        <span class="text-5xl font-bold text-zinc-900">{{PREMIUM_PRICE_VND}}</span>
+                        <span class="text-xl text-gray-600"> ₫</span>
+                    </div>
+
+                    <!-- What's Included -->
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{PREMIUM_FEATURE_1}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{PREMIUM_FEATURE_2}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{PREMIUM_FEATURE_3}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{PREMIUM_FEATURE_4}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{PREMIUM_FEATURE_5}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{PREMIUM_FEATURE_6}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-6 h-6 text-primary mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-700">{{PREMIUM_FEATURE_7}}</span>
+                        </li>
+                    </ul>
+
+                    <!-- Turnaround Time -->
+                    <p class="text-sm text-gray-600 mb-6">
+                        ⏱️ Turnaround: {{PREMIUM_TURNAROUND}}
+                    </p>
+
+                    <!-- CTA Button -->
+                    <a href="#contact" class="block w-full text-center bg-zinc-900 hover:bg-zinc-800 text-white px-6 py-4 rounded-full font-semibold transition-colors">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+
+            <!-- SEPAY Payment Section -->
+            <!-- CRITICAL: UPDATE WITH YOUR ACTUAL BANK DETAILS -->
+            <div class="mt-16 bg-gradient-to-br from-primary/10 to-primary-light/10 p-8 rounded-3xl border-2 border-primary/20">
+                <div class="max-w-4xl mx-auto">
+                    <div class="text-center mb-8">
+                        <h3 class="text-3xl font-bold font-heading text-zinc-900 mb-2">
+                            💳 Easy Payment with VietQR
+                        </h3>
+                        <p class="text-gray-600">
+                            Scan QR code or transfer to bank account - instant payment confirmation
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <!-- QR Code -->
+                        <div class="text-center">
+                            <!-- CUSTOMIZE: Generate your actual SePay QR code at https://my.sepay.vn -->
+                            <!-- Replace this placeholder URL with your real QR code image -->
+                            <img src="https://img.vietqr.io/image/{{YOUR_BANK_CODE}}-{{YOUR_ACCOUNT_NUMBER}}-compact.png?amount={{AMOUNT}}&addInfo={{TRANSFER_NOTE}}"
+                                 alt="VietQR Payment"
+                                 class="w-64 h-64 mx-auto bg-white p-4 rounded-2xl shadow-lg">
+                            <p class="mt-4 text-sm text-gray-600">
+                                Scan with your banking app
+                            </p>
+                        </div>
+
+                        <!-- Bank Details -->
+                        <div class="space-y-4">
+                            <div class="bg-white p-6 rounded-xl">
+                                <p class="text-sm text-gray-600 mb-1">Bank Name</p>
+                                <p class="text-lg font-bold text-zinc-900">{{YOUR_BANK_NAME}}</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl">
+                                <p class="text-sm text-gray-600 mb-1">Account Number</p>
+                                <p class="text-lg font-bold text-zinc-900">{{YOUR_ACCOUNT_NUMBER}}</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl">
+                                <p class="text-sm text-gray-600 mb-1">Account Name</p>
+                                <p class="text-lg font-bold text-zinc-900">{{YOUR_ACCOUNT_NAME}}</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl">
+                                <p class="text-sm text-gray-600 mb-1">Transfer Note</p>
+                                <p class="text-lg font-bold text-primary">{{DEFAULT_TRANSFER_NOTE}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Blog/Insights
+      PURPOSE: Demonstrate thought leadership, SEO value, keep site fresh
+      PSYCHOLOGY: Articles = expertise signal, "Read More" = curiosity gap, dates =
+                  recency/relevance, featured images = visual interest, 3 articles =
+                  enough variety without overwhelming homepage
+      RESPONSIVE: Desktop = 3 columns, Tablet = 2 columns, Mobile = stacked
+      CUSTOMIZE: Replace with your actual blog posts, update images, titles, excerpts,
+                 link to full blog post pages, keep dates recent for credibility
+    -->
+    <section id="blog" class="py-20 md:py-32 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-4">
+                    Latest Insights
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Thoughts on design, development, and business
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <!-- CUSTOMIZE: Replace with actual blog post data -->
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <!-- Featured Image -->
+                    <a href="{{ARTICLE_1_URL}}">
+                        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=500&fit=crop"
+                             alt="{{ARTICLE_1_TITLE}}"
+                             class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </a>
+
+                    <div class="p-6">
+                        <!-- Date -->
+                        <p class="text-sm text-gray-500 mb-3">
+                            {{ARTICLE_1_DATE}}
+                        </p>
+
+                        <!-- Title -->
+                        <h3 class="text-xl font-bold font-heading text-zinc-900 mb-3 group-hover:text-primary transition-colors">
+                            <a href="{{ARTICLE_1_URL}}">
+                                {{ARTICLE_1_TITLE}}
+                            </a>
+                        </h3>
+
+                        <!-- Excerpt -->
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            {{ARTICLE_1_EXCERPT}}
+                        </p>
+
+                        <!-- Read More Link -->
+                        <a href="{{ARTICLE_1_URL}}" class="inline-flex items-center text-primary hover:text-primary-dark font-semibold accent-border-hover">
+                            Read More
+                            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <a href="{{ARTICLE_2_URL}}">
+                        <img src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?w=800&h=500&fit=crop"
+                             alt="{{ARTICLE_2_TITLE}}"
+                             class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-500 mb-3">
+                            {{ARTICLE_2_DATE}}
+                        </p>
+                        <h3 class="text-xl font-bold font-heading text-zinc-900 mb-3 group-hover:text-primary transition-colors">
+                            <a href="{{ARTICLE_2_URL}}">
+                                {{ARTICLE_2_TITLE}}
+                            </a>
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            {{ARTICLE_2_EXCERPT}}
+                        </p>
+                        <a href="{{ARTICLE_2_URL}}" class="inline-flex items-center text-primary hover:text-primary-dark font-semibold accent-border-hover">
+                            Read More
+                            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group">
+                    <a href="{{ARTICLE_3_URL}}">
+                        <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=500&fit=crop"
+                             alt="{{ARTICLE_3_TITLE}}"
+                             class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
+                    </a>
+                    <div class="p-6">
+                        <p class="text-sm text-gray-500 mb-3">
+                            {{ARTICLE_3_DATE}}
+                        </p>
+                        <h3 class="text-xl font-bold font-heading text-zinc-900 mb-3 group-hover:text-primary transition-colors">
+                            <a href="{{ARTICLE_3_URL}}">
+                                {{ARTICLE_3_TITLE}}
+                            </a>
+                        </h3>
+                        <p class="text-gray-600 mb-4 leading-relaxed">
+                            {{ARTICLE_3_EXCERPT}}
+                        </p>
+                        <a href="{{ARTICLE_3_URL}}" class="inline-flex items-center text-primary hover:text-primary-dark font-semibold accent-border-hover">
+                            Read More
+                            <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Contact
+      PURPOSE: Convert visitors to leads, provide multiple contact options
+      PSYCHOLOGY: Split layout = choice (form vs. direct contact), form = low-friction
+                  lead capture, contact details = transparency/accessibility, social
+                  links = credibility/personality, dropdown/budget fields = qualification
+      RESPONSIVE: Desktop = 50/50 split, Mobile = stacked (contact info first)
+      CUSTOMIZE: Replace email, phone, location, social links, form action endpoint,
+                 adjust budget ranges and project types to match your services
+      JAVASCRIPT: Form validation included at bottom
+    -->
+    <section id="contact" class="py-20 md:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Left: Contact Info -->
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold font-heading text-zinc-900 mb-6">
+                        Let's Work Together
+                    </h2>
+                    <p class="text-xl text-gray-600 mb-12">
+                        Have a project in mind? I'd love to hear from you. Let's discuss how we can work together.
+                    </p>
+
+                    <!-- Contact Details -->
+                    <div class="space-y-6 mb-12">
+                        <!-- Email -->
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Email</p>
+                                <a href="mailto:{{YOUR_EMAIL}}" class="text-lg font-semibold text-zinc-900 hover:text-primary transition-colors">
+                                    {{YOUR_EMAIL}}
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Phone</p>
+                                <a href="tel:{{YOUR_PHONE}}" class="text-lg font-semibold text-zinc-900 hover:text-primary transition-colors">
+                                    {{YOUR_PHONE}}
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
+                                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Location</p>
+                                <p class="text-lg font-semibold text-zinc-900">
+                                    {{YOUR_LOCATION}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div>
+                        <p class="text-sm text-gray-600 mb-4">Follow me on social</p>
+                        <div class="flex space-x-4">
+                            <!-- LinkedIn -->
+                            <a href="{{YOUR_LINKEDIN_URL}}" target="_blank" class="w-12 h-12 bg-zinc-900 hover:bg-primary rounded-xl flex items-center justify-center transition-colors group">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </a>
+
+                            <!-- GitHub -->
+                            <a href="{{YOUR_GITHUB_URL}}" target="_blank" class="w-12 h-12 bg-zinc-900 hover:bg-primary rounded-xl flex items-center justify-center transition-colors group">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+
+                            <!-- Twitter/X -->
+                            <a href="{{YOUR_TWITTER_URL}}" target="_blank" class="w-12 h-12 bg-zinc-900 hover:bg-primary rounded-xl flex items-center justify-center transition-colors group">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                </svg>
+                            </a>
+
+                            <!-- Instagram -->
+                            <a href="{{YOUR_INSTAGRAM_URL}}" target="_blank" class="w-12 h-12 bg-zinc-900 hover:bg-primary rounded-xl flex items-center justify-center transition-colors group">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Contact Form -->
+                <div>
+                    <form id="contact-form" class="space-y-6">
+                        <!-- Name -->
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Your Name *
+                            </label>
+                            <input type="text"
+                                   id="name"
+                                   name="name"
+                                   required
+                                   class="w-full px-4 py-3 bg-stone-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                            <span class="error-message" id="name-error">Please enter your name</span>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Email Address *
+                            </label>
+                            <input type="email"
+                                   id="email"
+                                   name="email"
+                                   required
+                                   class="w-full px-4 py-3 bg-stone-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                            <span class="error-message" id="email-error">Please enter a valid email</span>
+                        </div>
+
+                        <!-- Project Type -->
+                        <div>
+                            <label for="project-type" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Project Type
+                            </label>
+                            <select id="project-type"
+                                    name="project-type"
+                                    class="w-full px-4 py-3 bg-stone-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                                <option value="">Select a project type</option>
+                                <option value="web-design">Web Design</option>
+                                <option value="branding">Branding</option>
+                                <option value="development">Development</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="consulting">Consulting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Budget Range -->
+                        <div>
+                            <label for="budget" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Budget Range (VND)
+                            </label>
+                            <select id="budget"
+                                    name="budget"
+                                    class="w-full px-4 py-3 bg-stone-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                                <option value="">Select budget range</option>
+                                <option value="5-10m">5-10 triệu ₫</option>
+                                <option value="10-20m">10-20 triệu ₫</option>
+                                <option value="20-50m">20-50 triệu ₫</option>
+                                <option value="50m+">50 triệu+ ₫</option>
+                            </select>
+                        </div>
+
+                        <!-- Message -->
+                        <div>
+                            <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">
+                                Project Details *
+                            </label>
+                            <textarea id="message"
+                                      name="message"
+                                      rows="6"
+                                      required
+                                      placeholder="Tell me about your project..."
+                                      class="w-full px-4 py-3 bg-stone-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"></textarea>
+                            <span class="error-message" id="message-error">Please describe your project</span>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="w-full bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-lg hover:shadow-primary/30">
+                            Send Message
+                        </button>
+                    </form>
+
+                    <!-- Success Message (hidden by default) -->
+                    <div id="form-success" class="hidden mt-6 p-6 bg-green-50 border-2 border-green-500 rounded-xl">
+                        <p class="text-green-700 font-semibold">✓ Message sent successfully! I'll get back to you soon.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--
+      SECTION: Footer
+      PURPOSE: Site closure, brand reinforcement, final social proof
+      PSYCHOLOGY: Dark background = professional closure, name/logo = brand recall,
+                  tagline = value reminder, large social icons = final engagement
+                  opportunity, "Made with love in Vietnam" = local connection,
+                  copyright = legitimacy
+      RESPONSIVE: Centered layout, stacks on all screen sizes
+      CUSTOMIZE: Replace name, tagline, social links, copyright year
+    -->
+    <footer class="bg-zinc-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <!-- Name/Logo -->
+                <h2 class="text-3xl md:text-4xl font-bold font-heading mb-3">
+                    {{YOUR_NAME}}
+                </h2>
+
+                <!-- Tagline -->
+                <p class="text-xl text-gray-400 mb-8">
+                    {{YOUR_TAGLINE}}
+                </p>
+
+                <!-- Social Icons (Large) -->
+                <div class="flex justify-center space-x-6 mb-12">
+                    <a href="{{YOUR_LINKEDIN_URL}}" target="_blank" class="w-14 h-14 bg-white/10 hover:bg-primary rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <a href="{{YOUR_GITHUB_URL}}" target="_blank" class="w-14 h-14 bg-white/10 hover:bg-primary rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="{{YOUR_TWITTER_URL}}" target="_blank" class="w-14 h-14 bg-white/10 hover:bg-primary rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="{{YOUR_INSTAGRAM_URL}}" target="_blank" class="w-14 h-14 bg-white/10 hover:bg-primary rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110">
+                        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Made in Vietnam -->
+                <p class="text-gray-400 mb-2">
+                    Made with ❤️ in Vietnam
+                </p>
+
+                <!-- Copyright -->
+                <p class="text-sm text-gray-500">
+                    © {{CURRENT_YEAR}} {{YOUR_NAME}}. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!--
+      ============================================================
+      JAVASCRIPT: Interactivity & Functionality
+      ============================================================
+      Functions included:
+      1. Mobile menu toggle
+      2. Navbar scroll effect (transparent to solid)
+      3. Portfolio filter functionality
+      4. Scroll-triggered animations (intersection observer)
+      5. Contact form validation
+      6. Smooth scroll for anchor links
+    -->
+    <script>
+        // 1. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            });
+        });
+
+        // 2. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white', 'shadow-md');
+            } else {
+                navbar.classList.remove('bg-white', 'shadow-md');
+            }
+        });
+
+        // 3. Portfolio Filter
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.getAttribute('data-category');
+
+                // Update active button
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active', 'bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-100', 'text-gray-700');
+                });
+                button.classList.add('active', 'bg-primary', 'text-white');
+                button.classList.remove('bg-gray-100', 'text-gray-700');
+
+                // Filter items
+                portfolioItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, 10);
+                    } else {
+                        item.classList.remove('visible');
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // 4. Scroll-Triggered Animations (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        portfolioItems.forEach(item => {
+            observer.observe(item);
+        });
+
+        // 5. Contact Form Validation
+        const contactForm = document.getElementById('contact-form');
+        const formSuccess = document.getElementById('form-success');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Get form fields
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const message = document.getElementById('message');
+
+            let isValid = true;
+
+            // Validate name
+            if (name.value.trim() === '') {
+                showError(name, 'name-error');
+                isValid = false;
+            } else {
+                hideError(name, 'name-error');
+            }
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                showError(email, 'email-error');
+                isValid = false;
+            } else {
+                hideError(email, 'email-error');
+            }
+
+            // Validate message
+            if (message.value.trim() === '') {
+                showError(message, 'message-error');
+                isValid = false;
+            } else {
+                hideError(message, 'message-error');
+            }
+
+            // If form is valid, submit (replace with actual form submission)
+            if (isValid) {
+                // CUSTOMIZE: Replace with your actual form submission logic
+                // Example: send to email service, CRM, etc.
+                console.log('Form submitted:', {
+                    name: name.value,
+                    email: email.value,
+                    projectType: document.getElementById('project-type').value,
+                    budget: document.getElementById('budget').value,
+                    message: message.value
+                });
+
+                // Show success message
+                formSuccess.classList.remove('hidden');
+                contactForm.reset();
+
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    formSuccess.classList.add('hidden');
+                }, 5000);
+            }
+        });
+
+        function showError(input, errorId) {
+            input.classList.add('form-error');
+            document.getElementById(errorId).style.display = 'block';
+        }
+
+        function hideError(input, errorId) {
+            input.classList.remove('form-error');
+            document.getElementById(errorId).style.display = 'none';
+        }
+
+        // 6. Smooth Scroll (for browsers that don't support CSS scroll-behavior)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#') {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 800" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1F4E79"/>
+    </marker>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f8a5b"/>
+    </marker>
+    <style>
+      .title{font-size:30px;font-weight:700;fill:#1a2230}
+      .sub{font-size:15px;fill:#5b6776}
+      .node{fill:#ffffff;stroke:#2E75B6;stroke-width:2.5}
+      .nodeNum{font-size:15px;font-weight:700;fill:#ffffff}
+      .nodeName{font-size:18px;font-weight:700;fill:#1F4E79}
+      .nodeVi{font-size:12.5px;fill:#5b6776}
+      .layer{font-size:11.5px;font-weight:600}
+      .kit{fill:#2E75B6}
+      .bot{fill:#1f8a5b}
+      .ring{fill:none;stroke:#cfe0d8;stroke-width:14}
+      .seg{fill:none;stroke:#1F4E79;stroke-width:3}
+      .fb{fill:none;stroke:#1f8a5b;stroke-width:3;stroke-dasharray:7 6}
+      .center{font-size:21px;font-weight:700;fill:#1F4E79}
+      .centerSub{font-size:12.5px;fill:#5b6776}
+      .badge{font-size:11px;font-weight:700}
+    </style>
+  </defs>
+
+  <!-- Header -->
+  <text x="520" y="46" text-anchor="middle" class="title">EcoSynTech Growth OS — Vòng Khép Kín 5 Trạm</text>
+  <text x="520" y="72" text-anchor="middle" class="sub">Từ Lý thuyết (Lớp KIT) đến Vận hành (Lớp BOT) — cải tiến liên tục, tự bồi đắp</text>
+
+  <!-- Flywheel ring -->
+  <circle cx="520" cy="430" r="250" class="ring"/>
+
+  <!-- Directional arrowheads on ring (clockwise) -->
+  <path class="seg" d="M 690 247 A 250 250 0 0 1 765 410" marker-end="url(#arrow)"/>
+  <path class="seg" d="M 758 505 A 250 250 0 0 1 645 622" marker-end="url(#arrow)"/>
+  <path class="seg" d="M 520 680 A 250 250 0 0 1 395 622" marker-end="url(#arrow)" transform="rotate(0)"/>
+  <path class="seg" d="M 285 540 A 250 250 0 0 1 282 410" marker-end="url(#arrow)"/>
+  <!-- Feedback / continuous-improvement arc: Insight -> Offer -->
+  <path class="fb" d="M 300 300 A 250 250 0 0 1 430 205" marker-end="url(#arrowG)"/>
+  <text x="318" y="232" class="layer bot" transform="rotate(-44 318 232)">CẢI TIẾN LIÊN TỤC</text>
+
+  <!-- Center hub -->
+  <circle cx="520" cy="430" r="95" fill="#f4f8f6" stroke="#1f8a5b" stroke-width="2"/>
+  <text x="520" y="412" text-anchor="middle" class="center">GROWTH</text>
+  <text x="520" y="438" text-anchor="middle" class="center">FLYWHEEL</text>
+  <text x="520" y="462" text-anchor="middle" class="centerSub">Frugal · Human-Centric</text>
+  <text x="520" y="479" text-anchor="middle" class="centerSub">Offline-safe</text>
+
+  <!-- ===== NODE 1: OFFER (top, 500,130 -> here 520,150) ===== -->
+  <g>
+    <rect x="430" y="120" width="180" height="92" rx="14" class="node"/>
+    <rect x="430" y="120" width="32" height="92" rx="14" fill="#1F4E79"/>
+    <text x="446" y="172" text-anchor="middle" class="nodeNum" transform="rotate(-90 446 172)">TRẠM 1</text>
+    <text x="540" y="146" text-anchor="middle" class="nodeName">OFFER</text>
+    <text x="540" y="165" text-anchor="middle" class="nodeVi">Nghiên cứu · Đóng gói giá trị</text>
+    <text x="540" y="185" text-anchor="middle" class="layer kit">KIT: Offer Agent</text>
+    <text x="540" y="201" text-anchor="middle" class="layer bot">BOT: SKU + value ladder</text>
+  </g>
+
+  <!-- ===== NODE 2: ATTRACT (right-top, ~738,289 -> box 745,250) ===== -->
+  <g>
+    <rect x="775" y="250" width="200" height="92" rx="14" class="node"/>
+    <rect x="775" y="250" width="32" height="92" rx="14" fill="#1F4E79"/>
+    <text x="791" y="302" text-anchor="middle" class="nodeNum" transform="rotate(-90 791 302)">TRẠM 2</text>
+    <text x="891" y="276" text-anchor="middle" class="nodeName">ATTRACT</text>
+    <text x="891" y="295" text-anchor="middle" class="nodeVi">Funnel · Content · Lead magnet</text>
+    <text x="891" y="315" text-anchor="middle" class="layer kit">KIT: Attraction Agent</text>
+    <text x="891" y="331" text-anchor="middle" class="layer bot">BOT: landing + seeding</text>
+  </g>
+
+  <!-- ===== NODE 3: CONVERT (right-bottom) ===== -->
+  <g>
+    <rect x="775" y="520" width="200" height="92" rx="14" class="node"/>
+    <rect x="775" y="520" width="32" height="92" rx="14" fill="#1F4E79"/>
+    <text x="791" y="572" text-anchor="middle" class="nodeNum" transform="rotate(-90 791 572)">TRẠM 3</text>
+    <text x="891" y="546" text-anchor="middle" class="nodeName">CONVERT</text>
+    <text x="891" y="565" text-anchor="middle" class="nodeVi">Sales page · Copy · Objection</text>
+    <text x="891" y="585" text-anchor="middle" class="layer kit">KIT: Conversion Agent</text>
+    <text x="891" y="601" text-anchor="middle" class="layer bot">BOT: /start · AI tư vấn</text>
+  </g>
+
+  <!-- ===== NODE 4: DELIVER (left-bottom) ===== -->
+  <g>
+    <rect x="65" y="520" width="200" height="92" rx="14" class="node" stroke="#1f8a5b"/>
+    <rect x="65" y="520" width="32" height="92" rx="14" fill="#1f8a5b"/>
+    <text x="81" y="572" text-anchor="middle" class="nodeNum" transform="rotate(-90 81 572)">TRẠM 4</text>
+    <text x="181" y="546" text-anchor="middle" class="nodeName">DELIVER</text>
+    <text x="181" y="565" text-anchor="middle" class="nodeVi">Payment · Notify · Giao hàng</text>
+    <text x="181" y="585" text-anchor="middle" class="layer kit">KIT: Deliver Agent</text>
+    <text x="181" y="601" text-anchor="middle" class="layer bot">BOT: Sepay→/mua→auto-giao</text>
+  </g>
+
+  <!-- ===== NODE 5: INSIGHT (left-top) ===== -->
+  <g>
+    <rect x="65" y="250" width="200" height="92" rx="14" class="node" stroke="#1f8a5b"/>
+    <rect x="65" y="250" width="32" height="92" rx="14" fill="#1f8a5b"/>
+    <text x="81" y="302" text-anchor="middle" class="nodeNum" transform="rotate(-90 81 302)">TRẠM 5</text>
+    <text x="181" y="276" text-anchor="middle" class="nodeName">INSIGHT</text>
+    <text x="181" y="295" text-anchor="middle" class="nodeVi">Analytics · Revenue · Optimize</text>
+    <text x="181" y="315" text-anchor="middle" class="layer kit">KIT: Insights Agent</text>
+    <text x="181" y="331" text-anchor="middle" class="layer bot">BOT: /stats · leads · DB</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(360,720)">
+    <rect x="0" y="0" width="18" height="12" rx="3" fill="#2E75B6"/>
+    <text x="24" y="11" class="layer kit">Lớp KIT (lý thuyết / sinh tài sản)</text>
+    <rect x="270" y="0" width="18" height="12" rx="3" fill="#1f8a5b"/>
+    <text x="294" y="11" class="layer bot">Lớp BOT (vận hành / ra tiền)</text>
+  </g>
+</svg>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cỗ Máy Nội Dung — Hệ thống nội dung tự động cho coach & người bán khóa học, dịch vụ</title>
+<meta name="description" content="Dành cho coach, người bán khóa học & dịch vụ: hệ thống nội dung tự động ra nội dung đều & ra học viên/khách đều, ~5h/tuần. Đây là cỗ máy thật một founder dùng để tự marketing EcoSynTech.">
+<style>
+  :root{
+    --navy:#1F4E79; --blue:#2E75B6; --green:#1f8a5b; --green-d:#15663f;
+    --ink:#1a2230; --muted:#5b6776; --bg:#ffffff; --soft:#f4f8f6; --band:#eaf3ef;
+    --note:#fff6e0; --line:#e2e8e5; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{line-height:1.25;color:var(--navy)}
+  h1{font-size:clamp(28px,6vw,44px);font-weight:800;letter-spacing:-.5px}
+  h2{font-size:clamp(22px,4.5vw,32px);font-weight:800;margin-bottom:14px}
+  h3{font-size:18px;font-weight:700}
+  p{color:var(--ink)}
+  .muted{color:var(--muted)}
+  .section{padding:54px 0}
+  .center{text-align:center}
+  .btn{display:inline-block;background:var(--green);color:#fff;font-weight:700;font-size:18px;
+    padding:16px 30px;border-radius:999px;text-decoration:none;border:none;cursor:pointer;
+    box-shadow:0 8px 22px rgba(31,138,91,.32);transition:transform .15s ease,box-shadow .15s ease}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(31,138,91,.42)}
+  .btn-lg{font-size:20px;padding:18px 40px}
+  .pill{display:inline-block;background:var(--band);color:var(--green-d);font-weight:700;
+    font-size:13px;padding:6px 14px;border-radius:999px;letter-spacing:.3px}
+  header.hero{background:linear-gradient(160deg,#0f2f4d 0%,#1F4E79 55%,#1f8a5b 140%);color:#fff;
+    padding:64px 0 56px;text-align:center}
+  header.hero h1{color:#fff}
+  header.hero .pill{background:rgba(255,255,255,.16);color:#eafff4}
+  .hero p.sub{font-size:clamp(16px,2.6vw,20px);color:#dbe7f2;margin:18px auto 26px;max-width:660px}
+  .hero .micro{margin-top:14px;font-size:14px;color:#cfe0ee}
+  .hero strong{color:#fff}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:1fr 1fr}
+  .card{background:var(--soft);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .pain li,.benefit li{list-style:none;padding:10px 0 10px 34px;position:relative;border-bottom:1px dashed var(--line)}
+  .pain li:last-child,.benefit li:last-child{border-bottom:none}
+  .pain li:before{content:"✕";position:absolute;left:6px;top:9px;color:#c0392b;font-weight:800}
+  .benefit li:before{content:"✓";position:absolute;left:6px;top:9px;color:var(--green);font-weight:800}
+  .step{display:flex;gap:16px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line)}
+  .step:last-child{border-bottom:none}
+  .num{flex:0 0 38px;height:38px;width:38px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800}
+  table.stack{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  table.stack td{padding:13px 14px;border-bottom:1px solid var(--line);font-size:15px;vertical-align:top}
+  table.stack td.val{text-align:right;white-space:nowrap;color:var(--muted);font-weight:600}
+  table.stack tr:last-child td{border-bottom:none}
+  table.stack tr.total td{background:var(--band);font-weight:800;color:var(--navy);font-size:16px}
+  .pricebox{background:#fff;border:2px solid var(--green);border-radius:18px;padding:30px 24px;text-align:center;
+    box-shadow:0 12px 30px rgba(31,138,91,.14)}
+  .anchor{color:var(--muted);text-decoration:line-through;font-size:20px}
+  .price{font-size:46px;font-weight:800;color:var(--green-d);line-height:1.1}
+  .price small{font-size:18px;font-weight:700}
+  .guarantee{background:var(--note);border:1px solid #f0dca0;border-radius:var(--radius);padding:18px 20px;display:flex;gap:14px;align-items:flex-start}
+  .guarantee .icon{font-size:26px}
+  details{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:0 18px;margin-bottom:10px}
+  details summary{cursor:pointer;font-weight:700;color:var(--navy);padding:16px 0;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  details summary::-webkit-details-marker{display:none}
+  details summary:after{content:"+";font-size:22px;color:var(--green)}
+  details[open] summary:after{content:"–"}
+  details p{padding:0 0 16px;color:var(--ink)}
+  .panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 8px 24px rgba(20,40,60,.06)}
+  label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+  input{width:100%;padding:13px 14px;border:1px solid #cbd5d0;border-radius:10px;font-size:16px;font-family:inherit}
+  input:focus{outline:none;border-color:var(--green)}
+  .qr{width:190px;height:190px;border:2px dashed #bcd; border-radius:12px;display:flex;align-items:center;justify-content:center;
+    text-align:center;color:var(--muted);font-size:13px;margin:0 auto;background:var(--soft);padding:10px}
+  .pay-info{font-size:15px}
+  .pay-info b{color:var(--navy)}
+  .note{font-size:12.5px;color:var(--muted);background:var(--note);border-radius:8px;padding:8px 10px;margin-top:10px}
+  .urgency{background:#fff3f1;border:1px solid #f3c4bb;color:#9a3b2c;border-radius:var(--radius);padding:14px 18px;font-weight:600;text-align:center}
+  footer{background:#0f2f4d;color:#cfe0ee;padding:30px 0;text-align:center;font-size:14px}
+  .stickycta{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);
+    padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;z-index:50;box-shadow:0 -4px 16px rgba(0,0,0,.06)}
+  .stickycta .p{font-weight:800;color:var(--green-d)}
+  @media(max-width:680px){.g2{grid-template-columns:1fr}.section{padding:42px 0}.stickycta .hidem{display:none}}
+  .toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);background:var(--green-d);color:#fff;
+    padding:14px 22px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);display:none;z-index:99}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="pill">DÀNH CHO COACH · NGƯỜI BÁN KHÓA HỌC · DỊCH VỤ · TƯ VẤN</span>
+    <h1 style="margin-top:18px">Một mình vẫn ra nội dung đều — và ra học viên/khách đều</h1>
+    <p class="sub"><strong>Cỗ Máy Nội Dung</strong> là hệ thống chạy sẵn giúp bạn biến 1 ý tưởng thành 5 bài đăng đa nền tảng, lên lịch theo giờ vàng Việt Nam và tự động kéo học viên/khách về Zalo/Messenger — chỉ tốn ~5 giờ mỗi tuần.</p>
+    <a href="#dangky" class="btn btn-lg">Nhận tư vấn &amp; bảng giá →</a>
+    <p class="micro">Đây là cỗ máy thật một founder dùng để tự marketing EcoSynTech · Không phải khóa lý thuyết · Bê về dùng ngay</p>
+  </div>
+</header>
+
+<!-- PAIN -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="center">Bạn có đang gặp những điều này?</h2>
+    <ul class="pain card" style="margin-top:18px">
+      <li>Ngồi cả buổi không nghĩ ra hôm nay đăng gì, rồi đăng cho có.</li>
+      <li>Làm nội dung tốn thời gian nhưng <strong>không đều</strong>, lúc chăm lúc bỏ.</li>
+      <li>Bài đăng nhiều like nhưng <strong>không ra học viên, không ra đơn</strong>.</li>
+      <li>Giỏi chuyên môn nhưng <strong>ngại/bí content</strong>, không biết kể câu chuyện bán hàng.</li>
+      <li>Một mình ôm hết, kiệt sức mà lớp học/dịch vụ vẫn vắng khách.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="section" style="background:var(--soft)">
+  <div class="wrap">
+    <h2 class="center">Giải pháp: một cỗ máy, không phải thêm một khóa học</h2>
+    <p class="center muted" style="max-width:660px;margin:0 auto 26px">Các khóa học dạy bạn <em>biết</em>. Cỗ Máy Nội Dung đưa bạn <strong>bộ công cụ chạy sẵn</strong> để <em>làm được ngay</em> — quy trình, mẫu, prompt, AI trợ lý, kịch bản chatbot, trang bán hàng. Bê về, điền thông tin của bạn, chạy.</p>
+    <div class="grid g2">
+      <div class="card"><h3>✍️ Ra nội dung nhanh gấp 5</h3><p class="muted" style="margin-top:6px">1 nội dung lõi → 5 bài cho TikTok, Facebook, Instagram, Zalo OA, Email bằng prompt có sẵn.</p></div>
+      <div class="card"><h3>⏰ Đăng đúng giờ vàng VN</h3><p class="muted" style="margin-top:6px">Lịch mẫu theo 3 khung giờ người Việt online: sáng, trưa, tối.</p></div>
+      <div class="card"><h3>🧲 Tự động bắt học viên/khách</h3><p class="muted" style="margin-top:6px">Kịch bản comment → tin nhắn tự động đưa khách về Zalo/Messenger, không lo bị bóp tương tác.</p></div>
+      <div class="card"><h3>💳 Bán &amp; giao tự động</h3><p class="muted" style="margin-top:6px">Trang bán hàng + thanh toán VietQR (SePay) + thông báo đơn qua Telegram.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DOGFOODING PROOF -->
+<section class="section" style="background:#0f2f4d;color:#fff">
+  <div class="wrap center">
+    <span class="pill" style="background:rgba(255,255,255,.16);color:#eafff4">CÂU CHUYỆN THẬT</span>
+    <h2 style="color:#fff;margin-top:14px">Đây là cỗ máy tôi dùng thật — không phải lý thuyết bán lại</h2>
+    <p style="color:#dbe7f2;max-width:680px;margin:14px auto 0">Tôi là founder kỹ thuật của EcoSynTech Global. Không có team marketing, tôi tự xây hệ thống này để ra nội dung &amp; khách đều mỗi tuần. Giờ tôi đóng gói lại đúng những gì đang chạy — cho coach và người bán chuyên môn như bạn.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="center">Quy trình 6 bước — chạy được bởi 1 người</h2>
+    <div class="card" style="margin-top:18px">
+      <div class="step"><div class="num">0</div><div><h3>Định vị nền</h3><p class="muted">Chốt sản phẩm, khách, nỗi đau, chỉ số mục tiêu, kênh chủ lực.</p></div></div>
+      <div class="step"><div class="num">1</div><div><h3>Thu hoạch ý tưởng</h3><p class="muted">Lấy ý tưởng từ trend &amp; câu hỏi khách đang hỏi — không ngồi nghĩ mò.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h3>Sản xuất hàng loạt 1→5</h3><p class="muted">1 nội dung lõi xé thành 5 bài đa nền tảng bằng thư viện prompt.</p></div></div>
+      <div class="step"><div class="num">3</div><div><h3>Lên lịch đăng</h3><p class="muted">Đổ vào lịch mẫu theo giờ vàng VN, hẹn đăng tự động.</p></div></div>
+      <div class="step"><div class="num">4</div><div><h3>Bắt khách về kênh sở hữu</h3><p class="muted">CTA + chatbot kéo khách về Zalo/Messenger — tài sản của bạn.</p></div></div>
+      <div class="step"><div class="num">5</div><div><h3>Tự động hóa &amp; bán</h3><p class="muted">Lead magnet → nuôi dưỡng → trang bán → VietQR → giao hàng.</p></div></div>
+      <div class="step"><div class="num">6</div><div><h3>Đo &amp; tối ưu</h3><p class="muted">Tìm bài thắng, nhân bản; cắt bài thua. Cỗ máy tự giỏi lên.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INSIDE / VALUE STACK -->
+<section class="section" style="background:var(--soft)">
+  <div class="wrap">
+    <h2 class="center">Bạn nhận được gì</h2>
+    <p class="center muted" style="max-width:660px;margin:6px auto 18px">Mỗi phần thay thế một khoản bạn sẽ phải tự thuê hoặc tự mò:</p>
+    <table class="stack">
+      <tr><td>📘 Playbook 6 bước + quy trình (chiến lược content)</td><td class="val">Tư vấn/agency 5-10tr</td></tr>
+      <tr><td>📊 Calendar + Thư viện 70+ prompt + prompt pack riêng cho coach/khóa học</td><td class="val">Freelancer 3-5tr/tháng</td></tr>
+      <tr><td>🤖 Bộ kịch bản chatbot Zalo/Messenger (comment → bắt lead)</td><td class="val">Thuê setup 2-3tr</td></tr>
+      <tr><td>🌐 Mẫu trang bán hàng + phễu (deploy miễn phí lên Vercel)</td><td class="val">Thuê thiết kế 2-5tr</td></tr>
+      <tr><td>✨ <b>MỚI:</b> AI trợ lý cấu hình sẵn (custom GPT)</td><td class="val">Tự setup: nhiều giờ</td></tr>
+      <tr><td>🎬 Video hướng dẫn cầm tay 60 phút + checklist công cụ</td><td class="val">Tự học rải rác</td></tr>
+      <tr><td>🔄 <b>MỚI:</b> Câu lạc bộ — cập nhật prompt/trend hàng tháng + Q&amp;A</td><td class="val">Giá trị lặp lại</td></tr>
+      <tr class="total"><td>Tự thuê rời sẽ tốn</td><td class="val">≈ 12 - 25 triệu + 3-6 tháng</td></tr>
+    </table>
+    <p class="center muted" style="margin-top:10px">Mỏ neo này bạn tự kiểm chứng được — đó là giá thuê freelancer/agency thật ngoài thị trường.</p>
+  </div>
+</section>
+
+<!-- PRICE -->
+<section class="section" id="gia">
+  <div class="wrap" style="max-width:560px">
+    <div class="pricebox">
+      <div class="anchor">Giá gốc 890.000đ</div>
+      <div class="price">599.000<small>đ</small></div>
+      <p class="muted" style="margin:8px 0 18px">Giá ưu đãi mở bán · 1 lần · Tự thuê rời sẽ tốn 12-25 triệu + 3-6 tháng</p>
+      <a href="#dangky" class="btn btn-lg">Đăng ký mua ngay →</a>
+    </div>
+    <div class="guarantee" style="margin-top:20px">
+      <div class="icon">🛡️</div>
+      <div><strong>Bảo đảm theo kết quả — hoàn tiền 14 ngày.</strong> Áp dụng đủ trong 14 ngày mà không ra được batch nội dung đầu tiên (1 core + 5 bài) + lịch 1 tháng — hoàn lại 100%, không hỏi lý do.</div>
+    </div>
+    <div class="urgency" style="margin-top:16px">🔥 Ưu đãi mở bán: 50 khách đầu tiên được tặng 3 tháng Câu lạc bộ + buổi hướng dẫn 1:1. Giá tăng sau đợt mở bán.</div>
+  </div>
+</section>
+
+<!-- FORM + PAYMENT -->
+<section class="section" id="dangky" style="background:var(--band)">
+  <div class="wrap">
+    <h2 class="center">Đăng ký &amp; thanh toán</h2>
+    <p class="center muted" style="margin-bottom:24px">Điền thông tin — bạn sẽ nhận hướng dẫn nhận sản phẩm qua Zalo/Email ngay sau khi thanh toán.</p>
+    <div class="grid g2">
+      <div class="panel">
+        <h3 style="margin-bottom:6px">1. Để lại thông tin</h3>
+        <form id="leadForm" onsubmit="return submitLead(event)">
+          <label for="ten">Họ tên</label>
+          <input id="ten" name="ten" required placeholder="Nguyễn Văn A">
+          <label for="sdt">Số điện thoại / Zalo</label>
+          <input id="sdt" name="sdt" required inputmode="tel" placeholder="09xx xxx xxx">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="ban@email.com">
+          <button class="btn" style="width:100%;margin-top:18px" type="submit">Gửi thông tin →</button>
+          <p class="note">⚙️ [THAY KỸ THUẬT]: nối form này tới Google Form / ManyChat / Zalo OA của bạn (sửa hàm <code>submitLead</code> hoặc dán mã nhúng form vào đây).</p>
+        </form>
+      </div>
+      <div class="panel">
+        <h3 style="margin-bottom:6px">2. Thanh toán VietQR</h3>
+        <div class="qr">[THAY: dán ảnh mã VietQR<br>từ SePay vào đây]</div>
+        <div class="pay-info" style="margin-top:16px">
+          <p><b>Ngân hàng:</b> [THAY tên ngân hàng]</p>
+          <p><b>Số tài khoản:</b> [THAY số TK]</p>
+          <p><b>Chủ tài khoản:</b> [THAY tên chủ TK]</p>
+          <p><b>Số tiền:</b> 599.000đ</p>
+          <p><b>Nội dung CK:</b> COMAY [SỐ ĐIỆN THOẠI]</p>
+        </div>
+        <p class="note">⚙️ [THAY KỸ THUẬT]: gắn link/nút thanh toán SePay để tự sinh mã VietQR &amp; tự xác nhận đơn → Telegram. Xem Hướng dẫn sử dụng (Bước 5).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="wrap" style="max-width:720px">
+    <h2 class="center">Câu hỏi thường gặp</h2>
+    <div style="margin-top:18px">
+      <details open><summary>Tôi không rành công nghệ, dùng được không?</summary><p>Được. Sản phẩm thiết kế cho người không kỹ thuật: prompt copy-paste, AI trợ lý cấu hình sẵn, mẫu điền sẵn, video cầm tay 60 phút và checklist từng bước. Công cụ đề xuất đều có bản miễn phí.</p></details>
+      <details><summary>Đây có phải khóa học không?</summary><p>Không. Đây là <strong>hệ thống chạy sẵn</strong> (mẫu + công cụ + AI trợ lý + kịch bản) để bạn làm được ngay, không phải ngồi học lý thuyết rồi tự mò.</p></details>
+      <details><summary>Hợp với ai nhất?</summary><p>Tối ưu cho coach, người bán khóa học, dịch vụ &amp; tư vấn online — những người bán bằng nội dung. Cá nhân/DN nhỏ khác bán qua FB/TikTok/Zalo cũng dùng tốt.</p></details>
+      <details><summary>Câu lạc bộ là gì?</summary><p>Sau khi mua, bạn được vào Câu lạc bộ: cập nhật prompt/trend mới hàng tháng + hỏi đáp + office hours. 50 khách đầu được tặng 3 tháng.</p></details>
+      <details><summary>Cần dùng AI nào?</summary><p>Prompt &amp; trợ lý dùng được với ChatGPT, Claude hoặc Gemini — kể cả bản miễn phí.</p></details>
+      <details><summary>Mất bao lâu để chạy?</summary><p>Cài đặt ~1 ngày. Sau đó ~5 giờ/tuần để ra trọn bộ nội dung đa nền tảng.</p></details>
+      <details><summary>Nếu không hiệu quả?</summary><p>Hoàn tiền 100% trong 14 ngày theo điều kiện ở mục bảo đảm phía trên.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Cỗ Máy Nội Dung</strong> — Hệ thống nội dung tự động cho coach &amp; người bán chuyên môn.</p>
+    <p class="muted" style="color:#9fb8cc;margin-top:6px">© <span id="yr"></span> [THAY tên thương hiệu của bạn] · Liên hệ: [THAY Zalo/SĐT/Email]</p>
+  </div>
+</footer>
+
+<!-- STICKY CTA -->
+<div class="stickycta">
+  <div><span class="p">599.000đ</span> <span class="muted hidem">&nbsp;· bảo đảm 14 ngày</span></div>
+  <a href="#dangky" class="btn">Mua ngay →</a>
+</div>
+
+<div class="toast" id="toast">✅ Đã nhận thông tin! Vui lòng chuyển khoản &amp; chúng tôi sẽ liên hệ qua Zalo.</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  function submitLead(e){
+    e.preventDefault();
+    // [THAY KỸ THUẬT]: gửi dữ liệu tới Google Form / ManyChat / Zalo OA / webhook của bạn ở đây.
+    var t = document.getElementById('toast');
+    t.style.display = 'block';
+    setTimeout(function(){ t.style.display='none'; }, 5000);
+    document.getElementById('leadForm').reset();
+    document.getElementById('dangky').scrollIntoView({behavior:'smooth'});
+    return false;
+  }
+</script>
+</body>
+</html>

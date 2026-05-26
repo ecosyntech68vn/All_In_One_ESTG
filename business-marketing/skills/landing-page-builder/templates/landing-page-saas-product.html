@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{PRODUCT_NAME}} - {{TAGLINE}}</title>
+    <meta name="description" content="{{META_DESCRIPTION}}">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#4F46E5',
+                        accent: '#EA580C'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom animations for scroll-triggered effects */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        /* Smooth transitions */
+        * {
+            transition-property: background-color, border-color, color, fill, stroke;
+            transition-duration: 200ms;
+            transition-timing-function: ease-in-out;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+<!--
+  ============================================================
+  TEMPLATE: SaaS Product Landing Page
+  STYLE: Clean, professional, product-first with modern SaaS aesthetics
+  BEST FOR: B2B SaaS products, developer tools, cloud platforms, productivity apps
+
+  DESIGN SYSTEM:
+  - Background: Clean white (#FFFFFF) with blue-gray tints (slate-50, blue-50)
+  - Primary: Professional blue (#2563EB blue-600)
+  - Secondary: Indigo (#4F46E5 indigo-600)
+  - CTA: Vivid blue/orange gradient or solid accent
+  - Heading Font: Plus Jakarta Sans (700-800 weight)
+  - Body Font: Plus Jakarta Sans (400-500 weight)
+
+  SECTIONS:
+  1. Navbar - Sticky navigation with scroll shadow
+  2. Hero - Split layout with product screenshot
+  3. Logo Cloud - Trust indicators
+  4. Feature Showcase - Tabbed interface
+  5. Feature Grid - 3x3 capabilities overview
+  6. Integration Section - Compatible tools
+  7. Stats Bar - Credibility metrics
+  8. Comparison Table - Competitive positioning
+  9. Testimonials - Social proof
+  10. Pricing - Three-tier structure
+  11. FAQ - Common objections
+  12. Final CTA - Email capture
+  13. Footer - Comprehensive links
+
+  CUSTOMIZATION GUIDE:
+  - Colors: Modify tailwind.config colors object above
+  - Fonts: Change Google Fonts import + fontFamily config
+  - Content: Replace all {{PLACEHOLDER}} values with actual content
+  - Sections: Can reorder, duplicate, or remove any section block
+  - Payment: Update SePay bank details in pricing section
+  - Images: Replace placeholder URLs with actual screenshots
+
+  VIETNAMESE MARKET NOTES:
+  - VND pricing format: Use {{PRICE_VND}} placeholders
+  - Vietnamese font option: Replace Plus Jakarta Sans with Be Vietnam Pro
+  - Payment methods: Included VietQR/SePay integration
+  - Local examples in comments for context
+
+  DEPLOYMENT:
+  - Save as index.html or deploy directly
+  - Vercel: vercel --prod
+  - Netlify: drag and drop to app.netlify.com
+  - Static hosting: Upload to any CDN or server
+
+  PERFORMANCE:
+  - Single file = fast load
+  - Tailwind CDN = no build step
+  - Google Fonts preconnect = optimized font loading
+  - Minimal JS = faster initial render
+  ============================================================
+-->
+
+<!--
+  SECTION: Navbar - Sticky Navigation
+  PURPOSE: Easy navigation + persistent CTA visibility
+  PSYCHOLOGY: Sticky nav keeps conversion path always accessible
+  RESPONSIVE: Hamburger menu on mobile (hidden menu slides down)
+  CUSTOMIZE:
+    - Replace {{LOGO_URL}} with your logo image
+    - Update nav links in the menu
+    - Change CTA button text/link
+    - Adjust shadow intensity on scroll (shadow-sm to shadow-lg)
+  TECHNICAL:
+    - Starts transparent/minimal shadow
+    - JS adds 'scrolled' class on scroll for enhanced shadow
+    - Mobile menu toggles via JS (hidden by default)
+    - z-50 ensures it stays above all content
+-->
+<nav id="navbar" class="fixed top-0 left-0 right-0 bg-white z-50 transition-shadow duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16 md:h-20">
+            <!-- Logo -->
+            <div class="flex-shrink-0">
+                <a href="#" class="flex items-center">
+                    <img src="{{LOGO_URL}}" alt="{{PRODUCT_NAME}}" class="h-8 md:h-10 w-auto">
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex md:items-center md:space-x-8">
+                <a href="#features" class="text-gray-700 hover:text-primary font-medium">Features</a>
+                <a href="#pricing" class="text-gray-700 hover:text-primary font-medium">Pricing</a>
+                <a href="#integrations" class="text-gray-700 hover:text-primary font-medium">Integrations</a>
+                <a href="#faq" class="text-gray-700 hover:text-primary font-medium">FAQ</a>
+                <a href="{{BLOG_URL}}" class="text-gray-700 hover:text-primary font-medium">Blog</a>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="hidden md:flex md:items-center md:space-x-4">
+                <a href="{{SIGNIN_URL}}" class="text-gray-700 hover:text-primary font-medium">Sign In</a>
+                <a href="{{TRIAL_URL}}" class="bg-primary text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-blue-700 shadow-sm hover:shadow-md">
+                    Start Free Trial
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-gray-700 hover:text-primary p-2">
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+        <div class="px-4 py-6 space-y-4">
+            <a href="#features" class="block text-gray-700 hover:text-primary font-medium py-2">Features</a>
+            <a href="#pricing" class="block text-gray-700 hover:text-primary font-medium py-2">Pricing</a>
+            <a href="#integrations" class="block text-gray-700 hover:text-primary font-medium py-2">Integrations</a>
+            <a href="#faq" class="block text-gray-700 hover:text-primary font-medium py-2">FAQ</a>
+            <a href="{{BLOG_URL}}" class="block text-gray-700 hover:text-primary font-medium py-2">Blog</a>
+            <div class="pt-4 border-t border-gray-200 space-y-3">
+                <a href="{{SIGNIN_URL}}" class="block text-center text-gray-700 hover:text-primary font-medium py-2">Sign In</a>
+                <a href="{{TRIAL_URL}}" class="block bg-primary text-white px-6 py-3 rounded-lg font-semibold text-center hover:bg-blue-700">
+                    Start Free Trial
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!--
+  SECTION: Hero - Above-the-fold conversion area
+  PURPOSE: Capture attention, communicate value, drive trial signups
+  PSYCHOLOGY:
+    - "New" badge creates curiosity and FOMO
+    - Dual CTA gives choice (high commitment "trial" vs low commitment "demo")
+    - Trust signals remove friction (no credit card, cancel anytime)
+    - Product screenshot provides social proof and tangible value visualization
+  RESPONSIVE:
+    - Stack vertically on mobile (text first, then image)
+    - Image scales down but remains visible
+    - CTAs stack on mobile
+  CUSTOMIZE:
+    - Replace {{HERO_HEADLINE}}, {{HERO_SUBHEADLINE}}
+    - Update {{PRODUCT_SCREENSHOT_URL}} with actual screenshot
+    - Change "New:" badge text or remove if not relevant
+    - Adjust gradient background colors
+    - Add/remove trust indicators as needed
+  DESIGN NOTES:
+    - White text on gradient for maximum contrast
+    - Screenshot has shadow + subtle rotation for depth
+    - Floating UI elements (annotations) can be added as absolute positioned divs
+-->
+<section class="pt-24 md:pt-32 pb-16 md:pb-24 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <!-- Left: Text Content -->
+            <div class="text-white">
+                <!-- New Feature Badge -->
+                <div class="inline-flex items-center bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+                    <span class="text-sm font-semibold text-white">🎉 New: {{NEW_FEATURE_ANNOUNCEMENT}}</span>
+                </div>
+
+                <!-- Main Headline -->
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                    {{HERO_HEADLINE}}
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-xl md:text-2xl text-blue-100 mb-8 leading-relaxed">
+                    {{HERO_SUBHEADLINE}}
+                </p>
+
+                <!-- Dual CTA -->
+                <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                    <a href="{{TRIAL_URL}}" class="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 shadow-lg hover:shadow-xl text-center">
+                        Start Free Trial
+                    </a>
+                    <a href="{{DEMO_URL}}" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 text-center">
+                        Watch Demo
+                    </a>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="flex flex-wrap gap-6 text-sm text-blue-100">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>No credit card required</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>14-day free trial</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span>Cancel anytime</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Product Screenshot -->
+            <div class="relative">
+                <!-- Browser mockup frame -->
+                <div class="bg-white rounded-lg shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <!-- Browser chrome -->
+                    <div class="bg-gray-200 px-4 py-3 flex items-center gap-2">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="flex-1 bg-white rounded mx-4 px-3 py-1 text-xs text-gray-500">
+                            {{PRODUCT_URL}}
+                        </div>
+                    </div>
+                    <!-- Screenshot -->
+                    <img src="{{PRODUCT_SCREENSHOT_URL}}" alt="{{PRODUCT_NAME}} Dashboard" class="w-full">
+                </div>
+
+                <!-- Floating UI annotation (optional - can add multiple) -->
+                <div class="hidden lg:block absolute -right-4 top-1/4 bg-white rounded-lg shadow-lg p-4 max-w-xs">
+                    <div class="flex items-start gap-3">
+                        <div class="bg-green-100 rounded-full p-2">
+                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">{{ANNOTATION_TITLE}}</p>
+                            <p class="text-sm text-gray-600">{{ANNOTATION_TEXT}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Logo Cloud - Trust Indicators
+  PURPOSE: Build credibility through association with known brands
+  PSYCHOLOGY: Social proof - "If these companies trust it, I can too"
+  RESPONSIVE: Logos stack/wrap on mobile, single row on desktop
+  CUSTOMIZE:
+    - Replace {{COMPANY_LOGO_X_URL}} with actual logo images
+    - Use grayscale logos for clean, professional look
+    - Adjust number of logos (6-8 ideal)
+    - Change "Trusted by teams at" text as needed
+  DESIGN NOTES:
+    - Separator lines above/below create visual containment
+    - Grayscale filter + opacity creates uniform look regardless of brand colors
+    - Hover effect adds subtle engagement
+-->
+<section class="py-12 bg-white border-y border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-sm font-semibold text-gray-500 uppercase tracking-wide mb-8">
+            Trusted by teams at
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+            <img src="{{COMPANY_LOGO_1_URL}}" alt="{{COMPANY_1}}" class="h-8 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+            <img src="{{COMPANY_LOGO_2_URL}}" alt="{{COMPANY_2}}" class="h-8 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+            <img src="{{COMPANY_LOGO_3_URL}}" alt="{{COMPANY_3}}" class="h-8 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+            <img src="{{COMPANY_LOGO_4_URL}}" alt="{{COMPANY_4}}" class="h-8 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+            <img src="{{COMPANY_LOGO_5_URL}}" alt="{{COMPANY_5}}" class="h-8 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+            <img src="{{COMPANY_LOGO_6_URL}}" alt="{{COMPANY_6}}" class="h-8 grayscale opacity-50 hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Feature Showcase - Tabbed Interface
+  PURPOSE: Deep-dive into key features with visual proof
+  PSYCHOLOGY:
+    - Tabs reduce cognitive load (one feature at a time)
+    - Screenshot + description = show AND tell
+    - Interactive element increases engagement time
+  RESPONSIVE:
+    - Tabs scroll horizontally on mobile
+    - Image/text stack vertically on mobile
+  CUSTOMIZE:
+    - Add/remove tabs by duplicating tab button and panel
+    - Replace {{FEATURE_X_...}} placeholders
+    - Update screenshot URLs
+    - Change active tab color (border-primary)
+  TECHNICAL:
+    - JS switches active tab on click
+    - Only one panel visible at a time
+    - Smooth transition between panels
+    - First tab active by default
+-->
+<section id="features" class="py-16 md:py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                {{FEATURES_HEADLINE}}
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                {{FEATURES_SUBHEADLINE}}
+            </p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex overflow-x-auto gap-4 mb-8 border-b border-gray-300">
+            <button class="feature-tab tab-active px-6 py-3 font-semibold whitespace-nowrap border-b-2 border-primary text-primary" data-tab="tab1">
+                {{FEATURE_1_TAB_TITLE}}
+            </button>
+            <button class="feature-tab px-6 py-3 font-semibold whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-gray-900" data-tab="tab2">
+                {{FEATURE_2_TAB_TITLE}}
+            </button>
+            <button class="feature-tab px-6 py-3 font-semibold whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-gray-900" data-tab="tab3">
+                {{FEATURE_3_TAB_TITLE}}
+            </button>
+            <button class="feature-tab px-6 py-3 font-semibold whitespace-nowrap border-b-2 border-transparent text-gray-600 hover:text-gray-900" data-tab="tab4">
+                {{FEATURE_4_TAB_TITLE}}
+            </button>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="tab-content">
+            <!-- Tab 1 -->
+            <div class="tab-panel" id="tab1">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-6">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                {{FEATURE_1_ICON_SVG}}
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                            {{FEATURE_1_TITLE}}
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            {{FEATURE_1_DESCRIPTION}}
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_1_BENEFIT_1}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_1_BENEFIT_2}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_1_BENEFIT_3}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="{{FEATURE_1_SCREENSHOT_URL}}" alt="{{FEATURE_1_TITLE}}" class="rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2 -->
+            <div class="tab-panel hidden" id="tab2">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <img src="{{FEATURE_2_SCREENSHOT_URL}}" alt="{{FEATURE_2_TITLE}}" class="rounded-lg shadow-xl">
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-6">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                {{FEATURE_2_ICON_SVG}}
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                            {{FEATURE_2_TITLE}}
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            {{FEATURE_2_DESCRIPTION}}
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_2_BENEFIT_1}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_2_BENEFIT_2}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_2_BENEFIT_3}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3 -->
+            <div class="tab-panel hidden" id="tab3">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-6">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                {{FEATURE_3_ICON_SVG}}
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                            {{FEATURE_3_TITLE}}
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            {{FEATURE_3_DESCRIPTION}}
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_3_BENEFIT_1}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_3_BENEFIT_2}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_3_BENEFIT_3}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="{{FEATURE_3_SCREENSHOT_URL}}" alt="{{FEATURE_3_TITLE}}" class="rounded-lg shadow-xl">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 4 -->
+            <div class="tab-panel hidden" id="tab4">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <img src="{{FEATURE_4_SCREENSHOT_URL}}" alt="{{FEATURE_4_TITLE}}" class="rounded-lg shadow-xl">
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-6">
+                            <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                {{FEATURE_4_ICON_SVG}}
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                            {{FEATURE_4_TITLE}}
+                        </h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            {{FEATURE_4_DESCRIPTION}}
+                        </p>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_4_BENEFIT_1}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_4_BENEFIT_2}}</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                                </svg>
+                                <span class="text-gray-700">{{FEATURE_4_BENEFIT_3}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Feature Grid - Capabilities Overview
+  PURPOSE: Comprehensive feature list at a glance
+  PSYCHOLOGY: Grid format allows quick scanning, icons aid memory retention
+  RESPONSIVE: 3 columns desktop, 2 tablet, 1 mobile
+  CUSTOMIZE:
+    - Add/remove feature cards (ideal: 6-9 features)
+    - Replace icons (use Heroicons or custom SVGs)
+    - Adjust card spacing/padding
+    - Change hover effects (currently shadow lift)
+  DESIGN NOTES:
+    - Colored icon backgrounds create visual hierarchy
+    - White cards on light background = subtle depth
+    - Hover shadow creates interactive feel
+    - Keep descriptions to 2 lines for visual consistency
+-->
+<section class="py-16 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Everything you need to {{PRIMARY_VALUE_PROPOSITION}}
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                {{FEATURE_GRID_SUBHEADLINE}}
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-blue-100 rounded-lg mb-4">
+                    <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/>
+                        <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{SMALL_FEATURE_1_TITLE}}</h3>
+                <p class="text-gray-600">{{SMALL_FEATURE_1_DESCRIPTION}}</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-indigo-100 rounded-lg mb-4">
+                    <svg class="w-6 h-6 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{SMALL_FEATURE_2_TITLE}}</h3>
+                <p class="text-gray-600">{{SMALL_FEATURE_2_DESCRIPTION}}</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4">
+                    <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{SMALL_FEATURE_3_TITLE}}</h3>
+                <p class="text-gray-600">{{SMALL_FEATURE_3_DESCRIPTION}}</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-purple-100 rounded-lg mb-4">
+                    <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{SMALL_FEATURE_4_TITLE}}</h3>
+                <p class="text-gray-600">{{SMALL_FEATURE_4_DESCRIPTION}}</p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-yellow-100 rounded-lg mb-4">
+                    <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{SMALL_FEATURE_5_TITLE}}</h3>
+                <p class="text-gray-600">{{SMALL_FEATURE_5_DESCRIPTION}}</p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow duration-300">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-red-100 rounded-lg mb-4">
+                    <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">{{SMALL_FEATURE_6_TITLE}}</h3>
+                <p class="text-gray-600">{{SMALL_FEATURE_6_DESCRIPTION}}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Integration Section - Ecosystem Connections
+  PURPOSE: Show compatibility with existing tools/workflows
+  PSYCHOLOGY: Reduces switching cost fears, shows ecosystem fit
+  RESPONSIVE: Grid collapses from 4 cols to 2 to 1
+  CUSTOMIZE:
+    - Replace integration logos ({{INTEGRATION_X_LOGO_URL}})
+    - Add/remove integration cards
+    - Update hover tooltip text
+    - Change grid columns (currently 4)
+  DESIGN NOTES:
+    - Rounded cards create friendly, approachable feel
+    - Hover effect reveals integration name
+    - Grayscale to color transition on hover
+    - Clean spacing prevents visual clutter
+-->
+<section id="integrations" class="py-16 md:py-24 bg-blue-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Connects with your favorite tools
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                {{INTEGRATIONS_SUBHEADLINE}}
+            </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Integration 1 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_1_LOGO_URL}}" alt="{{INTEGRATION_1_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_1_NAME}}</p>
+                </div>
+            </div>
+
+            <!-- Integration 2 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_2_LOGO_URL}}" alt="{{INTEGRATION_2_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_2_NAME}}</p>
+                </div>
+            </div>
+
+            <!-- Integration 3 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_3_LOGO_URL}}" alt="{{INTEGRATION_3_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_3_NAME}}</p>
+                </div>
+            </div>
+
+            <!-- Integration 4 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_4_LOGO_URL}}" alt="{{INTEGRATION_4_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_4_NAME}}</p>
+                </div>
+            </div>
+
+            <!-- Integration 5 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_5_LOGO_URL}}" alt="{{INTEGRATION_5_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_5_NAME}}</p>
+                </div>
+            </div>
+
+            <!-- Integration 6 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_6_LOGO_URL}}" alt="{{INTEGRATION_6_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_6_NAME}}</p>
+                </div>
+            </div>
+
+            <!-- Integration 7 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_7_LOGO_URL}}" alt="{{INTEGRATION_7_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_7_NAME}}</p>
+                </div>
+            </div>
+
+            <!-- Integration 8 -->
+            <div class="bg-white rounded-xl p-6 hover:shadow-lg transition-all duration-300 flex items-center justify-center group">
+                <div class="text-center">
+                    <img src="{{INTEGRATION_8_LOGO_URL}}" alt="{{INTEGRATION_8_NAME}}" class="h-12 mx-auto mb-3 grayscale group-hover:grayscale-0 transition-all">
+                    <p class="text-sm font-medium text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">{{INTEGRATION_8_NAME}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="{{ALL_INTEGRATIONS_URL}}" class="inline-flex items-center text-primary font-semibold hover:text-blue-700">
+                View all integrations
+                <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Stats Bar - Credibility Metrics
+  PURPOSE: Build trust through data-driven proof points
+  PSYCHOLOGY: Numbers = objectivity, gradient = premium feel
+  RESPONSIVE: 4 cols desktop, 2 cols tablet, 1 col mobile
+  CUSTOMIZE:
+    - Update metric numbers and labels
+    - Change gradient colors
+    - Add/remove metrics (keep to 3-5 for impact)
+    - Adjust text sizes for emphasis
+  DESIGN NOTES:
+    - White text on gradient for high contrast
+    - Large numbers draw eye immediately
+    - Small labels provide context
+    - Even spacing creates rhythm
+-->
+<section class="py-16 bg-gradient-to-r from-primary via-secondary to-indigo-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">{{STAT_1_NUMBER}}</div>
+                <div class="text-blue-100 font-medium">{{STAT_1_LABEL}}</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">{{STAT_2_NUMBER}}</div>
+                <div class="text-blue-100 font-medium">{{STAT_2_LABEL}}</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">{{STAT_3_NUMBER}}</div>
+                <div class="text-blue-100 font-medium">{{STAT_3_LABEL}}</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-white mb-2">{{STAT_4_NUMBER}}</div>
+                <div class="text-blue-100 font-medium">{{STAT_4_LABEL}}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Comparison Table - Competitive Differentiation
+  PURPOSE: Position product vs competitors, highlight advantages
+  PSYCHOLOGY: Direct comparison triggers decision-making, checkmarks = visual wins
+  RESPONSIVE: Horizontal scroll on mobile with sticky first column
+  CUSTOMIZE:
+    - Update competitor names
+    - Add/remove feature rows
+    - Change checkmark/X icons
+    - Adjust column highlighting (currently middle column)
+  TECHNICAL:
+    - Overflow-x-auto enables horizontal scroll
+    - Sticky first column on mobile (position-sticky)
+    - Your product column has border-primary highlight
+  DESIGN NOTES:
+    - Alternating row colors improve readability
+    - Icons are more scannable than text
+    - "Most Popular" badge draws attention to your product
+-->
+<section class="py-16 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Why choose {{PRODUCT_NAME}}?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                See how we compare to the competition
+            </p>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="border-b-2 border-gray-300">
+                        <th class="text-left py-4 px-6 font-semibold text-gray-700 bg-white sticky left-0 z-10">Feature</th>
+                        <th class="text-center py-4 px-6 font-semibold text-gray-700">{{COMPETITOR_1_NAME}}</th>
+                        <th class="text-center py-4 px-6 font-semibold text-primary bg-blue-50 border-x-2 border-primary relative">
+                            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-primary text-white text-xs px-3 py-1 rounded-full whitespace-nowrap">Most Popular</div>
+                            {{PRODUCT_NAME}}
+                        </th>
+                        <th class="text-center py-4 px-6 font-semibold text-gray-700">{{COMPETITOR_2_NAME}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Row 1 -->
+                    <tr class="border-b border-gray-200 bg-gray-50">
+                        <td class="py-4 px-6 font-medium text-gray-900 bg-gray-50 sticky left-0 z-10">{{COMPARISON_FEATURE_1}}</td>
+                        <td class="py-4 px-6 text-center">
+                            <svg class="w-6 h-6 mx-auto text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                        </td>
+                        <td class="py-4 px-6 text-center bg-blue-50">
+                            <svg class="w-6 h-6 mx-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            <svg class="w-6 h-6 mx-auto text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                            </svg>
+                        </td>
+                    </tr>
+
+                    <!-- Row 2 -->
+                    <tr class="border-b border-gray-200">
+                        <td class="py-4 px-6 font-medium text-gray-900 bg-white sticky left-0 z-10">{{COMPARISON_FEATURE_2}}</td>
+                        <td class="py-4 px-6 text-center">
+                            <svg class="w-6 h-6 mx-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </td>
+                        <td class="py-4 px-6 text-center bg-blue-50">
+                            <svg class="w-6 h-6 mx-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            <svg class="w-6 h-6 mx-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </td>
+                    </tr>
+
+                    <!-- Row 3 -->
+                    <tr class="border-b border-gray-200 bg-gray-50">
+                        <td class="py-4 px-6 font-medium text-gray-900 bg-gray-50 sticky left-0 z-10">{{COMPARISON_FEATURE_3}}</td>
+                        <td class="py-4 px-6 text-center text-sm text-gray-600">Limited</td>
+                        <td class="py-4 px-6 text-center bg-blue-50">
+                            <svg class="w-6 h-6 mx-auto text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                            </svg>
+                        </td>
+                        <td class="py-4 px-6 text-center text-sm text-gray-600">Limited</td>
+                    </tr>
+
+                    <!-- Row 4 -->
+                    <tr class="border-b border-gray-200">
+                        <td class="py-4 px-6 font-medium text-gray-900 bg-white sticky left-0 z-10">{{COMPARISON_FEATURE_4}}</td>
+                        <td class="py-4 px-6 text-center text-sm text-gray-600">{{COMPETITOR_1_PRICE}}</td>
+                        <td class="py-4 px-6 text-center bg-blue-50 font-semibold text-primary">{{YOUR_PRICE}}</td>
+                        <td class="py-4 px-6 text-center text-sm text-gray-600">{{COMPETITOR_2_PRICE}}</td>
+                    </tr>
+
+                    <!-- Row 5 -->
+                    <tr class="border-b border-gray-200 bg-gray-50">
+                        <td class="py-4 px-6 font-medium text-gray-900 bg-gray-50 sticky left-0 z-10">{{COMPARISON_FEATURE_5}}</td>
+                        <td class="py-4 px-6 text-center text-sm text-gray-600">Email only</td>
+                        <td class="py-4 px-6 text-center bg-blue-50 font-semibold text-primary">24/7 Live Chat</td>
+                        <td class="py-4 px-6 text-center text-sm text-gray-600">Business hours</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Testimonials - Social Proof
+  PURPOSE: Build trust through customer stories
+  PSYCHOLOGY: Real people = relatable, company logos = credibility
+  RESPONSIVE: 3 cols desktop, 2 tablet, 1 mobile
+  CUSTOMIZE:
+    - Replace testimonial content
+    - Update company logos and avatars
+    - Add/remove testimonial cards
+    - Change card styling (shadow, border, etc)
+  DESIGN NOTES:
+    - Company logo at top = immediate credibility
+    - Quote in larger text = easy to scan
+    - Avatar + name + title = humanization
+    - White cards on gray background = clear separation
+-->
+<section class="py-16 md:py-24 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Loved by teams worldwide
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                See what our customers have to say
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Testimonial 1 -->
+            <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <img src="{{TESTIMONIAL_1_COMPANY_LOGO_URL}}" alt="{{TESTIMONIAL_1_COMPANY}}" class="h-8 mb-6">
+                <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                    "{{TESTIMONIAL_1_QUOTE}}"
+                </p>
+                <div class="flex items-center gap-4">
+                    <img src="{{TESTIMONIAL_1_AVATAR_URL}}" alt="{{TESTIMONIAL_1_NAME}}" class="w-12 h-12 rounded-full">
+                    <div>
+                        <div class="font-semibold text-gray-900">{{TESTIMONIAL_1_NAME}}</div>
+                        <div class="text-sm text-gray-600">{{TESTIMONIAL_1_TITLE}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <img src="{{TESTIMONIAL_2_COMPANY_LOGO_URL}}" alt="{{TESTIMONIAL_2_COMPANY}}" class="h-8 mb-6">
+                <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                    "{{TESTIMONIAL_2_QUOTE}}"
+                </p>
+                <div class="flex items-center gap-4">
+                    <img src="{{TESTIMONIAL_2_AVATAR_URL}}" alt="{{TESTIMONIAL_2_NAME}}" class="w-12 h-12 rounded-full">
+                    <div>
+                        <div class="font-semibold text-gray-900">{{TESTIMONIAL_2_NAME}}</div>
+                        <div class="text-sm text-gray-600">{{TESTIMONIAL_2_TITLE}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="bg-white rounded-xl p-8 shadow-sm hover:shadow-md transition-shadow">
+                <img src="{{TESTIMONIAL_3_COMPANY_LOGO_URL}}" alt="{{TESTIMONIAL_3_COMPANY}}" class="h-8 mb-6">
+                <p class="text-gray-700 mb-6 text-lg leading-relaxed">
+                    "{{TESTIMONIAL_3_QUOTE}}"
+                </p>
+                <div class="flex items-center gap-4">
+                    <img src="{{TESTIMONIAL_3_AVATAR_URL}}" alt="{{TESTIMONIAL_3_NAME}}" class="w-12 h-12 rounded-full">
+                    <div>
+                        <div class="font-semibold text-gray-900">{{TESTIMONIAL_3_NAME}}</div>
+                        <div class="text-sm text-gray-600">{{TESTIMONIAL_3_TITLE}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Pricing - Monetization
+  PURPOSE: Convert visitors to paying customers
+  PSYCHOLOGY:
+    - Three tiers create contrast (anchoring effect)
+    - Middle tier highlighted = most popular (nudge)
+    - Annual/monthly toggle shows savings opportunity
+    - Feature comparison below helps decision
+  RESPONSIVE: Stack vertically on mobile, row on desktop
+  CUSTOMIZE:
+    - Update tier names, prices, features
+    - Change highlighted tier (border-primary)
+    - Add/remove features in comparison
+    - Update SePay VietQR details
+    - Adjust annual discount percentage
+  TECHNICAL:
+    - JS toggles between annual/monthly pricing
+    - VietQR QR code generated from bank details
+    - Feature comparison table shows checkmarks per tier
+  VIETNAMESE MARKET:
+    - Prices in VND format (e.g., 990,000 VND/tháng)
+    - SePay VietQR for local payment preference
+    - Annual plans show savings in VND
+-->
+<section id="pricing" class="py-16 md:py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Simple, transparent pricing
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                Choose the plan that's right for you
+            </p>
+
+            <!-- Annual/Monthly Toggle -->
+            <div class="inline-flex items-center bg-gray-100 rounded-lg p-1">
+                <button id="monthly-toggle" class="px-6 py-2 rounded-md font-semibold text-gray-700 transition-all">
+                    Monthly
+                </button>
+                <button id="annual-toggle" class="px-6 py-2 rounded-md font-semibold bg-white text-primary shadow-sm transition-all">
+                    Annual <span class="text-sm">(Save 20%)</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <!-- Free Tier -->
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Free</h3>
+                <p class="text-gray-600 mb-6">Perfect for trying out {{PRODUCT_NAME}}</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900">₫0</span>
+                    <span class="text-gray-600">/month</span>
+                </div>
+                <a href="{{FREE_SIGNUP_URL}}" class="block w-full bg-gray-100 text-gray-900 text-center px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors mb-8">
+                    Get Started Free
+                </a>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{FREE_FEATURE_1}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{FREE_FEATURE_2}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{FREE_FEATURE_3}}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Pro Tier (Highlighted) -->
+            <div class="bg-white border-2 border-primary rounded-2xl p-8 shadow-xl relative transform scale-105">
+                <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-primary text-white text-sm font-bold px-4 py-1 rounded-full">
+                    Most Popular
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Pro</h3>
+                <p class="text-gray-600 mb-6">For growing teams and businesses</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900 pricing-amount" data-monthly="{{PRO_PRICE_MONTHLY_VND}}" data-annual="{{PRO_PRICE_ANNUAL_VND}}">₫{{PRO_PRICE_ANNUAL_VND}}</span>
+                    <span class="text-gray-600 pricing-period">/month</span>
+                </div>
+                <a href="{{PRO_SIGNUP_URL}}" class="block w-full bg-primary text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors mb-8">
+                    Start Free Trial
+                </a>
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{PRO_FEATURE_1}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{PRO_FEATURE_2}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{PRO_FEATURE_3}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{PRO_FEATURE_4}}</span>
+                    </li>
+                </ul>
+
+                <!-- SePay VietQR Payment Option -->
+                <div class="border-t-2 border-gray-200 pt-6">
+                    <p class="text-sm font-semibold text-gray-700 mb-3">Thanh toán qua VietQR:</p>
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <img src="{{PRO_VIETQR_CODE_URL}}" alt="VietQR Code" class="w-48 h-48 mx-auto mb-3">
+                        <div class="text-sm text-gray-600 space-y-1">
+                            <p><strong>Ngân hàng:</strong> {{BANK_NAME}}</p>
+                            <p><strong>Số TK:</strong> {{BANK_ACCOUNT_NUMBER}}</p>
+                            <p><strong>Chủ TK:</strong> {{ACCOUNT_HOLDER_NAME}}</p>
+                            <p><strong>Nội dung:</strong> PRO {{YOUR_EMAIL}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enterprise Tier -->
+            <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+                <p class="text-gray-600 mb-6">For large organizations</p>
+                <div class="mb-6">
+                    <span class="text-4xl font-bold text-gray-900">Custom</span>
+                </div>
+                <a href="{{ENTERPRISE_CONTACT_URL}}" class="block w-full bg-gray-900 text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors mb-8">
+                    Contact Sales
+                </a>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{ENTERPRISE_FEATURE_1}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{ENTERPRISE_FEATURE_2}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{ENTERPRISE_FEATURE_3}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{ENTERPRISE_FEATURE_4}}</span>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <svg class="w-6 h-6 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="text-gray-700">{{ENTERPRISE_FEATURE_5}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: FAQ - Objection Handling
+  PURPOSE: Answer common questions, reduce purchase friction
+  PSYCHOLOGY: Accordion format = less overwhelming, progressive disclosure
+  RESPONSIVE: Full width on all devices, single column
+  CUSTOMIZE:
+    - Add/remove questions (6-10 ideal)
+    - Update Q&A content
+    - Change accordion open/close icons
+    - Adjust animation speed
+  TECHNICAL:
+    - JS toggles accordion panels on click
+    - Only one panel open at a time (optional: allow multiple)
+    - Smooth height transition animation
+    - Rotate chevron icon on open/close
+-->
+<section id="faq" class="py-16 md:py-24 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Frequently asked questions
+            </h2>
+            <p class="text-xl text-gray-600">
+                Everything you need to know about {{PRODUCT_NAME}}
+            </p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- FAQ 1 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-semibold text-gray-900 pr-4">{{FAQ_1_QUESTION}}</span>
+                    <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <div class="faq-answer hidden px-6 pb-5 text-gray-600">
+                    {{FAQ_1_ANSWER}}
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-semibold text-gray-900 pr-4">{{FAQ_2_QUESTION}}</span>
+                    <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <div class="faq-answer hidden px-6 pb-5 text-gray-600">
+                    {{FAQ_2_ANSWER}}
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-semibold text-gray-900 pr-4">{{FAQ_3_QUESTION}}</span>
+                    <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <div class="faq-answer hidden px-6 pb-5 text-gray-600">
+                    {{FAQ_3_ANSWER}}
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-semibold text-gray-900 pr-4">{{FAQ_4_QUESTION}}</span>
+                    <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <div class="faq-answer hidden px-6 pb-5 text-gray-600">
+                    {{FAQ_4_ANSWER}}
+                </div>
+            </div>
+
+            <!-- FAQ 5 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-semibold text-gray-900 pr-4">{{FAQ_5_QUESTION}}</span>
+                    <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <div class="faq-answer hidden px-6 pb-5 text-gray-600">
+                    {{FAQ_5_ANSWER}}
+                </div>
+            </div>
+
+            <!-- FAQ 6 -->
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center hover:bg-gray-50 transition-colors">
+                    <span class="font-semibold text-gray-900 pr-4">{{FAQ_6_QUESTION}}</span>
+                    <svg class="faq-icon w-5 h-5 text-gray-500 transform transition-transform flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                <div class="faq-answer hidden px-6 pb-5 text-gray-600">
+                    {{FAQ_6_ANSWER}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Final CTA - Last Conversion Opportunity
+  PURPOSE: Capture emails from those not ready to sign up
+  PSYCHOLOGY:
+    - Gradient = premium/action
+    - Inline form = low friction
+    - Trust signals below = reassurance
+  RESPONSIVE: Form inputs stack on mobile
+  CUSTOMIZE:
+    - Change headline/copy
+    - Update form action URL
+    - Add/remove trust signals
+    - Adjust gradient colors
+  TECHNICAL:
+    - Form submits to {{EMAIL_SIGNUP_URL}}
+    - Basic client-side validation
+    - Success message on submit
+-->
+<section class="py-16 md:py-24 bg-gradient-to-r from-primary to-secondary">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+            Start building today
+        </h2>
+        <p class="text-xl text-blue-100 mb-8">
+            Join thousands of teams already using {{PRODUCT_NAME}}
+        </p>
+
+        <form action="{{EMAIL_SIGNUP_URL}}" method="POST" class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto mb-6">
+            <input type="email" name="email" placeholder="Enter your email" required class="flex-1 px-6 py-4 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white">
+            <button type="submit" class="bg-white text-primary px-8 py-4 rounded-lg font-bold hover:bg-gray-100 shadow-lg hover:shadow-xl transition-all">
+                Get Started Free
+            </button>
+        </form>
+
+        <div class="flex flex-wrap justify-center gap-6 text-sm text-blue-100">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span>Free 14-day trial</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span>No credit card required</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span>Cancel anytime</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--
+  SECTION: Footer - Navigation & Legal
+  PURPOSE: Site navigation, legal compliance, brand info
+  PSYCHOLOGY: Comprehensive footer builds trust and credibility
+  RESPONSIVE: 4 cols desktop, 2 cols tablet, 1 col mobile
+  CUSTOMIZE:
+    - Update all links and content
+    - Add/remove columns
+    - Change social media links
+    - Update copyright year and company name
+  DESIGN NOTES:
+    - Dark background = visual endpoint
+    - Organized columns = easy scanning
+    - Social icons = community engagement
+    - Legal links = compliance and trust
+-->
+<footer class="bg-gray-900 text-gray-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <!-- Product Column -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Product</h3>
+                <ul class="space-y-3">
+                    <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                    <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+                    <li><a href="{{INTEGRATIONS_URL}}" class="hover:text-white transition-colors">Integrations</a></li>
+                    <li><a href="{{CHANGELOG_URL}}" class="hover:text-white transition-colors">Changelog</a></li>
+                    <li><a href="{{ROADMAP_URL}}" class="hover:text-white transition-colors">Roadmap</a></li>
+                </ul>
+            </div>
+
+            <!-- Resources Column -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Resources</h3>
+                <ul class="space-y-3">
+                    <li><a href="{{DOCS_URL}}" class="hover:text-white transition-colors">Documentation</a></li>
+                    <li><a href="{{API_URL}}" class="hover:text-white transition-colors">API Reference</a></li>
+                    <li><a href="{{BLOG_URL}}" class="hover:text-white transition-colors">Blog</a></li>
+                    <li><a href="{{GUIDES_URL}}" class="hover:text-white transition-colors">Guides</a></li>
+                    <li><a href="{{SUPPORT_URL}}" class="hover:text-white transition-colors">Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Company Column -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Company</h3>
+                <ul class="space-y-3">
+                    <li><a href="{{ABOUT_URL}}" class="hover:text-white transition-colors">About</a></li>
+                    <li><a href="{{CAREERS_URL}}" class="hover:text-white transition-colors">Careers</a></li>
+                    <li><a href="{{CONTACT_URL}}" class="hover:text-white transition-colors">Contact</a></li>
+                    <li><a href="{{PRESS_URL}}" class="hover:text-white transition-colors">Press Kit</a></li>
+                    <li><a href="{{PARTNERS_URL}}" class="hover:text-white transition-colors">Partners</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal Column -->
+            <div>
+                <h3 class="text-white font-semibold mb-4">Legal</h3>
+                <ul class="space-y-3">
+                    <li><a href="{{PRIVACY_URL}}" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    <li><a href="{{TERMS_URL}}" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="{{SECURITY_URL}}" class="hover:text-white transition-colors">Security</a></li>
+                    <li><a href="{{GDPR_URL}}" class="hover:text-white transition-colors">GDPR</a></li>
+                    <li><a href="{{COOKIES_URL}}" class="hover:text-white transition-colors">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-sm">
+                © {{CURRENT_YEAR}} {{COMPANY_NAME}}. All rights reserved.
+            </div>
+            <div class="flex gap-6">
+                <a href="{{TWITTER_URL}}" class="hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+                    </svg>
+                </a>
+                <a href="{{LINKEDIN_URL}}" class="hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+                <a href="{{GITHUB_URL}}" class="hover:text-white transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--
+  JAVASCRIPT: Interactive Functionality
+
+  FEATURES:
+  1. Mobile menu toggle
+  2. Navbar scroll shadow
+  3. Smooth scroll for anchor links
+  4. Feature tab switching
+  5. FAQ accordion
+  6. Pricing annual/monthly toggle
+  7. Scroll-triggered animations
+
+  CUSTOMIZATION:
+  - Adjust animation thresholds
+  - Change transition speeds
+  - Add/remove event listeners
+  - Modify toggle behaviors
+-->
+<script>
+// Mobile Menu Toggle
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+
+mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+});
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+    });
+});
+
+// Navbar scroll shadow
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+        navbar.classList.add('shadow-md');
+    } else {
+        navbar.classList.remove('shadow-md');
+    }
+});
+
+// Feature Tab Switching
+const tabButtons = document.querySelectorAll('.feature-tab');
+const tabPanels = document.querySelectorAll('.tab-panel');
+
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const targetTab = button.getAttribute('data-tab');
+
+        // Remove active state from all tabs
+        tabButtons.forEach(btn => {
+            btn.classList.remove('tab-active', 'border-primary', 'text-primary');
+            btn.classList.add('border-transparent', 'text-gray-600');
+        });
+
+        // Add active state to clicked tab
+        button.classList.add('tab-active', 'border-primary', 'text-primary');
+        button.classList.remove('border-transparent', 'text-gray-600');
+
+        // Hide all panels
+        tabPanels.forEach(panel => {
+            panel.classList.add('hidden');
+        });
+
+        // Show target panel
+        document.getElementById(targetTab).classList.remove('hidden');
+    });
+});
+
+// FAQ Accordion
+const faqQuestions = document.querySelectorAll('.faq-question');
+
+faqQuestions.forEach(question => {
+    question.addEventListener('click', () => {
+        const answer = question.nextElementSibling;
+        const icon = question.querySelector('.faq-icon');
+
+        // Toggle answer visibility
+        answer.classList.toggle('hidden');
+
+        // Rotate icon
+        icon.classList.toggle('rotate-180');
+    });
+});
+
+// Pricing Toggle (Annual/Monthly)
+const monthlyToggle = document.getElementById('monthly-toggle');
+const annualToggle = document.getElementById('annual-toggle');
+const pricingAmounts = document.querySelectorAll('.pricing-amount');
+
+monthlyToggle.addEventListener('click', () => {
+    // Update toggle styles
+    monthlyToggle.classList.add('bg-white', 'text-primary', 'shadow-sm');
+    annualToggle.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+
+    // Update prices
+    pricingAmounts.forEach(amount => {
+        const monthlyPrice = amount.getAttribute('data-monthly');
+        if (monthlyPrice) {
+            amount.textContent = '₫' + monthlyPrice;
+        }
+    });
+});
+
+annualToggle.addEventListener('click', () => {
+    // Update toggle styles
+    annualToggle.classList.add('bg-white', 'text-primary', 'shadow-sm');
+    monthlyToggle.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+
+    // Update prices
+    pricingAmounts.forEach(amount => {
+        const annualPrice = amount.getAttribute('data-annual');
+        if (annualPrice) {
+            amount.textContent = '₫' + annualPrice;
+        }
+    });
+});
+
+// Smooth Scroll for Anchor Links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href !== '#' && href !== '') {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+    });
+});
+
+// Scroll-triggered animations using Intersection Observer
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-on-scroll');
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Observe all sections for scroll animations
+document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+});
+</script>
+
+</body>
+</html>

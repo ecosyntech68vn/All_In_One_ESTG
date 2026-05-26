@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{EVENT_TITLE}} - {{EVENT_DATE}}</title>
+    <meta name="description" content="{{EVENT_DESCRIPTION}}">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0C0A09',
+                        surface: '#1C1917',
+                        primary: '#F59E0B',
+                        accent: '#EF4444',
+                        light: '#FAFAF9',
+                        lightbg: '#FFFBEB'
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0C0A09;
+            color: #FAFAF9;
+        }
+
+        /* Countdown Timer Styling */
+        .countdown-box {
+            background: linear-gradient(135deg, #1C1917 0%, #292524 100%);
+            border: 2px solid #F59E0B;
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .countdown-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(245, 158, 11, 0.4);
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #F59E0B;
+            line-height: 1;
+            display: block;
+        }
+
+        .countdown-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #A8A29E;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        /* Progress Bar Animation */
+        .progress-bar-container {
+            background: #292524;
+            border-radius: 50px;
+            height: 40px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid #F59E0B;
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #EF4444 0%, #F59E0B 100%);
+            height: 100%;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .progress-bar-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 700;
+            color: #FAFAF9;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+            font-size: 1rem;
+        }
+
+        /* Timeline Connector Lines */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.875rem;
+            top: 2rem;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #F59E0B 0%, transparent 100%);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 2rem;
+            height: 2rem;
+            background: #F59E0B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            border: 3px solid #1C1917;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Card Hover Glow Effects */
+        .glow-card {
+            background: #1C1917;
+            border: 1px solid #292524;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #F59E0B, #EF4444, #F59E0B);
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .glow-card:hover {
+            transform: translateY(-5px);
+            border-color: #F59E0B;
+        }
+
+        .glow-card:hover::before {
+            opacity: 0.3;
+        }
+
+        /* Speaker Photo Circle */
+        .speaker-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #F59E0B;
+            object-fit: cover;
+            box-shadow: 0 10px 40px rgba(245, 158, 11, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .speaker-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 50px rgba(245, 158, 11, 0.5);
+        }
+
+        /* FAQ Accordion */
+        .faq-item {
+            border-bottom: 1px solid #292524;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            cursor: pointer;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #F59E0B;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: #D6D3D1;
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            color: #F59E0B;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Button Pulse Animation */
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 15px rgba(245, 158, 11, 0);
+            }
+        }
+
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Urgency Blink */
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.7; }
+        }
+
+        .urgency-blink {
+            animation: blink 2s infinite;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Date Badge */
+        .date-badge {
+            background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.875rem;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+        }
+
+        /* Check Icon */
+        .check-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: #F59E0B;
+            border-radius: 50%;
+            color: #0C0A09;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECTION: Event Navbar - Sticky navigation with event branding and registration CTA -->
+    <nav class="sticky top-0 z-50 bg-dark border-b border-surface shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-4">
+                    <div class="text-2xl font-800 text-primary">{{EVENT_LOGO}}</div>
+                    <div class="hidden md:block">
+                        <span class="date-badge">{{EVENT_DATE_DISPLAY}}</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#agenda" class="hidden md:inline-block text-light hover:text-primary transition font-medium">Chương Trình</a>
+                    <a href="#speakers" class="hidden md:inline-block text-light hover:text-primary transition font-medium">Diễn Giả</a>
+                    <a href="#register" class="bg-primary hover:bg-amber-600 text-dark font-bold px-8 py-3 rounded-full transition transform hover:scale-105 btn-pulse">
+                        Đăng Ký Ngay
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SECTION: Hero with Event Title - Main event showcase with live countdown timer -->
+    <section class="relative py-20 md:py-32 bg-gradient-to-br from-dark via-surface to-dark overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full filter blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-accent rounded-full filter blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <div class="inline-block mb-6">
+                    <span class="bg-accent text-light px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wide urgency-blink">
+                        🔴 Live Event
+                    </span>
+                </div>
+
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-800 mb-6 leading-tight">
+                    {{EVENT_TITLE}}
+                </h1>
+
+                <p class="text-xl md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto">
+                    {{EVENT_SUBTITLE}}
+                </p>
+
+                <div class="flex items-center justify-center space-x-4 text-lg mb-12">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">{{EVENT_DATE_FULL}}</span>
+                    </div>
+                    <span class="text-gray-500">|</span>
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">{{EVENT_TIME}}</span>
+                    </div>
+                    <span class="text-gray-500">|</span>
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                        </svg>
+                        <span class="font-semibold">{{EVENT_LOCATION}}</span>
+                    </div>
+                </div>
+
+                <!-- Live Countdown Timer -->
+                <div class="mb-12">
+                    <h3 class="text-2xl font-700 mb-6 text-primary">Sự Kiện Bắt Đầu Sau:</h3>
+                    <div class="flex justify-center items-center space-x-4 md:space-x-6 flex-wrap gap-4">
+                        <div class="countdown-box">
+                            <span id="days" class="countdown-number">00</span>
+                            <span class="countdown-label">Ngày</span>
+                        </div>
+                        <div class="countdown-box">
+                            <span id="hours" class="countdown-number">00</span>
+                            <span class="countdown-label">Giờ</span>
+                        </div>
+                        <div class="countdown-box">
+                            <span id="minutes" class="countdown-number">00</span>
+                            <span class="countdown-label">Phút</span>
+                        </div>
+                        <div class="countdown-box">
+                            <span id="seconds" class="countdown-number">00</span>
+                            <span class="countdown-label">Giây</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="#register" class="bg-primary hover:bg-amber-600 text-dark font-bold text-lg px-12 py-4 rounded-full transition transform hover:scale-105 btn-pulse shadow-2xl">
+                        Đăng Ký Tham Dự Ngay
+                    </a>
+                    <a href="#learn-more" class="border-2 border-primary text-primary hover:bg-primary hover:text-dark font-bold text-lg px-12 py-4 rounded-full transition transform hover:scale-105">
+                        Tìm Hiểu Thêm
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: What You'll Learn - Key takeaways and learning outcomes -->
+    <section id="learn-more" class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Bạn Sẽ Học Được Gì?
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Những kiến thức và kỹ năng thiết yếu bạn sẽ thu được sau sự kiện
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="glow-card">
+                    <div class="flex items-start space-x-4">
+                        <div class="check-icon text-lg">✓</div>
+                        <div>
+                            <h3 class="text-xl font-700 mb-3 text-primary">{{LEARNING_POINT_1_TITLE}}</h3>
+                            <p class="text-gray-400 leading-relaxed">{{LEARNING_POINT_1_DESC}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glow-card">
+                    <div class="flex items-start space-x-4">
+                        <div class="check-icon text-lg">✓</div>
+                        <div>
+                            <h3 class="text-xl font-700 mb-3 text-primary">{{LEARNING_POINT_2_TITLE}}</h3>
+                            <p class="text-gray-400 leading-relaxed">{{LEARNING_POINT_2_DESC}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glow-card">
+                    <div class="flex items-start space-x-4">
+                        <div class="check-icon text-lg">✓</div>
+                        <div>
+                            <h3 class="text-xl font-700 mb-3 text-primary">{{LEARNING_POINT_3_TITLE}}</h3>
+                            <p class="text-gray-400 leading-relaxed">{{LEARNING_POINT_3_DESC}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glow-card">
+                    <div class="flex items-start space-x-4">
+                        <div class="check-icon text-lg">✓</div>
+                        <div>
+                            <h3 class="text-xl font-700 mb-3 text-primary">{{LEARNING_POINT_4_TITLE}}</h3>
+                            <p class="text-gray-400 leading-relaxed">{{LEARNING_POINT_4_DESC}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glow-card">
+                    <div class="flex items-start space-x-4">
+                        <div class="check-icon text-lg">✓</div>
+                        <div>
+                            <h3 class="text-xl font-700 mb-3 text-primary">{{LEARNING_POINT_5_TITLE}}</h3>
+                            <p class="text-gray-400 leading-relaxed">{{LEARNING_POINT_5_DESC}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glow-card">
+                    <div class="flex items-start space-x-4">
+                        <div class="check-icon text-lg">✓</div>
+                        <div>
+                            <h3 class="text-xl font-700 mb-3 text-primary">{{LEARNING_POINT_6_TITLE}}</h3>
+                            <p class="text-gray-400 leading-relaxed">{{LEARNING_POINT_6_DESC}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Event Agenda/Schedule Timeline - Detailed schedule with time slots -->
+    <section id="agenda" class="py-20 bg-surface">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Chương Trình Sự Kiện
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Lịch trình chi tiết từng phút của sự kiện
+                </p>
+            </div>
+
+            <div class="space-y-0">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="glow-card">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                            <h3 class="text-2xl font-700 text-primary">{{AGENDA_1_TITLE}}</h3>
+                            <span class="text-lg font-600 text-gray-400">{{AGENDA_1_TIME}}</span>
+                        </div>
+                        <p class="text-gray-400 mb-2">{{AGENDA_1_DESC}}</p>
+                        <p class="text-sm text-primary font-600">Diễn giả: {{AGENDA_1_SPEAKER}}</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="glow-card">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                            <h3 class="text-2xl font-700 text-primary">{{AGENDA_2_TITLE}}</h3>
+                            <span class="text-lg font-600 text-gray-400">{{AGENDA_2_TIME}}</span>
+                        </div>
+                        <p class="text-gray-400 mb-2">{{AGENDA_2_DESC}}</p>
+                        <p class="text-sm text-primary font-600">Diễn giả: {{AGENDA_2_SPEAKER}}</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">☕</div>
+                    <div class="glow-card bg-amber-900 bg-opacity-20 border-primary">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                            <h3 class="text-xl font-700 text-primary">Giải Lao & Networking</h3>
+                            <span class="text-lg font-600 text-gray-400">{{BREAK_TIME}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="glow-card">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                            <h3 class="text-2xl font-700 text-primary">{{AGENDA_3_TITLE}}</h3>
+                            <span class="text-lg font-600 text-gray-400">{{AGENDA_3_TIME}}</span>
+                        </div>
+                        <p class="text-gray-400 mb-2">{{AGENDA_3_DESC}}</p>
+                        <p class="text-sm text-primary font-600">Diễn giả: {{AGENDA_3_SPEAKER}}</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="glow-card">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                            <h3 class="text-2xl font-700 text-primary">{{AGENDA_4_TITLE}}</h3>
+                            <span class="text-lg font-600 text-gray-400">{{AGENDA_4_TIME}}</span>
+                        </div>
+                        <p class="text-gray-400 mb-2">{{AGENDA_4_DESC}}</p>
+                        <p class="text-sm text-primary font-600">Diễn giả: {{AGENDA_4_SPEAKER}}</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">5</div>
+                    <div class="glow-card">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                            <h3 class="text-2xl font-700 text-primary">{{AGENDA_5_TITLE}}</h3>
+                            <span class="text-lg font-600 text-gray-400">{{AGENDA_5_TIME}}</span>
+                        </div>
+                        <p class="text-gray-400 mb-2">{{AGENDA_5_DESC}}</p>
+                        <p class="text-sm text-accent font-600">Q&A Session - Tương tác trực tiếp</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Speaker Profiles Grid - Featured speakers with photos and bios -->
+    <section id="speakers" class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Diễn Giả Của Chúng Tôi
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Học hỏi từ những chuyên gia hàng đầu trong lĩnh vực
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                <!-- Speaker 1 -->
+                <div class="text-center">
+                    <div class="flex justify-center mb-6">
+                        <img src="{{SPEAKER_1_PHOTO}}" alt="{{SPEAKER_1_NAME}}" class="speaker-photo">
+                    </div>
+                    <h3 class="text-2xl font-700 mb-2">{{SPEAKER_1_NAME}}</h3>
+                    <p class="text-primary font-600 mb-4">{{SPEAKER_1_TITLE}}</p>
+                    <p class="text-gray-400 leading-relaxed mb-6">{{SPEAKER_1_BIO}}</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="{{SPEAKER_1_LINKEDIN}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SPEAKER_1_TWITTER}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SPEAKER_1_WEBSITE}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 16.057v-3.057h2.994c-.059 1.143-.212 2.24-.456 3.279-.823-.12-1.674-.188-2.538-.222zm1.957 2.162c-.499 1.33-1.159 2.497-1.957 3.456v-3.62c.666.028 1.319.081 1.957.164zm-1.957-7.219v-3.015c.868-.034 1.721-.103 2.548-.224.238 1.027.389 2.111.446 3.239h-2.994zm0-5.014v-3.661c.806.969 1.471 2.15 1.971 3.496-.642.084-1.3.137-1.971.165zm2.703-3.267c1.237.496 2.354 1.228 3.29 2.146-.642.234-1.311.442-2.019.607-.344-.992-.775-1.91-1.271-2.753zm-7.241 13.56c-.244-1.039-.398-2.136-.456-3.279h2.994v3.057c-.865.034-1.714.102-2.538.222zm2.538 1.776v3.62c-.798-.959-1.458-2.126-1.957-3.456.638-.083 1.291-.136 1.957-.164zm0-2.62h-2.994c.059-1.128.208-2.212.446-3.239.827.121 1.68.19 2.548.224v3.015zm0-5.014c-.67-.028-1.329-.081-1.971-.165.5-1.346 1.165-2.527 1.971-3.496v3.661zm-5.095-5.74c.936-.918 2.053-1.65 3.29-2.146-.496.843-.927 1.761-1.271 2.753-.708-.165-1.377-.373-2.019-.607zm-2.705 6.183c0-5.523 4.477-10 10-10 2.794 0 5.327 1.149 7.146 3l-1.414 1.414c-1.45-1.45-3.454-2.347-5.732-2.347-4.486 0-8.129 3.643-8.129 8.129 0 2.278.897 4.282 2.347 5.732l-1.414 1.414c-1.851-1.819-3-4.352-3-7.146z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Speaker 2 -->
+                <div class="text-center">
+                    <div class="flex justify-center mb-6">
+                        <img src="{{SPEAKER_2_PHOTO}}" alt="{{SPEAKER_2_NAME}}" class="speaker-photo">
+                    </div>
+                    <h3 class="text-2xl font-700 mb-2">{{SPEAKER_2_NAME}}</h3>
+                    <p class="text-primary font-600 mb-4">{{SPEAKER_2_TITLE}}</p>
+                    <p class="text-gray-400 leading-relaxed mb-6">{{SPEAKER_2_BIO}}</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="{{SPEAKER_2_LINKEDIN}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SPEAKER_2_TWITTER}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SPEAKER_2_WEBSITE}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 16.057v-3.057h2.994c-.059 1.143-.212 2.24-.456 3.279-.823-.12-1.674-.188-2.538-.222zm1.957 2.162c-.499 1.33-1.159 2.497-1.957 3.456v-3.62c.666.028 1.319.081 1.957.164zm-1.957-7.219v-3.015c.868-.034 1.721-.103 2.548-.224.238 1.027.389 2.111.446 3.239h-2.994zm0-5.014v-3.661c.806.969 1.471 2.15 1.971 3.496-.642.084-1.3.137-1.971.165zm2.703-3.267c1.237.496 2.354 1.228 3.29 2.146-.642.234-1.311.442-2.019.607-.344-.992-.775-1.91-1.271-2.753zm-7.241 13.56c-.244-1.039-.398-2.136-.456-3.279h2.994v3.057c-.865.034-1.714.102-2.538.222zm2.538 1.776v3.62c-.798-.959-1.458-2.126-1.957-3.456.638-.083 1.291-.136 1.957-.164zm0-2.62h-2.994c.059-1.128.208-2.212.446-3.239.827.121 1.68.19 2.548.224v3.015zm0-5.014c-.67-.028-1.329-.081-1.971-.165.5-1.346 1.165-2.527 1.971-3.496v3.661zm-5.095-5.74c.936-.918 2.053-1.65 3.29-2.146-.496.843-.927 1.761-1.271 2.753-.708-.165-1.377-.373-2.019-.607zm-2.705 6.183c0-5.523 4.477-10 10-10 2.794 0 5.327 1.149 7.146 3l-1.414 1.414c-1.45-1.45-3.454-2.347-5.732-2.347-4.486 0-8.129 3.643-8.129 8.129 0 2.278.897 4.282 2.347 5.732l-1.414 1.414c-1.851-1.819-3-4.352-3-7.146z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Speaker 3 -->
+                <div class="text-center">
+                    <div class="flex justify-center mb-6">
+                        <img src="{{SPEAKER_3_PHOTO}}" alt="{{SPEAKER_3_NAME}}" class="speaker-photo">
+                    </div>
+                    <h3 class="text-2xl font-700 mb-2">{{SPEAKER_3_NAME}}</h3>
+                    <p class="text-primary font-600 mb-4">{{SPEAKER_3_TITLE}}</p>
+                    <p class="text-gray-400 leading-relaxed mb-6">{{SPEAKER_3_BIO}}</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="{{SPEAKER_3_LINKEDIN}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SPEAKER_3_TWITTER}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SPEAKER_3_WEBSITE}}" class="w-10 h-10 bg-surface hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 16.057v-3.057h2.994c-.059 1.143-.212 2.24-.456 3.279-.823-.12-1.674-.188-2.538-.222zm1.957 2.162c-.499 1.33-1.159 2.497-1.957 3.456v-3.62c.666.028 1.319.081 1.957.164zm-1.957-7.219v-3.015c.868-.034 1.721-.103 2.548-.224.238 1.027.389 2.111.446 3.239h-2.994zm0-5.014v-3.661c.806.969 1.471 2.15 1.971 3.496-.642.084-1.3.137-1.971.165zm2.703-3.267c1.237.496 2.354 1.228 3.29 2.146-.642.234-1.311.442-2.019.607-.344-.992-.775-1.91-1.271-2.753zm-7.241 13.56c-.244-1.039-.398-2.136-.456-3.279h2.994v3.057c-.865.034-1.714.102-2.538.222zm2.538 1.776v3.62c-.798-.959-1.458-2.126-1.957-3.456.638-.083 1.291-.136 1.957-.164zm0-2.62h-2.994c.059-1.128.208-2.212.446-3.239.827.121 1.68.19 2.548.224v3.015zm0-5.014c-.67-.028-1.329-.081-1.971-.165.5-1.346 1.165-2.527 1.971-3.496v3.661zm-5.095-5.74c.936-.918 2.053-1.65 3.29-2.146-.496.843-.927 1.761-1.271 2.753-.708-.165-1.377-.373-2.019-.607zm-2.705 6.183c0-5.523 4.477-10 10-10 2.794 0 5.327 1.149 7.146 3l-1.414 1.414c-1.45-1.45-3.454-2.347-5.732-2.347-4.486 0-8.129 3.643-8.129 8.129 0 2.278.897 4.282 2.347 5.732l-1.414 1.414c-1.851-1.819-3-4.352-3-7.146z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Who Should Attend - Target audience personas -->
+    <section class="py-20 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Ai Nên Tham Dự?
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Sự kiện này dành cho những ai muốn phát triển trong lĩnh vực
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glow-card text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">{{AUDIENCE_1_TITLE}}</h3>
+                    <p class="text-gray-400">{{AUDIENCE_1_DESC}}</p>
+                </div>
+
+                <div class="glow-card text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">{{AUDIENCE_2_TITLE}}</h3>
+                    <p class="text-gray-400">{{AUDIENCE_2_DESC}}</p>
+                </div>
+
+                <div class="glow-card text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">{{AUDIENCE_3_TITLE}}</h3>
+                    <p class="text-gray-400">{{AUDIENCE_3_DESC}}</p>
+                </div>
+
+                <div class="glow-card text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg class="w-10 h-10 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19.5 12c0-.23-.01-.45-.03-.68l1.86-1.41c.4-.3.51-.86.26-1.3l-1.87-3.23c-.25-.44-.79-.62-1.25-.42l-2.15.91c-.37-.26-.76-.49-1.17-.68l-.29-2.31C14.8 2.38 14.37 2 13.87 2h-3.73c-.5 0-.93.38-.96.88l-.29 2.31c-.41.19-.8.42-1.17.68l-2.15-.91c-.46-.2-1-.02-1.25.42L2.41 8.62c-.25.44-.14.99.26 1.3l1.86 1.41c-.02.22-.03.44-.03.67s.01.45.03.68l-1.86 1.41c-.4.3-.51.86-.26 1.3l1.87 3.23c.25.44.79.62 1.25.42l2.15-.91c.37.26.76.49 1.17.68l.29 2.31c.03.5.46.88.96.88h3.73c.5 0 .93-.38.96-.88l.29-2.31c.41-.19.8-.42 1.17-.68l2.15.91c.46.2 1 .02 1.25-.42l1.87-3.23c.25-.44.14-.99-.26-1.3l-1.86-1.41c.03-.23.04-.45.04-.68zm-7.5 2c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">{{AUDIENCE_4_TITLE}}</h3>
+                    <p class="text-gray-400">{{AUDIENCE_4_DESC}}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Social Proof - Past event statistics -->
+    <section class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Con Số Ấn Tượng
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Thành tích từ các sự kiện trước đó
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-6xl md:text-7xl font-800 text-primary mb-4">{{PAST_ATTENDEES}}</div>
+                    <p class="text-xl text-gray-400 font-600">Người Tham Dự</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="text-6xl md:text-7xl font-800 text-primary mb-4">{{PAST_COUNTRIES}}</div>
+                    <p class="text-xl text-gray-400 font-600">Quốc Gia</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="text-6xl md:text-7xl font-800 text-primary mb-4">{{PAST_SATISFACTION}}%</div>
+                    <p class="text-xl text-gray-400 font-600">Hài Lòng</p>
+                </div>
+
+                <div class="text-center">
+                    <div class="text-6xl md:text-7xl font-800 text-primary mb-4">{{PAST_HOURS}}</div>
+                    <p class="text-xl text-gray-400 font-600">Giờ Nội Dung</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Bonus Resources - What attendees receive -->
+    <section class="py-20 bg-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Quà Tặng Khi Tham Dự
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Giá trị bạn nhận được vượt xa giá vé
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glow-card">
+                    <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">Recording Video</h3>
+                    <p class="text-gray-400">Truy cập vĩnh viễn video ghi hình toàn bộ sự kiện</p>
+                </div>
+
+                <div class="glow-card">
+                    <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">Slide Deck</h3>
+                    <p class="text-gray-400">Bộ slide trình bày đầy đủ của tất cả diễn giả</p>
+                </div>
+
+                <div class="glow-card">
+                    <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">Templates</h3>
+                    <p class="text-gray-400">Bộ templates và công cụ áp dụng ngay</p>
+                </div>
+
+                <div class="glow-card">
+                    <div class="w-16 h-16 bg-primary rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-dark" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-700 mb-3 text-primary">Resource Pack</h3>
+                    <p class="text-gray-400">Tài liệu, checklist và tài nguyên bổ sung</p>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <p class="text-2xl font-700 text-primary mb-2">Tổng Giá Trị Quà Tặng</p>
+                <p class="text-5xl font-800 text-light">{{BONUS_VALUE_TOTAL}}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Testimonials - Reviews from past attendees -->
+    <section class="py-20 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Phản Hồi Từ Học Viên
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Trải nghiệm thực tế từ những người đã tham dự
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glow-card">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-primary text-xl">
+                            ★★★★★
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-lg mb-6 leading-relaxed italic">
+                        "{{TESTIMONIAL_1_QUOTE}}"
+                    </p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="font-700 text-light">{{TESTIMONIAL_1_NAME}}</p>
+                        <p class="text-sm text-gray-400">{{TESTIMONIAL_1_ROLE}}</p>
+                        <p class="text-sm text-primary mt-1">{{TESTIMONIAL_1_EVENT}}</p>
+                    </div>
+                </div>
+
+                <div class="glow-card">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-primary text-xl">
+                            ★★★★★
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-lg mb-6 leading-relaxed italic">
+                        "{{TESTIMONIAL_2_QUOTE}}"
+                    </p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="font-700 text-light">{{TESTIMONIAL_2_NAME}}</p>
+                        <p class="text-sm text-gray-400">{{TESTIMONIAL_2_ROLE}}</p>
+                        <p class="text-sm text-primary mt-1">{{TESTIMONIAL_2_EVENT}}</p>
+                    </div>
+                </div>
+
+                <div class="glow-card">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-primary text-xl">
+                            ★★★★★
+                        </div>
+                    </div>
+                    <p class="text-gray-300 text-lg mb-6 leading-relaxed italic">
+                        "{{TESTIMONIAL_3_QUOTE}}"
+                    </p>
+                    <div class="border-t border-gray-700 pt-4">
+                        <p class="font-700 text-light">{{TESTIMONIAL_3_NAME}}</p>
+                        <p class="text-sm text-gray-400">{{TESTIMONIAL_3_ROLE}}</p>
+                        <p class="text-sm text-primary mt-1">{{TESTIMONIAL_3_EVENT}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Registration Form - Event registration with SePay integration -->
+    <section id="register" class="py-20 bg-surface">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Đăng Ký Tham Dự
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Đừng bỏ lỡ cơ hội học hỏi và networking tuyệt vời này
+                </p>
+            </div>
+
+            <div class="glow-card max-w-2xl mx-auto">
+                <form id="registrationForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-600 mb-2" for="fullName">Họ và Tên <span class="text-accent">*</span></label>
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            required
+                            class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-light"
+                            placeholder="Nguyễn Văn A"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-600 mb-2" for="email">Email <span class="text-accent">*</span></label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                            class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-light"
+                            placeholder="email@example.com"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-600 mb-2" for="phone">Số Điện Thoại <span class="text-accent">*</span></label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            required
+                            class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-light"
+                            placeholder="0901234567"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-600 mb-2" for="company">Công Ty/Tổ Chức</label>
+                        <input
+                            type="text"
+                            id="company"
+                            name="company"
+                            class="w-full px-4 py-3 bg-dark border border-gray-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-light"
+                            placeholder="Tên công ty"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-600 mb-3">Loại Vé <span class="text-accent">*</span></label>
+                        <div class="space-y-3">
+                            <label class="flex items-center p-4 bg-dark border border-gray-700 rounded-lg cursor-pointer hover:border-primary transition">
+                                <input type="radio" name="ticketType" value="free" class="w-5 h-5 text-primary" checked>
+                                <div class="ml-4">
+                                    <div class="font-600 text-light">Vé Miễn Phí</div>
+                                    <div class="text-sm text-gray-400">Truy cập cơ bản vào sự kiện</div>
+                                </div>
+                                <div class="ml-auto text-2xl font-800 text-primary">FREE</div>
+                            </label>
+
+                            <label class="flex items-center p-4 bg-dark border border-gray-700 rounded-lg cursor-pointer hover:border-primary transition">
+                                <input type="radio" name="ticketType" value="vip" class="w-5 h-5 text-primary">
+                                <div class="ml-4">
+                                    <div class="font-600 text-light">Vé VIP</div>
+                                    <div class="text-sm text-gray-400">Bao gồm tất cả bonus + ưu đãi đặc biệt</div>
+                                </div>
+                                <div class="ml-auto text-2xl font-800 text-primary">{{TICKET_PRICE}}</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- SePay QR Code for VIP Ticket -->
+                    <div id="paymentSection" class="hidden">
+                        <div class="bg-lightbg border-2 border-primary rounded-lg p-6 text-center">
+                            <h3 class="text-xl font-700 text-dark mb-4">Quét Mã QR Để Thanh Toán</h3>
+                            <div class="bg-white p-4 rounded-lg inline-block mb-4">
+                                <img
+                                    src="https://qr.sepay.vn/img?acc={{SEPAY_ACCOUNT}}&bank={{SEPAY_BANK}}&amount={{TICKET_PRICE_RAW}}&des={{EVENT_ORDER_DESC}}&template=compact"
+                                    alt="SePay QR Code"
+                                    class="w-64 h-64 mx-auto"
+                                >
+                            </div>
+                            <p class="text-sm text-gray-700 mb-2">
+                                <strong>Ngân hàng:</strong> {{SEPAY_BANK_NAME}}
+                            </p>
+                            <p class="text-sm text-gray-700 mb-2">
+                                <strong>Số tài khoản:</strong> {{SEPAY_ACCOUNT}}
+                            </p>
+                            <p class="text-sm text-gray-700 mb-2">
+                                <strong>Số tiền:</strong> {{TICKET_PRICE}}
+                            </p>
+                            <p class="text-sm text-gray-700">
+                                <strong>Nội dung:</strong> {{EVENT_ORDER_DESC}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start">
+                        <input type="checkbox" id="terms" name="terms" required class="w-5 h-5 text-primary mt-1">
+                        <label for="terms" class="ml-3 text-sm text-gray-400">
+                            Tôi đồng ý với <a href="#" class="text-primary hover:underline">điều khoản sử dụng</a> và <a href="#" class="text-primary hover:underline">chính sách bảo mật</a>
+                        </label>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full bg-primary hover:bg-amber-600 text-dark font-bold text-lg py-4 rounded-full transition transform hover:scale-105 btn-pulse"
+                    >
+                        Xác Nhận Đăng Ký
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center text-sm text-gray-400">
+                    <p>🔒 Thông tin của bạn được bảo mật tuyệt đối</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Limited Seats Urgency Bar - Scarcity indicator -->
+    <section class="py-12 bg-dark border-y border-accent">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-6">
+                <h3 class="text-2xl font-700 text-accent mb-2 urgency-blink">⚠️ Số Lượng Chỗ Ngồi Có Hạn!</h3>
+                <p class="text-lg text-gray-300">Đăng ký ngay để đảm bảo chỗ của bạn</p>
+            </div>
+
+            <div class="progress-bar-container relative">
+                <div id="progressBar" class="progress-bar-fill" style="width: 0%"></div>
+                <div class="progress-bar-text">
+                    <span id="seatsText">{{SEATS_REMAINING}} chỗ còn lại / {{SEATS_TOTAL}} chỗ</span>
+                </div>
+            </div>
+
+            <div class="mt-6 text-center">
+                <a href="#register" class="inline-block bg-accent hover:bg-red-600 text-light font-bold text-lg px-10 py-3 rounded-full transition transform hover:scale-105">
+                    Giữ Chỗ Ngay
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Host/Organizer Info - Event organizer details -->
+    <section class="py-20 bg-surface">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Người Tổ Chức
+                </h2>
+            </div>
+
+            <div class="glow-card">
+                <div class="flex flex-col md:flex-row items-center md:items-start space-y-6 md:space-y-0 md:space-x-8">
+                    <div class="flex-shrink-0">
+                        <img src="{{HOST_PHOTO}}" alt="{{HOST_NAME}}" class="speaker-photo">
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-3xl font-700 mb-2">{{HOST_NAME}}</h3>
+                        <p class="text-xl text-primary font-600 mb-4">{{HOST_TITLE}}</p>
+                        <div class="text-gray-400 leading-relaxed space-y-4 mb-6">
+                            <p>{{HOST_BIO_1}}</p>
+                            <p>{{HOST_BIO_2}}</p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="text-lg font-700 mb-3">Thành Tựu Nổi Bật:</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li class="flex items-start">
+                                    <span class="check-icon mr-3 mt-1">✓</span>
+                                    <span>{{HOST_ACHIEVEMENT_1}}</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="check-icon mr-3 mt-1">✓</span>
+                                    <span>{{HOST_ACHIEVEMENT_2}}</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="check-icon mr-3 mt-1">✓</span>
+                                    <span>{{HOST_ACHIEVEMENT_3}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="flex justify-center md:justify-start space-x-4">
+                            <a href="{{HOST_LINKEDIN}}" class="w-12 h-12 bg-dark hover:bg-primary rounded-full flex items-center justify-center transition">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                </svg>
+                            </a>
+                            <a href="{{HOST_TWITTER}}" class="w-12 h-12 bg-dark hover:bg-primary rounded-full flex items-center justify-center transition">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                                </svg>
+                            </a>
+                            <a href="{{HOST_WEBSITE}}" class="w-12 h-12 bg-dark hover:bg-primary rounded-full flex items-center justify-center transition">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm1 16.057v-3.057h2.994c-.059 1.143-.212 2.24-.456 3.279-.823-.12-1.674-.188-2.538-.222zm1.957 2.162c-.499 1.33-1.159 2.497-1.957 3.456v-3.62c.666.028 1.319.081 1.957.164zm-1.957-7.219v-3.015c.868-.034 1.721-.103 2.548-.224.238 1.027.389 2.111.446 3.239h-2.994zm0-5.014v-3.661c.806.969 1.471 2.15 1.971 3.496-.642.084-1.3.137-1.971.165zm2.703-3.267c1.237.496 2.354 1.228 3.29 2.146-.642.234-1.311.442-2.019.607-.344-.992-.775-1.91-1.271-2.753zm-7.241 13.56c-.244-1.039-.398-2.136-.456-3.279h2.994v3.057c-.865.034-1.714.102-2.538.222zm2.538 1.776v3.62c-.798-.959-1.458-2.126-1.957-3.456.638-.083 1.291-.136 1.957-.164zm0-2.62h-2.994c.059-1.128.208-2.212.446-3.239.827.121 1.68.19 2.548.224v3.015zm0-5.014c-.67-.028-1.329-.081-1.971-.165.5-1.346 1.165-2.527 1.971-3.496v3.661zm-5.095-5.74c.936-.918 2.053-1.65 3.29-2.146-.496.843-.927 1.761-1.271 2.753-.708-.165-1.377-.373-2.019-.607zm-2.705 6.183c0-5.523 4.477-10 10-10 2.794 0 5.327 1.149 7.146 3l-1.414 1.414c-1.45-1.45-3.454-2.347-5.732-2.347-4.486 0-8.129 3.643-8.129 8.129 0 2.278.897 4.282 2.347 5.732l-1.414 1.414c-1.851-1.819-3-4.352-3-7.146z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Event FAQ - Common questions accordion -->
+    <section class="py-20 bg-dark">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-800 mb-4">
+                    Câu Hỏi Thường Gặp
+                </h2>
+                <p class="text-xl text-gray-400">
+                    Giải đáp những thắc mắc phổ biến
+                </p>
+            </div>
+
+            <div class="space-y-0">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>{{FAQ_1_QUESTION}}</span>
+                        <svg class="w-6 h-6 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        {{FAQ_1_ANSWER}}
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>{{FAQ_2_QUESTION}}</span>
+                        <svg class="w-6 h-6 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        {{FAQ_2_ANSWER}}
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>{{FAQ_3_QUESTION}}</span>
+                        <svg class="w-6 h-6 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        {{FAQ_3_ANSWER}}
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>{{FAQ_4_QUESTION}}</span>
+                        <svg class="w-6 h-6 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        {{FAQ_4_ANSWER}}
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>{{FAQ_5_QUESTION}}</span>
+                        <svg class="w-6 h-6 faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        {{FAQ_5_ANSWER}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: Footer - Event details and social links -->
+    <footer class="bg-surface border-t border-gray-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-800 text-primary mb-4">{{EVENT_LOGO}}</h3>
+                    <p class="text-gray-400 mb-4">{{EVENT_TAGLINE}}</p>
+                    <div class="flex space-x-4">
+                        <a href="{{SOCIAL_FACEBOOK}}" class="w-10 h-10 bg-dark hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SOCIAL_TWITTER}}" class="w-10 h-10 bg-dark hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SOCIAL_LINKEDIN}}" class="w-10 h-10 bg-dark hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="{{SOCIAL_YOUTUBE}}" class="w-10 h-10 bg-dark hover:bg-primary rounded-full flex items-center justify-center transition">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-700 mb-4">Chi Tiết Sự Kiện</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>{{EVENT_DATE_FULL}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>{{EVENT_TIME}}</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+                            </svg>
+                            <span>{{EVENT_LOCATION}}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-700 mb-4">Liên Hệ</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                            <a href="mailto:{{CONTACT_EMAIL}}" class="hover:text-primary transition">{{CONTACT_EMAIL}}</a>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                            </svg>
+                            <a href="tel:{{CONTACT_PHONE}}" class="hover:text-primary transition">{{CONTACT_PHONE}}</a>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mt-1 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd"/>
+                            </svg>
+                            <a href="{{WEBSITE_URL}}" class="hover:text-primary transition">{{WEBSITE_URL}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-500 text-sm">
+                    &copy; {{CURRENT_YEAR}} {{COMPANY_NAME}}. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Live Countdown Timer
+        function updateCountdown() {
+            const eventDate = new Date('{{EVENT_DATE_ISO}}').getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+
+            if (distance < 0) {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // Progress Bar Animation
+        function animateProgressBar() {
+            const seatsRemaining = parseInt('{{SEATS_REMAINING}}');
+            const seatsTotal = parseInt('{{SEATS_TOTAL}}');
+            const percentage = ((seatsTotal - seatsRemaining) / seatsTotal) * 100;
+
+            setTimeout(() => {
+                document.getElementById('progressBar').style.width = percentage + '%';
+            }, 500);
+        }
+
+        animateProgressBar();
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const wasActive = faqItem.classList.contains('active');
+
+                // Close all other items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+
+                // Toggle current item
+                if (!wasActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Ticket Type Selection - Show/Hide Payment Section
+        document.querySelectorAll('input[name="ticketType"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const paymentSection = document.getElementById('paymentSection');
+                if (e.target.value === 'vip') {
+                    paymentSection.classList.remove('hidden');
+                } else {
+                    paymentSection.classList.add('hidden');
+                }
+            });
+        });
+
+        // Form Validation
+        document.getElementById('registrationForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const terms = document.getElementById('terms').checked;
+
+            if (!fullName || !email || !phone) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Email không hợp lệ!');
+                return;
+            }
+
+            const phoneRegex = /^[0-9]{10,11}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('Số điện thoại không hợp lệ!');
+                return;
+            }
+
+            if (!terms) {
+                alert('Vui lòng đồng ý với điều khoản sử dụng!');
+                return;
+            }
+
+            // Success
+            alert('Đăng ký thành công! Chúng tôi sẽ gửi email xác nhận cho bạn trong thời gian sớm nhất.');
+            e.target.reset();
+            document.getElementById('paymentSection').classList.add('hidden');
+        });
+
+        // Smooth Scroll for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

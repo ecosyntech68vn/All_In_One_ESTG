@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{PRODUCT_NAME}} - {{HEADLINE}} | {{BRAND_NAME}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <meta property="og:title" content="{{OG_TITLE}}">
+  <meta property="og:description" content="{{META_DESCRIPTION}}">
+  <meta property="og:image" content="{{OG_IMAGE_URL}}">
+  <meta property="og:type" content="website">
+
+  <!-- TEMPLATE: Minimal Clean (#3) -->
+  <!-- STYLE: Maximum whitespace, single-column focus, editorial/magazine feel -->
+  <!-- PALETTE: Warm stone tones — bg:#FAFAF9, text:#1C1917, primary:#78716C, accent:#B45309, border:#E7E5E4 -->
+  <!-- FONTS: Playfair Display (headlines) + Source Sans 3 (body) -->
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#78716C',
+            accent: '#B45309',
+            surface: '#FAFAF9',
+            border: '#E7E5E4',
+            dark: '#1C1917',
+            muted: '#A8A29E'
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Source Sans 3', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ============================================================
+       MINIMAL CLEAN TEMPLATE - Custom Styles
+       Elegant, editorial feel with generous whitespace
+       ============================================================ */
+
+    /* Smooth scrolling for anchor links */
+    html { scroll-behavior: smooth; }
+
+    /* Fade-in animation triggered by IntersectionObserver */
+    .fade-section {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Elegant pull-quote styling */
+    .pull-quote {
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    .pull-quote::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: #B45309;
+    }
+
+    /* Subtle line divider */
+    .line-divider {
+      width: 60px;
+      height: 1px;
+      background-color: #B45309;
+      margin: 2rem auto;
+    }
+
+    /* FAQ toggle animation */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-answer.open {
+      max-height: 500px;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    /* Thin elegant border styling */
+    .elegant-border {
+      border: 1px solid #E7E5E4;
+    }
+
+    /* Hover underline effect for links */
+    .hover-underline {
+      position: relative;
+      display: inline-block;
+    }
+    .hover-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: #B45309;
+      transition: width 0.3s ease;
+    }
+    .hover-underline:hover::after {
+      width: 100%;
+    }
+
+    /* Large ordinal number styling */
+    .ordinal-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 700;
+      color: #E7E5E4;
+      line-height: 1;
+      min-width: 4rem;
+    }
+  </style>
+</head>
+
+<!-- ============================================================
+     BODY
+     Background: warm off-white (#FAFAF9)
+     Text: near-black stone (#1C1917)
+     Single-column, generous vertical spacing throughout
+     ============================================================ -->
+<body class="font-sans text-dark bg-surface">
+
+<!-- ============================================================
+     SECTION 1: ULTRA-MINIMAL TOP BAR
+     Purpose: Brand presence + single CTA, no clutter
+     Design: Logo left, CTA right, thin bottom border
+     Mobile: Same layout, smaller font
+     ============================================================ -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-surface/95 backdrop-blur-sm border-b border-border">
+  <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+    <!-- Brand name in serif for elegance -->
+    <a href="#" class="font-serif text-xl font-semibold text-dark tracking-tight">{{BRAND_NAME}}</a>
+
+    <!-- Minimal nav links - hidden on mobile, shown on md+ -->
+    <div class="hidden md:flex items-center gap-8 text-sm text-primary">
+      <a href="#about" class="hover-underline transition-colors hover:text-dark">About</a>
+      <a href="#included" class="hover-underline transition-colors hover:text-dark">Details</a>
+      <a href="#pricing" class="hover-underline transition-colors hover:text-dark">Pricing</a>
+    </div>
+
+    <!-- Single CTA button - understated, accent color -->
+    <a href="#pricing" class="text-sm font-medium text-accent border border-accent px-5 py-2 hover:bg-accent hover:text-white transition-all duration-300 cursor-pointer">
+      {{CTA_TEXT}}
+    </a>
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     SECTION 2: FULL-HEIGHT HERO
+     Purpose: Capture attention with massive serif headline
+     Design: Centered, text-7xl headline, serif font, subtle divider
+     Whitespace: Very generous (pt-40 pb-24)
+     Typography: Playfair Display, tight leading, balanced spacing
+     ============================================================ -->
+<section class="pt-40 pb-24 px-6 fade-section">
+  <div class="max-w-3xl mx-auto text-center">
+    <!-- Pre-headline - small, muted, uppercase tracking -->
+    <p class="text-sm font-medium text-accent uppercase tracking-widest mb-6">{{PRE_HEADLINE}}</p>
+
+    <!-- Main headline - massive serif, the centerpiece -->
+    <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-dark leading-tight tracking-tight mb-8">
+      {{HEADLINE}}
+    </h1>
+
+    <!-- Subtle line divider - accent color, centered -->
+    <div class="line-divider"></div>
+
+    <!-- Subheadline - lighter weight, readable width -->
+    <p class="text-lg md:text-xl text-primary leading-relaxed max-w-2xl mx-auto mt-8 mb-10">
+      {{SUBHEADLINE}}
+    </p>
+
+    <!-- CTA button - solid accent, generous padding -->
+    <a href="#pricing" class="inline-block bg-accent text-white px-10 py-4 text-base font-medium hover:bg-amber-800 transition-colors duration-300 cursor-pointer">
+      {{CTA_TEXT}}
+    </a>
+
+    <!-- Social proof - subtle, below CTA -->
+    <p class="mt-6 text-sm text-muted">{{SOCIAL_PROOF}}</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 3: MANIFESTO / STORY (Problem Agitation)
+     Purpose: Single-column storytelling, build emotional connection
+     Design: Long-form text with pull quotes, accent borders
+     Width: Narrow (max-w-2xl) for optimal reading line length
+     ============================================================ -->
+<section class="py-20 px-6 fade-section">
+  <div class="max-w-2xl mx-auto">
+    <!-- Section label -->
+    <p class="text-sm font-medium text-accent uppercase tracking-widest mb-8">The Problem</p>
+
+    <!-- Story paragraph 1 - relatable struggle -->
+    <p class="text-lg text-dark leading-relaxed mb-6">
+      {{STORY_PARAGRAPH_1}}
+    </p>
+
+    <!-- Pull quote - accent left border, larger text -->
+    <blockquote class="pull-quote my-10 py-2">
+      <p class="font-serif text-2xl md:text-3xl text-dark leading-snug italic">
+        "{{PULL_QUOTE}}"
+      </p>
+    </blockquote>
+
+    <!-- Story paragraph 2 - agitate the pain -->
+    <p class="text-lg text-primary leading-relaxed mb-6">
+      {{STORY_PARAGRAPH_2}}
+    </p>
+
+    <!-- Transition to solution -->
+    <p class="text-lg text-dark leading-relaxed font-medium">
+      {{STORY_TRANSITION}}
+    </p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 4: WHAT'S INCLUDED
+     Purpose: Numbered list showing contents of offer
+     Design: Large ordinal numbers + descriptions, editorial style
+     Pattern: Number left, content right — clean vertical rhythm
+     ============================================================ -->
+<section id="included" class="py-20 px-6 border-t border-border fade-section">
+  <div class="max-w-3xl mx-auto">
+    <!-- Section heading -->
+    <p class="text-sm font-medium text-accent uppercase tracking-widest mb-4">What You Get</p>
+    <h2 class="font-serif text-3xl md:text-4xl font-bold text-dark mb-16">{{INCLUDED_HEADLINE}}</h2>
+
+    <!-- Item 1 -->
+    <div class="flex gap-6 md:gap-10 mb-12 items-start">
+      <span class="ordinal-number">01</span>
+      <div class="pt-2">
+        <h3 class="text-xl font-semibold text-dark mb-2">{{ITEM_1_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{ITEM_1_DESC}}</p>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="flex gap-6 md:gap-10 mb-12 items-start">
+      <span class="ordinal-number">02</span>
+      <div class="pt-2">
+        <h3 class="text-xl font-semibold text-dark mb-2">{{ITEM_2_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{ITEM_2_DESC}}</p>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="flex gap-6 md:gap-10 mb-12 items-start">
+      <span class="ordinal-number">03</span>
+      <div class="pt-2">
+        <h3 class="text-xl font-semibold text-dark mb-2">{{ITEM_3_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{ITEM_3_DESC}}</p>
+      </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="flex gap-6 md:gap-10 mb-12 items-start">
+      <span class="ordinal-number">04</span>
+      <div class="pt-2">
+        <h3 class="text-xl font-semibold text-dark mb-2">{{ITEM_4_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{ITEM_4_DESC}}</p>
+      </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="flex gap-6 md:gap-10 mb-12 items-start">
+      <span class="ordinal-number">05</span>
+      <div class="pt-2">
+        <h3 class="text-xl font-semibold text-dark mb-2">{{ITEM_5_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{ITEM_5_DESC}}</p>
+      </div>
+    </div>
+
+    <!-- Bonus item -->
+    <div class="flex gap-6 md:gap-10 items-start bg-amber-50 border border-amber-200 p-6 md:p-8">
+      <span class="ordinal-number text-accent">+</span>
+      <div class="pt-2">
+        <p class="text-sm font-medium text-accent uppercase tracking-wider mb-1">Bonus</p>
+        <h3 class="text-xl font-semibold text-dark mb-2">{{BONUS_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{BONUS_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 5: BEFORE / AFTER COMPARISON
+     Purpose: Show transformation, create desire
+     Design: Two columns with center divider line
+     Left = Before (pain), Right = After (result)
+     ============================================================ -->
+<section class="py-20 px-6 border-t border-border fade-section">
+  <div class="max-w-4xl mx-auto">
+    <p class="text-sm font-medium text-accent uppercase tracking-widest mb-4 text-center">The Transformation</p>
+    <h2 class="font-serif text-3xl md:text-4xl font-bold text-dark mb-16 text-center">{{TRANSFORMATION_HEADLINE}}</h2>
+
+    <div class="grid md:grid-cols-2 gap-0">
+      <!-- Before column -->
+      <div class="p-8 md:p-10 md:border-r border-border">
+        <p class="text-sm font-medium text-red-600 uppercase tracking-wider mb-6">Before</p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span class="text-primary">{{BEFORE_1}}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span class="text-primary">{{BEFORE_2}}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span class="text-primary">{{BEFORE_3}}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            <span class="text-primary">{{BEFORE_4}}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- After column -->
+      <div class="p-8 md:p-10 border-t md:border-t-0 border-border">
+        <p class="text-sm font-medium text-emerald-600 uppercase tracking-wider mb-6">After</p>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-dark font-medium">{{AFTER_1}}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-dark font-medium">{{AFTER_2}}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-dark font-medium">{{AFTER_3}}</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-dark font-medium">{{AFTER_4}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 6: FEATURED TESTIMONIAL
+     Purpose: Single large testimonial for maximum impact
+     Design: Full-width, large serif quote, minimal decoration
+     ============================================================ -->
+<section class="py-24 px-6 bg-white border-t border-b border-border fade-section">
+  <div class="max-w-3xl mx-auto text-center">
+    <!-- Large quotation mark -->
+    <span class="font-serif text-6xl text-border leading-none block mb-6">"</span>
+
+    <!-- Testimonial quote - large, serif, italic -->
+    <blockquote class="font-serif text-2xl md:text-3xl text-dark leading-snug italic mb-10">
+      {{TESTIMONIAL_QUOTE}}
+    </blockquote>
+
+    <!-- Divider -->
+    <div class="line-divider"></div>
+
+    <!-- Author info -->
+    <div class="mt-8 flex items-center justify-center gap-4">
+      <!-- Author photo placeholder -->
+      <div class="w-14 h-14 rounded-full bg-stone-200 flex items-center justify-center text-primary font-serif text-xl font-bold">
+        {{TESTIMONIAL_INITIAL}}
+      </div>
+      <div class="text-left">
+        <p class="font-semibold text-dark">{{TESTIMONIAL_NAME}}</p>
+        <p class="text-sm text-muted">{{TESTIMONIAL_ROLE}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 7: PROCESS STEPS - VERTICAL TIMELINE
+     Purpose: Show the journey / how it works
+     Design: Left-aligned vertical line with dots, minimal style
+     ============================================================ -->
+<section class="py-20 px-6 fade-section">
+  <div class="max-w-3xl mx-auto">
+    <p class="text-sm font-medium text-accent uppercase tracking-widest mb-4">The Process</p>
+    <h2 class="font-serif text-3xl md:text-4xl font-bold text-dark mb-16">{{PROCESS_HEADLINE}}</h2>
+
+    <!-- Timeline container -->
+    <div class="relative pl-8 md:pl-12">
+      <!-- Vertical line -->
+      <div class="absolute left-3 md:left-5 top-2 bottom-2 w-px bg-border"></div>
+
+      <!-- Step 1 -->
+      <div class="relative mb-14">
+        <div class="absolute left-[-1.45rem] md:left-[-2.45rem] top-1 w-3 h-3 rounded-full bg-accent border-2 border-surface"></div>
+        <p class="text-xs font-medium text-accent uppercase tracking-wider mb-2">Step 1</p>
+        <h3 class="text-xl font-semibold text-dark mb-2">{{STEP_1_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{STEP_1_DESC}}</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="relative mb-14">
+        <div class="absolute left-[-1.45rem] md:left-[-2.45rem] top-1 w-3 h-3 rounded-full bg-accent border-2 border-surface"></div>
+        <p class="text-xs font-medium text-accent uppercase tracking-wider mb-2">Step 2</p>
+        <h3 class="text-xl font-semibold text-dark mb-2">{{STEP_2_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{STEP_2_DESC}}</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="relative mb-14">
+        <div class="absolute left-[-1.45rem] md:left-[-2.45rem] top-1 w-3 h-3 rounded-full bg-accent border-2 border-surface"></div>
+        <p class="text-xs font-medium text-accent uppercase tracking-wider mb-2">Step 3</p>
+        <h3 class="text-xl font-semibold text-dark mb-2">{{STEP_3_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{STEP_3_DESC}}</p>
+      </div>
+
+      <!-- Step 4 (final) -->
+      <div class="relative">
+        <div class="absolute left-[-1.45rem] md:left-[-2.45rem] top-1 w-3 h-3 rounded-full bg-accent border-2 border-surface"></div>
+        <p class="text-xs font-medium text-accent uppercase tracking-wider mb-2">Step 4</p>
+        <h3 class="text-xl font-semibold text-dark mb-2">{{STEP_4_TITLE}}</h3>
+        <p class="text-primary leading-relaxed">{{STEP_4_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 8: CREDIBILITY / ABOUT THE CREATOR
+     Purpose: Build trust through personal story
+     Design: Simple layout with accent border, photo placeholder
+     ============================================================ -->
+<section id="about" class="py-20 px-6 border-t border-border fade-section">
+  <div class="max-w-3xl mx-auto">
+    <div class="md:flex gap-10 items-start">
+      <!-- Photo placeholder -->
+      <div class="shrink-0 mb-8 md:mb-0">
+        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-stone-200 mx-auto md:mx-0 flex items-center justify-center">
+          <span class="font-serif text-4xl text-muted">{{CREATOR_INITIAL}}</span>
+        </div>
+      </div>
+
+      <!-- About text -->
+      <div>
+        <p class="text-sm font-medium text-accent uppercase tracking-widest mb-4">About the Creator</p>
+        <h3 class="font-serif text-2xl font-bold text-dark mb-4">{{CREATOR_NAME}}</h3>
+        <p class="text-primary leading-relaxed mb-4">{{CREATOR_BIO_1}}</p>
+        <p class="text-primary leading-relaxed mb-6">{{CREATOR_BIO_2}}</p>
+
+        <!-- Credentials -->
+        <div class="flex flex-wrap gap-6 text-sm text-muted">
+          <span>{{CREDENTIAL_1}}</span>
+          <span class="text-border">|</span>
+          <span>{{CREDENTIAL_2}}</span>
+          <span class="text-border">|</span>
+          <span>{{CREDENTIAL_3}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 9: PRICING
+     Purpose: Clean pricing with minimal decoration
+     Design: 2 plans only, border-only cards (no shadows), SePay QR
+     ============================================================ -->
+<section id="pricing" class="py-20 px-6 border-t border-border fade-section">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <p class="text-sm font-medium text-accent uppercase tracking-widest mb-4">Pricing</p>
+      <h2 class="font-serif text-3xl md:text-4xl font-bold text-dark">{{PRICING_HEADLINE}}</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+      <!-- Plan 1: Standard -->
+      <div class="elegant-border p-8 md:p-10">
+        <h3 class="font-serif text-xl font-semibold text-dark mb-2">{{PLAN_1_NAME}}</h3>
+        <p class="text-sm text-muted mb-6">{{PLAN_1_TAGLINE}}</p>
+
+        <div class="mb-8">
+          <span class="font-serif text-4xl font-bold text-dark">{{PLAN_1_PRICE}}</span>
+          <span class="text-muted ml-1">VND</span>
+        </div>
+
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_1_FEATURE_1}}
+          </li>
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_1_FEATURE_2}}
+          </li>
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_1_FEATURE_3}}
+          </li>
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_1_FEATURE_4}}
+          </li>
+        </ul>
+
+        <a href="#" class="block text-center border border-dark text-dark px-6 py-3 font-medium hover:bg-dark hover:text-white transition-all duration-300 cursor-pointer">
+          {{PLAN_1_CTA}}
+        </a>
+      </div>
+
+      <!-- Plan 2: Premium (Recommended) -->
+      <div class="border-2 border-accent p-8 md:p-10 relative">
+        <!-- Recommended badge -->
+        <div class="absolute -top-3 left-6 bg-accent text-white text-xs font-medium px-3 py-1 uppercase tracking-wider">
+          Recommended
+        </div>
+
+        <h3 class="font-serif text-xl font-semibold text-dark mb-2">{{PLAN_2_NAME}}</h3>
+        <p class="text-sm text-muted mb-6">{{PLAN_2_TAGLINE}}</p>
+
+        <div class="mb-8">
+          <span class="font-serif text-4xl font-bold text-dark">{{PLAN_2_PRICE}}</span>
+          <span class="text-muted ml-1">VND</span>
+        </div>
+
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_2_FEATURE_1}}
+          </li>
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_2_FEATURE_2}}
+          </li>
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_2_FEATURE_3}}
+          </li>
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_2_FEATURE_4}}
+          </li>
+          <li class="flex items-start gap-3 text-primary">
+            <svg class="w-4 h-4 text-accent shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+            {{PLAN_2_FEATURE_5}}
+          </li>
+        </ul>
+
+        <!-- SePay QR Payment -->
+        <div class="text-center mb-6 p-4 bg-amber-50 border border-amber-200">
+          <p class="text-sm font-medium text-dark mb-3">Scan to Pay</p>
+          <img src="https://qr.sepay.vn/img?acc={{SEPAY_ACCOUNT}}&bank={{SEPAY_BANK}}&amount={{PLAN_2_PRICE_RAW}}&des={{ORDER_DESC}}&template=compact" alt="QR Payment" class="mx-auto w-40 h-40">
+          <p class="mt-2 text-xs text-muted">Scan with any banking app</p>
+        </div>
+
+        <a href="#" class="block text-center bg-accent text-white px-6 py-3 font-medium hover:bg-amber-800 transition-colors duration-300 cursor-pointer">
+          {{PLAN_2_CTA}}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 10: FAQ
+     Purpose: Remove objections before purchase
+     Design: Simple toggle with + / - icons, minimal style
+     ============================================================ -->
+<section class="py-20 px-6 border-t border-border fade-section">
+  <div class="max-w-2xl mx-auto">
+    <p class="text-sm font-medium text-accent uppercase tracking-widest mb-4 text-center">Questions</p>
+    <h2 class="font-serif text-3xl md:text-4xl font-bold text-dark mb-16 text-center">{{FAQ_HEADLINE}}</h2>
+
+    <!-- FAQ Item 1 -->
+    <div class="border-b border-border">
+      <button onclick="toggleFaq(this)" class="w-full py-5 flex justify-between items-center text-left cursor-pointer group">
+        <span class="font-medium text-dark group-hover:text-accent transition-colors pr-4">{{FAQ_1_Q}}</span>
+        <span class="text-2xl text-muted shrink-0 transition-transform">+</span>
+      </button>
+      <div class="faq-answer text-primary leading-relaxed px-0">{{FAQ_1_A}}</div>
+    </div>
+
+    <!-- FAQ Item 2 -->
+    <div class="border-b border-border">
+      <button onclick="toggleFaq(this)" class="w-full py-5 flex justify-between items-center text-left cursor-pointer group">
+        <span class="font-medium text-dark group-hover:text-accent transition-colors pr-4">{{FAQ_2_Q}}</span>
+        <span class="text-2xl text-muted shrink-0 transition-transform">+</span>
+      </button>
+      <div class="faq-answer text-primary leading-relaxed px-0">{{FAQ_2_A}}</div>
+    </div>
+
+    <!-- FAQ Item 3 -->
+    <div class="border-b border-border">
+      <button onclick="toggleFaq(this)" class="w-full py-5 flex justify-between items-center text-left cursor-pointer group">
+        <span class="font-medium text-dark group-hover:text-accent transition-colors pr-4">{{FAQ_3_Q}}</span>
+        <span class="text-2xl text-muted shrink-0 transition-transform">+</span>
+      </button>
+      <div class="faq-answer text-primary leading-relaxed px-0">{{FAQ_3_A}}</div>
+    </div>
+
+    <!-- FAQ Item 4 -->
+    <div class="border-b border-border">
+      <button onclick="toggleFaq(this)" class="w-full py-5 flex justify-between items-center text-left cursor-pointer group">
+        <span class="font-medium text-dark group-hover:text-accent transition-colors pr-4">{{FAQ_4_Q}}</span>
+        <span class="text-2xl text-muted shrink-0 transition-transform">+</span>
+      </button>
+      <div class="faq-answer text-primary leading-relaxed px-0">{{FAQ_4_A}}</div>
+    </div>
+
+    <!-- FAQ Item 5 -->
+    <div class="border-b border-border">
+      <button onclick="toggleFaq(this)" class="w-full py-5 flex justify-between items-center text-left cursor-pointer group">
+        <span class="font-medium text-dark group-hover:text-accent transition-colors pr-4">{{FAQ_5_Q}}</span>
+        <span class="text-2xl text-muted shrink-0 transition-transform">+</span>
+      </button>
+      <div class="faq-answer text-primary leading-relaxed px-0">{{FAQ_5_A}}</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 11: EMAIL CAPTURE / NEWSLETTER
+     Purpose: Secondary conversion — capture leads who aren't ready to buy
+     Design: Centered input + button, minimal decoration
+     ============================================================ -->
+<section class="py-20 px-6 bg-white border-t border-border fade-section">
+  <div class="max-w-xl mx-auto text-center">
+    <p class="text-sm font-medium text-accent uppercase tracking-widest mb-4">Stay Connected</p>
+    <h2 class="font-serif text-2xl md:text-3xl font-bold text-dark mb-4">{{NEWSLETTER_HEADLINE}}</h2>
+    <p class="text-primary mb-8">{{NEWSLETTER_DESC}}</p>
+
+    <!-- Email form -->
+    <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="return false;">
+      <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 border border-border bg-surface text-dark placeholder:text-muted focus:outline-none focus:border-accent transition-colors" required>
+      <button type="submit" class="bg-accent text-white px-6 py-3 font-medium hover:bg-amber-800 transition-colors cursor-pointer whitespace-nowrap">
+        {{NEWSLETTER_CTA}}
+      </button>
+    </form>
+
+    <p class="mt-4 text-xs text-muted">{{NEWSLETTER_PRIVACY}}</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SECTION 12: FINAL CTA + FOOTER
+     Purpose: Last chance conversion + site info
+     Design: Elegant, minimal, thin top border
+     ============================================================ -->
+
+<!-- Final CTA -->
+<section class="py-24 px-6 border-t border-border fade-section">
+  <div class="max-w-3xl mx-auto text-center">
+    <h2 class="font-serif text-3xl md:text-4xl font-bold text-dark mb-6">{{FINAL_CTA_HEADLINE}}</h2>
+    <p class="text-lg text-primary mb-10 max-w-xl mx-auto">{{FINAL_CTA_SUBHEADLINE}}</p>
+
+    <a href="#pricing" class="inline-block bg-accent text-white px-10 py-4 text-base font-medium hover:bg-amber-800 transition-colors duration-300 cursor-pointer">
+      {{CTA_TEXT}}
+    </a>
+
+    <!-- Trust signals -->
+    <div class="mt-8 flex flex-wrap justify-center gap-6 text-sm text-muted">
+      <span>Instant Access</span>
+      <span class="text-border">|</span>
+      <span>No Spam, Ever</span>
+      <span class="text-border">|</span>
+      <span>Unsubscribe Anytime</span>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="border-t border-border py-10 px-6">
+  <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted">
+    <p class="font-serif text-dark font-semibold">{{BRAND_NAME}}</p>
+    <div class="flex gap-6">
+      <a href="#" class="hover-underline hover:text-dark transition-colors">Privacy</a>
+      <a href="#" class="hover-underline hover:text-dark transition-colors">Terms</a>
+      <a href="#" class="hover-underline hover:text-dark transition-colors">Contact</a>
+    </div>
+    <p>&copy; {{YEAR}} {{BRAND_NAME}}</p>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     SCRIPTS
+     - Smooth scroll for anchor links
+     - FAQ toggle
+     - Fade-in on scroll (IntersectionObserver)
+     ============================================================ -->
+<script>
+// Smooth scroll for all anchor links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// FAQ toggle function
+function toggleFaq(button) {
+  const answer = button.nextElementSibling;
+  const icon = button.querySelector('span:last-child');
+  const isOpen = answer.classList.contains('open');
+
+  // Close all other FAQs
+  document.querySelectorAll('.faq-answer.open').forEach(el => {
+    el.classList.remove('open');
+    el.previousElementSibling.querySelector('span:last-child').textContent = '+';
+  });
+
+  // Toggle current
+  if (!isOpen) {
+    answer.classList.add('open');
+    icon.textContent = '−';
+  }
+}
+
+// Fade-in on scroll using IntersectionObserver
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.fade-section').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

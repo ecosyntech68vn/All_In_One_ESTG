@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  business-marketing:
+    build: ./business-marketing
+    ports:
+      - "5000:5000"
+    env_file: .env
+    volumes:
+      - ./shared:/app/shared
+      - ./integration:/app/integration
+    networks:
+      - estg-network
+
+  tro-ly-shop:
+    build: ./tro_ly_shop
+    ports:
+      - "8000:8000"
+    env_file: .env
+    volumes:
+      - ./shared:/app/shared
+      - ./integration:/app/integration
+    networks:
+      - estg-network
+
+networks:
+  estg-network:
+    driver: bridge
