@@ -1491,7 +1491,7 @@ def handle_admin(chat_id, text):
         # Handle agent subscriptions
         if sku.startswith("agent_"):
             plan_key = sku.replace("agent_", "", 1) if sku.startswith("agent_agent_") else sku.replace("agent_", "")
-            plan = AGENT_PLANS.get(plan_key, AGENT_PLANS.get("agent_basic"))
+            plan = AGENT_PLANS.get(plan_key, AGENT_PLANS.get("basic"))
             mark_order_paid(code, f"MANUAL-{chat_id}", "agent")
             create_subscription(customer_chat_id, plan_key, plan["model"], plan["daily_msgs"])
             tg_send(customer_chat_id,
@@ -2782,7 +2782,7 @@ def process_payment(amount, content, ref, source="unknown"):
     if sku.startswith("agent_"):
         # Extract plan key from SKU (e.g., "agent_agent_basic" → "agent_basic")
         plan_key = sku.replace("agent_", "", 1) if sku.startswith("agent_agent_") else sku.replace("agent_", "")
-        plan = AGENT_PLANS.get(plan_key, AGENT_PLANS.get("agent_basic"))
+        plan = AGENT_PLANS.get(plan_key, AGENT_PLANS.get("basic"))
         create_subscription(chat_id, plan_key, plan["model"], plan["daily_msgs"])
         tg_send(chat_id,
             f"✅ *Đã nhận thanh toán {amount:,}đ*\n"

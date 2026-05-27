@@ -12,21 +12,21 @@ log = logging.getLogger(__name__)
 # ========== PLANS ==========
 
 AGENT_PLANS = {
-    "agent_basic": {
+    "basic": {
         "name": "AI Agent Cơ Bản",
         "price": 99000,
         "model": "gemini",
         "daily_msgs": 30,
         "desc": "Gemini AI, 30 tin/ngày, 1 Agent"
     },
-    "agent_pro": {
+    "pro": {
         "name": "AI Agent Pro",
         "price": 199000,
         "model": "claude",
         "daily_msgs": 100,
         "desc": "Claude AI, 100 tin/ngày, 3 Agent"
     },
-    "agent_business": {
+    "business": {
         "name": "AI Agent Business",
         "price": 499000,
         "model": "gpt4",
