@@ -4,7 +4,7 @@ This would be called by the Business-Marketing system when a new lead is capture
 """
 import json
 import logging
-from shared.config.settings import TELEGRAM_BOT_TOKEN, BASE_URL
+from shared.config.settings import TELEGRAM_BOT_TOKEN, TELEGRAM_ADMIN_CHAT_ID, BASE_URL
 import requests
 
 logger = logging.getLogger(__name__)
