@@ -1,27 +1,38 @@
+# All_In_One_ESTG — Compose stack
+# 2 service share file .env ở root, nhưng BOT_TOKEN được override
+# riêng cho từng service để 2 bot Telegram tách biệt.
 version: '3.8'
 
 services:
   business-marketing:
-    build: ./business-marketing
+    build: ../business-marketing
     ports:
       - "5000:5000"
-    env_file: .env
+    env_file: ../.env
+    environment:
+      # Override BOT_TOKEN bằng token bot bán hàng số
+      - BOT_TOKEN=${BOT_TOKEN_SALES}
     volumes:
-      - ./shared:/app/shared
-      - ./integration:/app/integration
+      - ../shared:/app/shared
+      - ../integration:/app/integration
     networks:
       - estg-network
+    restart: unless-stopped
 
   tro-ly-shop:
-    build: ./tro_ly_shop
+    build: ../tro_ly_shop
     ports:
       - "8000:8000"
-    env_file: .env
+    env_file: ../.env
+    environment:
+      # Override BOT_TOKEN bằng token bot chăm sóc khách "AI Thực Chiến"
+      - BOT_TOKEN=${BOT_TOKEN_CSKH}
     volumes:
-      - ./shared:/app/shared
-      - ./integration:/app/integration
+      - ../shared:/app/shared
+      - ../integration:/app/integration
     networks:
       - estg-network
+    restart: unless-stopped
 
 networks:
   estg-network:
